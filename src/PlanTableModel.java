@@ -2,7 +2,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class MyTableModel extends AbstractTableModel {
+public class PlanTableModel extends AbstractTableModel {
 	
 		private final static int JTABLE_ROW_NUM = 12;
 		private final static int JTABLE_COLS_NUM = 7;
@@ -32,7 +32,7 @@ public class MyTableModel extends AbstractTableModel {
 				 "18:15-19:00",
 				 "19:15-20:00"};
 		
-		public MyTableModel() {
+		public PlanTableModel() {
 			super();
 			for (int i = 0; i < 12; i++) {
 				data[i][0] = GODZINY[i];		

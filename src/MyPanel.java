@@ -22,8 +22,10 @@ public class MyPanel extends JPanel implements ActionListener {
 	private JPanel groupJPanel = new JPanel();
     private JTable planTable = new MyJTable();
 	private JTextArea groupNameJTextArea = new JTextArea("Nazwa grupy:");
-	private JTextArea groupNameJTextField = new JTextArea("wprowadü nazwÍ");
+	private JTextField groupNameJTextField = new JTextField("wprowadü nazwÍ");
 	private JButton insertJButton = new JButton("Wprowadü");
+
+	private JTextField logJTextField = new JTextField("Log programu");
 	
     public MyPanel() {
 		super();
@@ -34,18 +36,25 @@ public class MyPanel extends JPanel implements ActionListener {
 		groupNameJTextArea.setOpaque(true);
 		groupNameJTextArea.setEditable(false);
 
-		groupNameJTextField.setForeground(Color.GRAY);		
-			
+		groupNameJTextField.setForeground(Color.GRAY);
+		
+		logJTextField.setEditable(false);
+		
+		
+		
 		groupJPanel.add(groupNameJTextArea);
 		groupJPanel.add(groupNameJTextField);
 		
 		add(groupJPanel);
 		
+
+		insertJButton.addActionListener(this);
 		insertJButton.setPreferredSize(new Dimension(50, 20));
 		insertJButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		add(new JScrollPane(planTable));
 		add(insertJButton);
+		add(logJTextField);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {

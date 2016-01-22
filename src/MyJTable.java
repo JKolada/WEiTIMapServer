@@ -9,7 +9,7 @@ public class MyJTable extends JTable {
 
 
 	public MyJTable() {
-		super(new MyTableModel());		
+		super(new PlanTableModel());		
 
 		this.setFont(new Font("Arial", Font.BOLD, 15));
 //		setLayout(new BorderLayout());
