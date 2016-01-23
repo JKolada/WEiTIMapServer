@@ -1,41 +1,88 @@
+import java.awt.Cursor;
+import java.io.*;
 import java.sql.*;
+
+import org.sqlite.core.DB;
 
 public class MyDatabase {
 	
-	public MyDatabase() {		
-		Connection c = null;
-	    Statement stmt = null;
-	    try {
-	      Class.forName("org.sqlite.JDBC");
-	      c = DriverManager.getConnection("jdbc:sqlite:test.db");
-	      System.out.println("Opened database successfully");
-	    } catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	    }  
-	    
-
+	Connection mConnection = null;
+    Statement mStatement = null;
+	
+	public MyDatabase() {
+		
 	      try {
-			stmt = c.createStatement();
-		} catch (SQLException e) {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	      
-	      for (int i = 0; i < MyDatabaseUtilities.TABLE_CREATES_STATEMENTS.length; i++) {
-		      try {
-				stmt.executeUpdate(MyDatabaseUtilities.TABLE_CREATES_STATEMENTS[i]);
-				System.out.println("Table " + MyDatabaseUtilities.TABLE_NAMES[i] + " succesfully created.\n" );
-			} catch (SQLException e) {
-				e.printStackTrace();
-				System.out.println("Table " + MyDatabaseUtilities.TABLE_NAMES[i] + " creation failed.\n" );
-			}
-	      }	      
-
 	      try {
-			stmt.close();
-			c.close();
+			mConnection = DriverManager.getConnection("jdbc:sqlite:test.db");
+			System.out.println("Opened database successfully");	    
+		    mStatement = mConnection.createStatement();
+		      
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//	      checkTables();
+	      setDatabase();
+	      
 	}
+	
+	
+	private void setDatabase() {
+
+			for (int i = 0; i < MyDatabaseUtilities.TABLE_CREATES_STATEMENTS.length; i++) {
+		    	try {
+					mStatement.executeUpdate(MyDatabaseUtilities.TABLE_CREATES_STATEMENTS[i]);
+			    	System.out.println("Table " + MyDatabaseUtilities.TABLE_NAMES[i] + " succesfully created or it exists." );	    
+				} catch (SQLException e) {
+					System.out.println("Table " + MyDatabaseUtilities.TABLE_NAMES[i] + " creation failed.\n" );		
+					e.printStackTrace();
+				}  	
+			}        
+			try {
+				mStatement.executeUpdate(MyDatabaseUtilities.TB_DNI_TYG_INSERTS);
+				mStatement.executeUpdate(MyDatabaseUtilities.TB_GODZINY_INSERTS);  		
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			try {
+//				mStatement.executeUpdate(MyDatabaseUtilities.TB_GRUPY_TEST_INSERT); 
+
+//				mStatement.executeUpdate(MyDatabaseUtilities.TB_SALE_TEST_INSERTS);
+
+				mStatement.executeUpdate(MyDatabaseUtilities.TB_PLAN_TEST_INSERT);
+				
+		    	System.out.println("TB_GRUPY_TEST_INSERT succesfully executed." );	 
+				mStatement.close();
+				mConnection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			
+	}
+	
+	private void checkTables () {
+		ResultSet result;
+		try {
+			result = mStatement.executeQuery("SELECT name FROM sqlite_master WHERE type='name'");
+			String id;
+	        while(result.next()) {
+	        	id = result.getString("table_name");
+	            System.out.println(id);
+	        }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 
 }

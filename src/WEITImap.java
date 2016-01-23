@@ -5,8 +5,12 @@ public class WEITImap {
 	
 	public static void main(String[] args) {	
 		
-	    mDB = new MyDatabase();
-	    mGUI = new MyGUI();
+	    try {
+			mDB = new MyDatabase();
+		    mGUI = new MyGUI();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	    
 		javax.swing.SwingUtilities.invokeLater(
 				new Runnable() { public void run() {
