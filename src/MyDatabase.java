@@ -2,15 +2,16 @@ import java.awt.Cursor;
 import java.io.*;
 import java.sql.*;
 
+import org.sqlite.SQLiteDataSource;
 import org.sqlite.core.DB;
 
-public class MyDatabase {
+public class MyDatabase extends SQLiteDataSource{
 	
 	Connection mConnection = null;
     Statement mStatement = null;
+    
 	
 	public MyDatabase() {
-		
 	      try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
@@ -26,22 +27,27 @@ public class MyDatabase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//	      checkTables();
+
+	      checkTables();
+		  resetDB();
+	      checkTables();
 	      setDatabase();
 	      
 	}
 	
-	
 	private void setDatabase() {
-
-			for (int i = 0; i < MyDatabaseUtilities.TABLE_CREATES_STATEMENTS.length; i++) {
+			
+			int k = 0;
+			for (String i: MyDatabaseUtilities.TABLE_CREATES_STATEMENTS) {
+				
 		    	try {
-					mStatement.executeUpdate(MyDatabaseUtilities.TABLE_CREATES_STATEMENTS[i]);
-			    	System.out.println("Table " + MyDatabaseUtilities.TABLE_NAMES[i] + " succesfully created or it exists." );	    
+					mStatement.executeUpdate(i);
+			    	System.out.println("Table " + MyDatabaseUtilities.TABLE_NAMES[k]+ " succesfully created or it exists." );	    
 				} catch (SQLException e) {
-					System.out.println("Table " + MyDatabaseUtilities.TABLE_NAMES[i] + " creation failed.\n" );		
+					System.out.println("Table " + MyDatabaseUtilities.TABLE_NAMES[k] + " creation failed. StackTrace:" );		
 					e.printStackTrace();
 				}  	
+		    	k++;
 			}        
 			try {
 				mStatement.executeUpdate(MyDatabaseUtilities.TB_DNI_TYG_INSERTS);
@@ -50,38 +56,71 @@ public class MyDatabase {
 				e.printStackTrace();
 			}
 			
-			try {
-//				mStatement.executeUpdate(MyDatabaseUtilities.TB_GRUPY_TEST_INSERT); 
-
-//				mStatement.executeUpdate(MyDatabaseUtilities.TB_SALE_TEST_INSERTS);
-
-				mStatement.executeUpdate(MyDatabaseUtilities.TB_PLAN_TEST_INSERT);
-				
-		    	System.out.println("TB_GRUPY_TEST_INSERT succesfully executed." );	 
-				mStatement.close();
-				mConnection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			k = 0;
+			for (String i: MyDatabaseUtilities.INSERT_INTO_STATEMENT_LIST) {
+		    	try {
+					mStatement.executeUpdate(i);
+			    	System.out.println("\'" + MyDatabaseUtilities.INSERT_STATEMENT_NAMES[k]  + "\' insert statement succesfully executed." );	    
+				} catch (SQLException e) {
+					System.out.println("\'" + MyDatabaseUtilities.INSERT_STATEMENT_NAMES[k]  + "\' insert statement failed. StackTrace:" );	    
+					e.printStackTrace();
+				}  	
+		    	k++;
+		    	if (k >= MyDatabaseUtilities.INSERT_INTO_STATEMENT_LIST.length) {
+		    		break;
+		    	}
+			}   
+			
 			
 			
 	}
 	
-	private void checkTables () {
+	private int checkTables () {
 		ResultSet result;
+		int table_num = 0;
+		String table_name_temp;		
 		try {
-			result = mStatement.executeQuery("SELECT name FROM sqlite_master WHERE type='name'");
-			String id;
+			result = mStatement.executeQuery("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name");
 	        while(result.next()) {
-	        	id = result.getString("table_name");
-	            System.out.println(id);
+	        	table_name_temp = result.getString("name");
+	            System.out.println(table_name_temp + " exists.");
+	            table_num++;
 	        }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	        
+	    if (table_num > 0) {
+			System.out.println("Error: Some tables still exist." );	 
+	    }
+		return table_num;
 		
+			
+	}
+	
+	private void resetDB() {
+
+//		try {
+//			mStatement.execute("DROP TABLE tb_rodz_zajec");
+//		} catch (SQLException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		
+		for(String i: MyDatabaseUtilities.TABLE_NAMES) {
+			try {
+				
+				
+				mStatement.execute("DROP TABLE " + i);
+				
+				
+				
+				System.out.println("Table \'" + i + "\' has been dropped succesfully");
+			} catch (SQLException e) {
+				System.out.println("Error: SQL Statement \'DROP TABLE " + i + "\' failed. StackTrace:");
+				e.printStackTrace();
+			}
+		}
 	}
 	
 
