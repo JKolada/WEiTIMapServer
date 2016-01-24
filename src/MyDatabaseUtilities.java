@@ -55,7 +55,8 @@ public final class MyDatabaseUtilities {
 	"	rodz_zajec VARCHAR(1) NOT NULL DEFAULT 'X',"  +	
 	"	sala_id INTEGER NOT NULL," +
 	"	parzystosc VARCHAR(1) NOT NULL DEFAULT 'X',"  +
-	"	CHECK (parzystosc = 'P' OR parzystosc = 'N' OR parzystosc = 'X'),"  +
+	"	CHECK (parzystosc = 'P' OR parzystosc = 'N' OR parzystosc = 'X'),"  +	
+	"	CHECK (rodz_zajec IN ('W', 'L', 'C', 'R')),"  +
 	"	FOREIGN KEY (grupa_id) REFERENCES tb_grupy(grupa_id),"  +
 	"	FOREIGN KEY (sala_id) REFERENCES tb_sale(sala_id)," +
 	"	FOREIGN KEY (dzien_tyg_id) REFERENCES tb_dni_tyg(dzien_tyg_id),"  +
@@ -79,26 +80,26 @@ public final class MyDatabaseUtilities {
 			
 	public final static String TB_DNI_TYG_INSERTS = 
 	"INSERT INTO tb_dni_tyg (nazwa_dnia) VALUES " +
-//	"('poniedzia쿮k'), " +
-//	"('wtorek')" ;//, " +
-//	"('쐒oda'), " +
-	"('czwartek')"; // +
-//	"('pi퉡ek')";			
+	"('poniedzia쿮k'), " +
+	"('wtorek')," +
+	"('쐒oda'), " +
+	"('czwartek'), " +
+	"('pi퉡ek')";			
 
  	public final static String TB_GODZINY_INSERTS = 
-	"INSERT INTO tb_godziny (godziny) VALUES " +
-//	 "('08:15-09:00'), " + 	
-//	 "('09:15-10:00'), " +	
-//	 "('10:15-11:00'), " +	
-//	 "('11:15-12:00'), " +	
-//	 "('12:15-13:00'), " +	
-//	 "('13:15-14:00'), " +	
-//	 "('14:15-15:00'), " +	
-//	 "('15:15-16:00'), " +	
-//	 "('16:15-17:00'), " +	
-//	 "('17:15-18:00'), " +	
-//	 "('18:15-19:00'), " +	
-	 "('19:15-20:00')";	
+	"INSERT INTO tb_godziny (godz_id, godziny) VALUES " +
+	 "(8, '08:15-09:00'), " + 	
+	 "(9, '09:15-10:00'), " +	
+	 "(10,'10:15-11:00'), " +	
+	 "(11,'11:15-12:00'), " +	
+	 "(12,'12:15-13:00'), " +	
+	 "(13,'13:15-14:00'), " +	
+	 "(14,'14:15-15:00'), " +	
+	 "(15,'15:15-16:00'), " +	
+	 "(16,'16:15-17:00'), " +	
+	 "(17,'17:15-18:00'), " +	
+	 "(18,'18:15-19:00'), " +	
+	 "(19,'19:15-20:00')";	
 
 			// TEST 'INSERT INTO' STATEMENTS
 			
@@ -130,12 +131,12 @@ public final class MyDatabaseUtilities {
 	"('118-AL', '0', 0, 0)";	
 
 	public final static String TB_PLAN_TEST_INS_0 = 
-	"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id, parzystosc) " +
-	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id, \'N\' " +
+	"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, rodz_zajec, sala_id, parzystosc) " +
+	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, 'W', e.sala_id, \'N\' " +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = \'1E1\' " +
 	"AND b.nazwa_dnia = \'poniedzia쿮k\' " +
-	"AND c.godziny = \'08:15-09:00\' " +
+	"AND c.godz_id = 8 " +
 	"AND d.nazwa_zajec = \'WFI\' AND e.nazwa_sali = \'105-AR\'";
 	
 	private final static String TB_PLAN_TEST_INS_1 = 
@@ -144,7 +145,7 @@ public final class MyDatabaseUtilities {
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = \'1E1\' " +
 	"AND b.nazwa_dnia = \'poniedzia쿮k\' " +
-	"AND c.godziny_num = \'09:15-10:00\' " +
+	"AND c.godz_id =  9 " +
 	"AND d.nazwa_zajec = \'WFI\' AND e.nazwa_sali = \'105-AR\'";
 	
 
@@ -154,7 +155,7 @@ public final class MyDatabaseUtilities {
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = \'1E1\' " +
 	"AND b.nazwa_dnia = \'poniedzia쿮k\' " +
-	"AND c.godziny_num = \'10:15-11:00\' " +
+	"AND c.godz_id =  10 " +
 	"AND d.nazwa_zajec = \'PRM\' AND e.nazwa_sali = \'011\'";
 	
 	private final static String TB_PLAN_TEST_INS_3 = 
@@ -163,42 +164,79 @@ public final class MyDatabaseUtilities {
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = \'1E1\' " +
 	"AND b.nazwa_dnia = \'poniedzia쿮k\' " +
-	"AND c.godziny_num = \'11:15-12:00\' " +
+	"AND c.godz_id =  11 " +
 	"AND d.nazwa_zajec = \'PRM\' AND e.nazwa_sali = \'011\'";
-	
 	
 	private final static String TB_PLAN_TEST_INS_4 = 
-	"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id) " +
-	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id " +
+	"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id, parzystosc) " +
+	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id, \'N\'" +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = \'1E1\' " +
 	"AND b.nazwa_dnia = \'poniedzia쿮k\' " +
-	"AND c.godziny_num = \'12:15-13:00\' " +
-	"AND d.nazwa_zajec = \'PRM\' AND e.nazwa_sali = \'011\'";
+	"AND c.godz_id =  12 " +
+	"AND d.nazwa_zajec = \'WFI\' AND e.nazwa_sali = \'106\'";
 	
 	private final static String TB_PLAN_TEST_INS_5 = 
-	"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id) " +
-	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id " +
+	"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id, parzystosc) " +
+	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id, \'N\' " +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = \'1E1\' " +
 	"AND b.nazwa_dnia = \'poniedzia쿮k\' " +
-	"AND c.godziny_num = \'13:15-14:00\' " +
-	"AND d.nazwa_zajec = \'PRM\' AND e.nazwa_sali = \'011\'";
+	"AND c.godz_id =  13 " +
+	"AND d.nazwa_zajec = \'WFI\' AND e.nazwa_sali = \'106\'";
 	
 	private final static String TB_PLAN_TEST_INS_6 = 
+	"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id, parzystosc) " +
+	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id, \'P\'" +
+	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
+	"WHERE	a.nazwa_grupy = \'1E1\' " +
+	"AND b.nazwa_dnia = \'poniedzia쿮k\' " +
+	"AND c.godz_id =  12 " +
+	"AND d.nazwa_zajec = \'ULOG\' AND e.nazwa_sali = \'106\'";
+	
+	private final static String TB_PLAN_TEST_INS_7 = 
+	"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id, parzystosc) " +
+	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id, \'P\' " +
+	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
+	"WHERE	a.nazwa_grupy = \'1E1\' " +
+	"AND b.nazwa_dnia = \'poniedzia쿮k\' " +
+	"AND c.godz_id =  13 " +
+	"AND d.nazwa_zajec = \'ULOG\' AND e.nazwa_sali = \'106\'";
+	
+	private final static String TB_PLAN_TEST_INS_8 = 
 	"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id) " +
 	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id " +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = \'1E1\' " +
 	"AND b.nazwa_dnia = \'poniedzia쿮k\' " +
-	"AND c.godziny_num = \'14:15-15:00\' " +
-	"AND d.nazwa_zajec = \'PRM\' AND e.nazwa_sali = \'011\'";
-	
-	
+	"AND c.godz_id =  14 " +
+	"AND d.nazwa_zajec = \'PPOM\' AND e.nazwa_sali = \'DS202\'";
+
+	private final static String TB_PLAN_TEST_INS_9 = 
+	"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id) " +
+	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id " +
+	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
+	"WHERE	a.nazwa_grupy = \'1E1\' " +
+	"AND b.nazwa_dnia = \'poniedzia쿮k\' " +
+	"AND c.godz_id =  15 " +
+	"AND d.nazwa_zajec = \'PPOM\' AND e.nazwa_sali = \'DS202\'";
+
+	private final static String TB_PLAN_TEST_INS_10 = 
+	"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id) " +
+	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id " +
+	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
+	"WHERE	a.nazwa_grupy = \'1E1\' " +
+	"AND b.nazwa_dnia = \'poniedzia쿮k\' " +
+	"AND c.godz_id =  16 " +
+	"AND d.nazwa_zajec = \'PPOM\' AND e.nazwa_sali = \'DS202\'";
+
+
+
+
 	public final static String[] TB_PLAN_TEST_INS_lIST = {
-			"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id)  SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id  FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e  WHERE a.nazwa_grupy = \'1E1\'  AND b.nazwa_dnia = \'poniedzia쿮k\'  AND c.godziny_num = \'09:15-10:00\'  AND d.nazwa_zajec = \'WFI\' AND e.nazwa_sali = \'105-AR\'",
-			"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id)  SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id  FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e  WHERE a.nazwa_grupy = \'1E1\'  AND b.nazwa_dnia = \'poniedzia쿮k\'  AND c.godziny_num = \':15-10:00\'  AND d.nazwa_zajec = \'ULOG\' AND e.nazwa_sali = \'105-AR\'",
-			"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id)  SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id  FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e  WHERE a.nazwa_grupy = \'1E1\'  AND b.nazwa_dnia = \'poniedzia쿮k\'  AND c.godziny_num = \'09:15-10:00\'  AND d.nazwa_zajec = \'WFI\' AND e.nazwa_sali = \'105-AR\'"
+			"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id)  SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id  FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e  WHERE a.nazwa_grupy = \'1E1\'  AND b.nazwa_dnia = \'poniedzia쿮k\'  AND c.godz_id =  09  AND d.nazwa_zajec = \'WFI\' AND e.nazwa_sali = \'105-AR\'",
+			"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id)  SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id  FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e  WHERE a.nazwa_grupy = \'1E1\'  AND b.nazwa_dnia = \'poniedzia쿮k\'  AND c.godz_id =  \15ND d.nazwa_zajec = \'ULOG\' AND e.nazwa_sali = \'105-AR\'",
+			"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id)  SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id  FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e  WHERE a.nazwa_grupy = \'1E1\'  AND b.nazwa_dnia = \'poniedzia쿮k\'  AND c.godz_id =  09  AND d.nazwa_zajec = \'WFI\' AND e.nazwa_sali = \'105-AR\'"
 			};
 
 
@@ -215,18 +253,22 @@ public final class MyDatabaseUtilities {
 							};
 
 	public final static String[] INSERT_INTO_STATEMENT_LIST = {
-								TB_DNI_TYG_INSERTS
-//								TB_GODZINY_INSERTS,
-//								TB_GRUPY_TEST_INSERT, 
-//								TB_ZAJECIA_TEST_INSERTS, 
-//								TB_SALE_TEST_INSERT, 
-//								TB_PLAN_TEST_INS_0,
-//								TB_PLAN_TEST_INS_1,
-//								TB_PLAN_TEST_INS_2,
-//								TB_PLAN_TEST_INS_3,
-//								TB_PLAN_TEST_INS_4,
-//								TB_PLAN_TEST_INS_5,
-//								TB_PLAN_TEST_INS_6,
+								TB_DNI_TYG_INSERTS,
+								TB_GODZINY_INSERTS,
+								TB_GRUPY_TEST_INSERT, 
+								TB_ZAJECIA_TEST_INSERTS, 
+								TB_SALE_TEST_INSERT, 
+								TB_PLAN_TEST_INS_0,
+								TB_PLAN_TEST_INS_1,
+								TB_PLAN_TEST_INS_2,
+								TB_PLAN_TEST_INS_3,
+								TB_PLAN_TEST_INS_4,
+								TB_PLAN_TEST_INS_5,
+								TB_PLAN_TEST_INS_6,
+								TB_PLAN_TEST_INS_7,
+								TB_PLAN_TEST_INS_8,
+								TB_PLAN_TEST_INS_9,
+								TB_PLAN_TEST_INS_10
 							};
 
 	public final static String[] TABLE_NAMES = {
@@ -241,18 +283,22 @@ public final class MyDatabaseUtilities {
 							};
 
 	public final static String[] INSERT_STATEMENT_NAMES = {
-								"TB_DNI_TYG_INSERTS"
-//								"TB_GODZINY_INSERTS",
-//								"TB_GRUPY_TEST_INSERT", 
-//								"TB_ZAJECIA_TEST_INSERTS", 
-//								"TB_SALE_TEST_INSERT", 
-//								"TB_PLAN_TEST_INS_0"
-//								"TB_PLAN_TEST_INS_1",
-//								"TB_PLAN_TEST_INS_2",
-//								"TB_PLAN_TEST_INS_3",
-//								"TB_PLAN_TEST_INS_4",
-//								"TB_PLAN_TEST_INS_5",
-//								"TB_PLAN_TEST_INS_6"
+								"TB_DNI_TYG_INSERTS",
+								"TB_GODZINY_INSERTS",
+								"TB_GRUPY_TEST_INSERT", 
+								"TB_ZAJECIA_TEST_INSERTS", 
+								"TB_SALE_TEST_INSERT", 
+								"TB_PLAN_TEST_INS_0",
+								"TB_PLAN_TEST_INS_1",
+								"TB_PLAN_TEST_INS_2",
+								"TB_PLAN_TEST_INS_3",
+								"TB_PLAN_TEST_INS_4",
+								"TB_PLAN_TEST_INS_5",
+								"TB_PLAN_TEST_INS_6",
+								"TB_PLAN_TEST_INS_7",
+								"TB_PLAN_TEST_INS_8",
+								"TB_PLAN_TEST_INS_9",
+								"TB_PLAN_TEST_INS_10"
 							};
 }
 

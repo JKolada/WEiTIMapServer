@@ -8,8 +8,7 @@ import org.sqlite.core.DB;
 public class MyDatabase extends SQLiteDataSource{
 	
 	Connection mConnection = null;
-    Statement mStatement = null;
-    
+    Statement mStatement = null;    
 	
 	public MyDatabase() {
 	      try {
@@ -28,9 +27,8 @@ public class MyDatabase extends SQLiteDataSource{
 			e.printStackTrace();
 		}
 
-	      checkTables();
-		  resetDB();
-	      checkTables();
+	      resetDB();
+	      checkTables(true);
 	      setDatabase();
 	      
 	}
@@ -48,13 +46,7 @@ public class MyDatabase extends SQLiteDataSource{
 					e.printStackTrace();
 				}  	
 		    	k++;
-			}        
-			try {
-				mStatement.executeUpdate(MyDatabaseUtilities.TB_DNI_TYG_INSERTS);
-				mStatement.executeUpdate(MyDatabaseUtilities.TB_GODZINY_INSERTS);  		
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			}   
 			
 			k = 0;
 			for (String i: MyDatabaseUtilities.INSERT_INTO_STATEMENT_LIST) {
@@ -70,12 +62,17 @@ public class MyDatabase extends SQLiteDataSource{
 		    		break;
 		    	}
 			}   
-			
+//			
 			
 			
 	}
 	
-	private int checkTables () {
+
+	private int checkTables (boolean reset) {
+		return checkTables(reset, "ALL");
+	}
+	
+	private int checkTables (boolean reset, String table_name_to_drop) {
 		ResultSet result;
 		int table_num = 0;
 		String table_name_temp;		
@@ -85,6 +82,12 @@ public class MyDatabase extends SQLiteDataSource{
 	        	table_name_temp = result.getString("name");
 	            System.out.println(table_name_temp + " exists.");
 	            table_num++;
+	            if (reset = true) {
+	            	if ((table_name_to_drop.equals(table_name_temp)) || (table_name_to_drop.equals("ALL")))
+					mStatement.execute("DROP TABLE " + table_name_temp);
+					System.out.println(table_name_temp + " has been dropped.");
+					table_num--;
+	            }
 	        }
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -98,23 +101,10 @@ public class MyDatabase extends SQLiteDataSource{
 			
 	}
 	
-	private void resetDB() {
-
-//		try {
-//			mStatement.execute("DROP TABLE tb_rodz_zajec");
-//		} catch (SQLException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-		
+	private void resetDB() {		
 		for(String i: MyDatabaseUtilities.TABLE_NAMES) {
 			try {
-				
-				
 				mStatement.execute("DROP TABLE " + i);
-				
-				
-				
 				System.out.println("Table \'" + i + "\' has been dropped succesfully");
 			} catch (SQLException e) {
 				System.out.println("Error: SQL Statement \'DROP TABLE " + i + "\' failed. StackTrace:");
