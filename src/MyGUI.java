@@ -4,19 +4,24 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 public class MyGUI {	
+
+	private static MyDatabase mDB;
+    private static MyPanel newContentPane;       
+	
+
+    private static JFrame frame;
+	
+	public MyGUI(MyDatabase DB) {
+		mDB = DB;
+		frame = new MyFrame();
+	}
+	
 	public static void createAndShowGUI() {
-			
-        JFrame frame = new MyFrame();
 		frame.setMinimumSize(new Dimension(800, 500));
+		newContentPane = new MyPanel();
         MyPanel newContentPane = new MyPanel();      
-      
-        
-        newContentPane.setOpaque(true);
-        frame.setContentPane(newContentPane);  
-                
-        frame.add(new JTextField());
-        
-        
+        frame.setContentPane(newContentPane);                  
+        frame.add(new JTextField());               
         
         frame.pack();
         frame.setVisible(true);

@@ -1,9 +1,11 @@
-import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 
 public class PlanTableModel extends AbstractTableModel {
 	
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4810474261428483824L;
 		private final static int JTABLE_ROW_NUM = 12;
 		private final static int JTABLE_COLS_NUM = 7;
 		

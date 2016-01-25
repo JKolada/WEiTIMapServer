@@ -75,8 +75,20 @@ public final class MyDatabaseUtilities {
 	"	FOREIGN KEY (godz_id) REFERENCES tb_godziny(godz_id)," +
 	"	FOREIGN KEY (pracownik_id) REFERENCES tb_pracownicy(pracownik_id)" +
 	")";
+
+	// VIEWS // // // // // // // // // // // // // // // // // // // //  // // //
 	
-	// INSERTS // // // // // // // // // // // // // // // // // // // //  // // //
+	public final static String CREATE_VIEW_PLAN =
+	"CREATE VIEW IF NOT EXISTS VW_PLAN " +
+	"AS SELECT b.nazwa_grupy, c.nazwa_sali, d.nazwa_dnia, e.godziny, a.parzystosc, f.nazwa_zajec, a.rodz_zajec " +
+	"FROM tb_plan a " +
+	"JOIN tb_grupy b 	ON (a.grupa_id = b.grupa_id) " +
+	"JOIN tb_sale c  	ON (a.sala_id = c.sala_id) " +
+	"JOIN tb_dni_tyg d  ON (a.dzien_tyg_id = d.dzien_tyg_id) " +
+	"JOIN tb_godziny e  ON (a.godz_id = e.godz_id) " +
+	"JOIN tb_zajecia f  ON (a.id_zajec = f.id_zajec)";
+	
+	// INSERTS // // // // // // // // // // // // // // // // // // // // // // //
 			
 	public final static String TB_DNI_TYG_INSERTS = 
 	"INSERT INTO tb_dni_tyg (nazwa_dnia) VALUES " +

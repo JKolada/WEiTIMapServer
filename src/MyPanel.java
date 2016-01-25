@@ -7,9 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,18 +17,25 @@ import javax.swing.SwingConstants;
 
 public class MyPanel extends JPanel implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5169492090332131771L;
 	private JPanel groupJPanel = new JPanel();
     private JTable planTable = new MyJTable();
 	private JTextArea groupNameJTextArea = new JTextArea("Nazwa grupy:");
 	private JTextField groupNameJTextField = new JTextField("wprowadü nazwÍ");
 	private JButton insertJButton = new JButton("Wprowadü");
+	private MyControlPanel controlPanel = new MyControlPanel();
 
 	private JTextField logJTextField = new JTextField("Log programu");
 	
     public MyPanel() {
 		super();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    	setOpaque(true);
 		
+    	
 		groupJPanel.setLayout(new GridLayout(1, 2));
 		
 		groupNameJTextArea.setOpaque(true);
@@ -45,6 +50,7 @@ public class MyPanel extends JPanel implements ActionListener {
 		groupJPanel.add(groupNameJTextArea);
 		groupJPanel.add(groupNameJTextField);
 		
+		add(controlPanel);
 		add(groupJPanel);
 		
 

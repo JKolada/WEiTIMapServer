@@ -1,9 +1,10 @@
-import java.awt.Cursor;
-import java.io.*;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.sqlite.SQLiteDataSource;
-import org.sqlite.core.DB;
 
 public class MyDatabase extends SQLiteDataSource{
 	
@@ -47,6 +48,14 @@ public class MyDatabase extends SQLiteDataSource{
 				}  	
 		    	k++;
 			}   
+			
+			try {
+				mStatement.executeUpdate(MyDatabaseUtilities.CREATE_VIEW_PLAN);
+		    	System.out.println("VW_PLAN succesfully created or it exists." );	    
+			} catch (SQLException e) {
+				System.out.println("VW_PLAN creation failed. StackTrace:" );		
+				e.printStackTrace();
+			}  	
 			
 			k = 0;
 			for (String i: MyDatabaseUtilities.INSERT_INTO_STATEMENT_LIST) {

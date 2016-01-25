@@ -8,6 +8,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class MyJTable extends JTable {
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8925549787570334079L;
+
 	public MyJTable() {
 		super(new PlanTableModel());		
 
