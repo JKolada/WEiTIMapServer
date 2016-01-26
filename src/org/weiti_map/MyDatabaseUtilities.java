@@ -1,3 +1,4 @@
+package org.weiti_map;
 
 public final class MyDatabaseUtilities {	
 	
@@ -78,7 +79,7 @@ public final class MyDatabaseUtilities {
 
 	// VIEWS // // // // // // // // // // // // // // // // // // // //  // // //
 	
-	public final static String CREATE_VIEW_PLAN =
+	public final static String CREATE_PLAN_VIEW =
 	"CREATE VIEW IF NOT EXISTS VW_PLAN " +
 	"AS SELECT b.nazwa_grupy, c.nazwa_sali, d.nazwa_dnia, e.godziny, a.parzystosc, f.nazwa_zajec, a.rodz_zajec " +
 	"FROM tb_plan a " +
@@ -87,6 +88,7 @@ public final class MyDatabaseUtilities {
 	"JOIN tb_dni_tyg d  ON (a.dzien_tyg_id = d.dzien_tyg_id) " +
 	"JOIN tb_godziny e  ON (a.godz_id = e.godz_id) " +
 	"JOIN tb_zajecia f  ON (a.id_zajec = f.id_zajec)";
+	
 	
 	// INSERTS // // // // // // // // // // // // // // // // // // // // // // //
 			
@@ -241,17 +243,6 @@ public final class MyDatabaseUtilities {
 	"AND b.nazwa_dnia = \'poniedzia쿮k\' " +
 	"AND c.godz_id =  16 " +
 	"AND d.nazwa_zajec = \'PPOM\' AND e.nazwa_sali = \'DS202\'";
-
-
-
-
-	public final static String[] TB_PLAN_TEST_INS_lIST = {
-			"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id)  SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id  FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e  WHERE a.nazwa_grupy = \'1E1\'  AND b.nazwa_dnia = \'poniedzia쿮k\'  AND c.godz_id =  09  AND d.nazwa_zajec = \'WFI\' AND e.nazwa_sali = \'105-AR\'",
-			"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id)  SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id  FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e  WHERE a.nazwa_grupy = \'1E1\'  AND b.nazwa_dnia = \'poniedzia쿮k\'  AND c.godz_id =  \15ND d.nazwa_zajec = \'ULOG\' AND e.nazwa_sali = \'105-AR\'",
-			"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, sala_id)  SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, e.sala_id  FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e  WHERE a.nazwa_grupy = \'1E1\'  AND b.nazwa_dnia = \'poniedzia쿮k\'  AND c.godz_id =  09  AND d.nazwa_zajec = \'WFI\' AND e.nazwa_sali = \'105-AR\'"
-			};
-
-
 
 	public final static String[] TABLE_CREATES_STATEMENTS = {
 								CREATE_TB_PRACOWNICY,

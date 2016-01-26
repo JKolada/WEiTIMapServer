@@ -1,3 +1,5 @@
+package org.weiti_map;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,8 +10,10 @@ import org.sqlite.SQLiteDataSource;
 
 public class MyDatabase extends SQLiteDataSource{
 	
-	Connection mConnection = null;
-    Statement mStatement = null;    
+	private Boolean isSet = false;
+	private Connection mConnection = null;
+	private Statement mStatement = null;    
+	
 	
 	public MyDatabase() {
 	      try {
@@ -31,8 +35,14 @@ public class MyDatabase extends SQLiteDataSource{
 	      resetDB();
 	      checkTables(true);
 	      setDatabase();
+	      isSet = true; //TODO
 	      
 	}
+	
+	public Boolean isSet() {
+		return isSet;
+	}
+	
 	
 	private void setDatabase() {
 			
@@ -50,7 +60,7 @@ public class MyDatabase extends SQLiteDataSource{
 			}   
 			
 			try {
-				mStatement.executeUpdate(MyDatabaseUtilities.CREATE_VIEW_PLAN);
+				mStatement.executeUpdate(MyDatabaseUtilities.CREATE_PLAN_VIEW);
 		    	System.out.println("VW_PLAN succesfully created or it exists." );	    
 			} catch (SQLException e) {
 				System.out.println("VW_PLAN creation failed. StackTrace:" );		
@@ -122,5 +132,49 @@ public class MyDatabase extends SQLiteDataSource{
 		}
 	}
 	
+	public void getPlanViewData() {
+//	      ResultSet rs = mStatement.executeQuery( "SELECT * FROM VW_PLAN" );
+//	      while ( rs.next() ) {
+//	    	  
+////	    	  b.nazwa_grupy, c.nazwa_sali, d.nazwa_dnia, e.godziny, a.parzystosc, f.nazwa_zajec, a.rodz_zajec
+//	         int id = rs.getInt("id");
+//	         String  name = rs.getString("name");
+//	         int age  = rs.getInt("age");
+//	         String  address = rs.getString("address");
+//	         float salary = rs.getFloat("salary");
+//	         System.out.println( "ID = " + id );
+//	         System.out.println( "NAME = " + name );
+//	         System.out.println( "AGE = " + age );
+//	         System.out.println( "ADDRESS = " + address );
+//	         System.out.println( "SALARY = " + salary );
+//	         System.out.println();
+//	         
+//	         
+//	         JsonBuilderFactory factory = Json.createBuilderFactory(config);
+//	         JsonObject value = factory.createObjectBuilder()
+//	             .add("firstName", "John")
+//	             .add("lastName", "Smith")
+//	             .add("age", 25)
+//	             .add("address", factory.createObjectBuilder()
+//	                 .add("streetAddress", "21 2nd Street")
+//	                 .add("city", "New York")
+//	                 .add("state", "NY")
+//	                 .add("postalCode", "10021"))
+//	             .add("phoneNumber", factory.createArrayBuilder()
+//	                 .add(factory.createObjectBuilder()
+//	                     .add("type", "home")
+//	                     .add("number", "212 555-1234"))
+//	                 .add(factory.createObjectBuilder()
+//	                     .add("type", "fax")
+//	                     .add("number", "646 555-4567")))
+//	             .build();
+//	         }
+	     
 
+	}
 }
+
+
+
+
+

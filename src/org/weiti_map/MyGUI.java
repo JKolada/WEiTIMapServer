@@ -1,7 +1,8 @@
+package org.weiti_map;
+
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 
 public class MyGUI {	
 
@@ -13,18 +14,12 @@ public class MyGUI {
 	
 	public MyGUI(MyDatabase DB) {
 		mDB = DB;
-		frame = new MyFrame();
 	}
 	
 	public static void createAndShowGUI() {
-		frame.setMinimumSize(new Dimension(800, 500));
-		newContentPane = new MyPanel();
-        MyPanel newContentPane = new MyPanel();      
-        frame.setContentPane(newContentPane);                  
-        frame.add(new JTextField());               
-        
-        frame.pack();
-        frame.setVisible(true);
+//		newContentPane = new MyPanel(mDB); 
+		frame = new MyFrame(mDB);
+//        frame.add(new JTextField());
 // 
 //        //Create the menu bar.  Make it have a green background.
 //        JMenuBar greenMenuBar = new JMenuBar();

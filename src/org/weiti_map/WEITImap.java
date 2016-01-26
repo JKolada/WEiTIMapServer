@@ -1,3 +1,5 @@
+package org.weiti_map;
+
 public class WEITImap {
 	
 	private static MyGUI mGUI; 

@@ -1,3 +1,5 @@
+package org.weiti_map;
+
 import javax.swing.table.AbstractTableModel;
 
 public class PlanTableModel extends AbstractTableModel {

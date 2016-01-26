@@ -1,4 +1,4 @@
-
+package org.weiti_map;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,17 +21,21 @@ public class MyPanel extends JPanel implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 5169492090332131771L;
+	private MyDatabase mDatabase;
 	private JPanel groupJPanel = new JPanel();
     private JTable planTable = new MyJTable();
 	private JTextArea groupNameJTextArea = new JTextArea("Nazwa grupy:");
 	private JTextField groupNameJTextField = new JTextField("wprowadü nazwÍ");
 	private JButton insertJButton = new JButton("Wprowadü");
-	private MyControlPanel controlPanel = new MyControlPanel();
+	private MyControlPanel controlPanel;
 
 	private JTextField logJTextField = new JTextField("Log programu");
 	
-    public MyPanel() {
+    public MyPanel(MyDatabase mDB) {
 		super();
+		mDatabase = mDB;
+		controlPanel = new MyControlPanel(mDatabase);
+		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     	setOpaque(true);
 		
