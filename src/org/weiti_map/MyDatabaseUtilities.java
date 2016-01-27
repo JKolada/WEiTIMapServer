@@ -89,6 +89,9 @@ public final class MyDatabaseUtilities {
 	"JOIN tb_godziny e  ON (a.godz_id = e.godz_id) " +
 	"JOIN tb_zajecia f  ON (a.id_zajec = f.id_zajec)";
 	
+
+	public final static String PLAN_VIEW_COL_NAMES[] =
+		{"nazwa_grupy", "nazwa_sali", "nazwa_dnia", "godziny", "parzystosc", "nazwa_zajec", "rodz_zajec"};
 	
 	// INSERTS // // // // // // // // // // // // // // // // // // // // // // //
 			

@@ -132,45 +132,15 @@ public class MyDatabase extends SQLiteDataSource{
 		}
 	}
 	
-	public void getPlanViewData() {
-//	      ResultSet rs = mStatement.executeQuery( "SELECT * FROM VW_PLAN" );
-//	      while ( rs.next() ) {
-//	    	  
-////	    	  b.nazwa_grupy, c.nazwa_sali, d.nazwa_dnia, e.godziny, a.parzystosc, f.nazwa_zajec, a.rodz_zajec
-//	         int id = rs.getInt("id");
-//	         String  name = rs.getString("name");
-//	         int age  = rs.getInt("age");
-//	         String  address = rs.getString("address");
-//	         float salary = rs.getFloat("salary");
-//	         System.out.println( "ID = " + id );
-//	         System.out.println( "NAME = " + name );
-//	         System.out.println( "AGE = " + age );
-//	         System.out.println( "ADDRESS = " + address );
-//	         System.out.println( "SALARY = " + salary );
-//	         System.out.println();
-//	         
-//	         
-//	         JsonBuilderFactory factory = Json.createBuilderFactory(config);
-//	         JsonObject value = factory.createObjectBuilder()
-//	             .add("firstName", "John")
-//	             .add("lastName", "Smith")
-//	             .add("age", 25)
-//	             .add("address", factory.createObjectBuilder()
-//	                 .add("streetAddress", "21 2nd Street")
-//	                 .add("city", "New York")
-//	                 .add("state", "NY")
-//	                 .add("postalCode", "10021"))
-//	             .add("phoneNumber", factory.createArrayBuilder()
-//	                 .add(factory.createObjectBuilder()
-//	                     .add("type", "home")
-//	                     .add("number", "212 555-1234"))
-//	                 .add(factory.createObjectBuilder()
-//	                     .add("type", "fax")
-//	                     .add("number", "646 555-4567")))
-//	             .build();
-//	         }
-	     
-
+	public GroupPlanObject getGroupPlanObject(String group_name) {
+		String query = "SELECT * FROM VW_PLAN WHERE nazwa_grupy = '" + group_name +"'";
+    	GroupPlanObject groupObject = null;
+		try {
+			groupObject = new GroupPlanObject(mStatement.executeQuery(query));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return groupObject;
 	}
 }
 
