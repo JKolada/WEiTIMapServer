@@ -7,6 +7,10 @@ import java.awt.GridLayout;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,20 +23,23 @@ import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 
-public class MyControlPanel extends JPanel implements ActionListener {
+public class MyControlPanel extends JPanel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -204928193180502263L;
 
+	private MyPanel parentJPanel;
 	private MyDatabase mDatabase;
+
+	
 	private JPanel groupJPanel = new JPanel();
 	private JPanel radioJPanel = new JPanel(new MigLayout());
 	private JPanel tableTypeJPanel = new JPanel(new MigLayout());
 	
 	private JTextField insertTypeTextField= new JTextField();
-	private JLabel tableTypeLabel = new JLabel("error");
+	private JLabel tableTypeLabel = new JLabel("wybierz grupê");
 	private JButton printJButton = new JButton("Poka¿");
 	
 	private JRadioButton showDataRadioButton = new JRadioButton("wyœwietlanie danych");
@@ -45,9 +52,10 @@ public class MyControlPanel extends JPanel implements ActionListener {
 
 	private String comboBox1String = new String("error");
 	
-    public MyControlPanel(MyDatabase mDB) {
+    public MyControlPanel(MyPanel parent, MyDatabase mDB) {
 		super();
 		mDatabase = mDB;
+		parentJPanel = parent;
 		configure();
 				
 	}
@@ -87,31 +95,44 @@ public class MyControlPanel extends JPanel implements ActionListener {
 			}
 		});
 		
-		
+		/*
+		 *  czy korzystaæ z metod klasy zewnêtrznej w actionlistenerze?
+		 * 
+		 */
 		comboBox1.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				comboBox1String = String.valueOf(comboBox1.getSelectedItem());
 				switch (comboBox1String) {
 					case "Plan zajêæ":
-						
+						tableTypeLabel.setVisible(true);
+						comboBox2.setVisible(true);
+						tableTypeLabel.setText("wybierz grupê");						
+						break;
 					case "Zajêcia":
-						
-					case "Pracownicy": 
-						
+						tableTypeLabel.setVisible(false);
+						comboBox2.setVisible(false);
+						break;
+					case "Pracownicy":
+						tableTypeLabel.setVisible(false);
+						comboBox2.setVisible(false);
+						break;
 					case "Sale":
+						tableTypeLabel.setVisible(false);
+						comboBox2.setVisible(false);
 						
+						break;
 				}
 			}
 		});
 		
-//		comboBox1.addActionListener(new ActionListener() {			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		});
+		comboBox2.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				parentJPanel.showGroupPlan(String.valueOf(comboBox1.getSelectedItem()));				
+			}
+		});
+		
 		
 		radioJPanel.add(new JLabel("Wybierz tryb aplikacji:"), "wrap");
 		radioJPanel.add(showDataRadioButton, "wrap");
@@ -123,21 +144,13 @@ public class MyControlPanel extends JPanel implements ActionListener {
 		groupJPanel.add(radioJPanel);		
 		groupJPanel.add(comboBox1);		
 		groupJPanel.add(tableTypeJPanel);
-		groupJPanel.add(insertTypeTextField);
-		groupJPanel.add(printJButton);
+//		groupJPanel.add(insertTypeTextField);
+//		groupJPanel.add(printJButton);
 		
 		add(groupJPanel);
 		
     }
     
-	@Override
-	public void actionPerformed(ActionEvent e) {
-			
-		
-//		searchRadioButton 
-
-	}
-
 	
 }
 

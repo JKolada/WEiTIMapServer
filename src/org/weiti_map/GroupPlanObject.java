@@ -28,5 +28,11 @@ public class GroupPlanObject {
     	}
 	     
 	}
+	
+	public String getGroupName() {
+		return nazwa_grupy;
+	}
+	
+	
 
 }

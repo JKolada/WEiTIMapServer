@@ -15,6 +15,6 @@ public class MyLecture {
 	
 	public String[] getLectureData() {
 		return lectureData;
-	}
+	}	
 
 }

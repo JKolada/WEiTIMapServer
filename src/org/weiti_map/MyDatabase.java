@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.sqlite.SQLiteDataSource;
 
@@ -156,7 +158,6 @@ public class MyDatabase extends SQLiteDataSource{
 	    } catch (SQLException e) {
     		e.printStackTrace();
     	}
-//		String[] bar = nazwy_grup.toArray(new String[nazwy_grup.size()]);
 		return nazwy_grup.toArray(new String[nazwy_grup.size()]);
 	}
 	

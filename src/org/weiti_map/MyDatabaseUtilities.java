@@ -43,8 +43,8 @@ public final class MyDatabaseUtilities {
 	"	id_zajec INTEGER PRIMARY KEY," +
 	"	skrot_nazwy_zajec TEXT NOT NULL," +
 	"	nazwa_zajec TEXT NOT NULL," +
-	"	id_wykladowca TEXT," +
-	"	FOREIGN KEY (id_wykladowca) REFERENCES tb_pracownicy(pracownik_id)" +
+	"	id_wykladowcy TEXT," +
+	"	FOREIGN KEY (id_wykladowcy) REFERENCES tb_pracownicy(pracownik_id)" +
 	")";
 
 	private final static String CREATE_TB_PLAN =
@@ -306,6 +306,7 @@ public final class MyDatabaseUtilities {
 								"TB_PLAN_TEST_INS_9",
 								"TB_PLAN_TEST_INS_10"
 							};
+	
 }
 
 /*
