@@ -38,10 +38,10 @@ public class MyControlPanel extends JPanel implements ActionListener {
 	private JRadioButton showDataRadioButton = new JRadioButton("wyœwietlanie danych");
 	private JRadioButton insertRadioButton = new JRadioButton("wprowadzanie danych");
 
-	private String[] petStrings = { "Plan zajêæ", "Zajêcia", "Pracownicy", "Sale" };
+	private String[] mainViewColNames = { "Plan zajêæ", "Zajêcia", "Pracownicy", "Sale" };
 
-	private JComboBox<String> comboBox1 = new JComboBox<String>(petStrings);
-	private JComboBox<String> comboBox2 = new JComboBox<String>(); //TODO
+	private JComboBox<String> comboBox1 = new JComboBox<String>(mainViewColNames);
+	private JComboBox<String> comboBox2; // = new JComboBox<String>(); //TODO
 
 	private String comboBox1String = new String("error");
 	
@@ -64,8 +64,13 @@ public class MyControlPanel extends JPanel implements ActionListener {
 				
 		insertTypeTextField.setOpaque(true);
 		insertTypeTextField.setPreferredSize(new Dimension(150, 20) );
+		
+
+		comboBox2 = new JComboBox<String>(mDatabase.getGroupNames());
 		comboBox2.setPreferredSize(new Dimension(100, 25));
+		
 		comboBox1.setSelectedIndex(0);
+		
 		
 		insertRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -109,8 +114,8 @@ public class MyControlPanel extends JPanel implements ActionListener {
 //		});
 		
 		radioJPanel.add(new JLabel("Wybierz tryb aplikacji:"), "wrap");
-		radioJPanel.add(insertRadioButton, "wrap");
-		radioJPanel.add(showDataRadioButton);				
+		radioJPanel.add(showDataRadioButton, "wrap");
+		radioJPanel.add(insertRadioButton);				
 
 		tableTypeJPanel.add(tableTypeLabel, "wrap");
 		tableTypeJPanel.add(comboBox2);

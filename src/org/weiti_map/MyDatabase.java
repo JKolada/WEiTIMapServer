@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.sqlite.SQLiteDataSource;
 
@@ -133,7 +135,7 @@ public class MyDatabase extends SQLiteDataSource{
 	}
 	
 	public GroupPlanObject getGroupPlanObject(String group_name) {
-		String query = "SELECT * FROM VW_PLAN WHERE nazwa_grupy = '" + group_name +"'";
+		String query = "SELECT * FROM vw_plan WHERE nazwa_grupy = '" + group_name +"'";
     	GroupPlanObject groupObject = null;
 		try {
 			groupObject = new GroupPlanObject(mStatement.executeQuery(query));
@@ -142,6 +144,22 @@ public class MyDatabase extends SQLiteDataSource{
 		}
 		return groupObject;
 	}
+	
+	public String[] getGroupNames() {
+		String query = "SELECT nazwa_grupy FROM tb_grupy";			
+		List<String> nazwy_grup = new ArrayList<String>();
+		try {					
+			ResultSet nazwy_grup_rs = mStatement.executeQuery(query);
+		    while (nazwy_grup_rs.next() ) {	    	
+		    	nazwy_grup.add(nazwy_grup_rs.getString("nazwa_grupy"));	    	  	    	
+	    	}		    
+	    } catch (SQLException e) {
+    		e.printStackTrace();
+    	}
+//		String[] bar = nazwy_grup.toArray(new String[nazwy_grup.size()]);
+		return nazwy_grup.toArray(new String[nazwy_grup.size()]);
+	}
+	
 }
 
 
