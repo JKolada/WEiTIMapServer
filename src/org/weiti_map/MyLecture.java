@@ -15,6 +15,14 @@ public class MyLecture {
 	
 	public String[] getLectureData() {
 		return lectureData;
-	}	
+	}
+	
+	public boolean isP() {
+		if (lectureData[3].charAt(0) == 'P') {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }

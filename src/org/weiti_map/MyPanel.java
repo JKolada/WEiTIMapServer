@@ -21,8 +21,8 @@ public class MyPanel extends JPanel {
 	private MyTablePanel tablePanelP = new MyTablePanel('P');
 	private MyTablePanel tablePanelN = new MyTablePanel('N');
 	private JTextArea groupNameJTextArea = new JTextArea("Nazwa grupy:");
-	private JTextField groupNameJTextField = new JTextField("wprowadü nazwÍ");
-	private JButton insertJButton = new JButton("Wprowadü");
+	private JTextField groupNameJTextField = new JTextField("wprowad≈∫ nazwƒô");
+	private JButton insertJButton = new JButton("Wprowad≈∫");
 	private MyControlPanel controlPanel;
 
 	private JTextField logJTextField = new JTextField("Log programu");
@@ -46,6 +46,9 @@ public class MyPanel extends JPanel {
 		groupNameJTextField.setForeground(Color.GRAY);
 
 		logJTextField.setEditable(false);
+		
+		showGroupPlan("1E1");
+//		mDB.temp();
 		
 		
 		
@@ -95,6 +98,7 @@ public class MyPanel extends JPanel {
     
     public void showGroupPlan(String groupName) {
     	GroupPlanObject plan = mDatabase.getGroupPlanObject(groupName);
+    	System.out.println(groupName);
     	tablePanelP.setGroupPlan(plan);
     	tablePanelN.setGroupPlan(plan);
     	

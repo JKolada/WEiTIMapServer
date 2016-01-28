@@ -2,27 +2,27 @@ package org.weiti_map;
 
 import javax.swing.table.AbstractTableModel;
 
-public class PlanTableModel extends AbstractTableModel {
+public class DefaultPlanTableModel extends AbstractTableModel {
 	
 		/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4810474261428483824L;
-		private final static int JTABLE_ROW_NUM = 12;
-		private final static int JTABLE_COLS_NUM = 7;
+		protected final static int JTABLE_ROW_NUM = 12;
+		protected final static int JTABLE_COLS_NUM = 7;
 		
-		private static String[][] data = new String[JTABLE_ROW_NUM][JTABLE_COLS_NUM];
+		protected static String[][] data = new String[JTABLE_ROW_NUM][JTABLE_COLS_NUM];
 		
-		private final static String[] DNI_TYGODNIA =
+		protected final String[] DNI_TYGODNIA =
 				{" ",
-				"poniedzia³ek",
+				"poniedziaÅ‚ek",
 				"wtorek",
-				"œroda",
+				"Å›roda",
 				"czwartek",
-				"pi¹tek",
+				"piÄ…tek",
 				" "};
 		
-		private final static String[] GODZINY = 
+		protected final static String[] GODZINY = 
 				{"08:15-09:00",
 				 "09:15-10:00",
 				 "10:15-11:00",
@@ -36,7 +36,7 @@ public class PlanTableModel extends AbstractTableModel {
 				 "18:15-19:00",
 				 "19:15-20:00"};
 		
-		public PlanTableModel() {
+		public DefaultPlanTableModel() {
 			super();
 			for (int i = 0; i < 12; i++) {
 				data[i][0] = GODZINY[i];		

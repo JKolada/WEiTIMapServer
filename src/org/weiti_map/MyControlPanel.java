@@ -39,13 +39,13 @@ public class MyControlPanel extends JPanel {
 	private JPanel tableTypeJPanel = new JPanel(new MigLayout());
 	
 	private JTextField insertTypeTextField= new JTextField();
-	private JLabel tableTypeLabel = new JLabel("wybierz grupê");
-	private JButton printJButton = new JButton("Poka¿");
+	private JLabel tableTypeLabel = new JLabel("wybierz grupÄ™");
+	private JButton printJButton = new JButton("PokaÅ¼");
 	
-	private JRadioButton showDataRadioButton = new JRadioButton("wyœwietlanie danych");
+	private JRadioButton showDataRadioButton = new JRadioButton("wyÅ›wietlanie danych");
 	private JRadioButton insertRadioButton = new JRadioButton("wprowadzanie danych");
 
-	private String[] mainViewColNames = { "Plan zajêæ", "Zajêcia", "Pracownicy", "Sale" };
+	private String[] mainViewColNames = { "Plan zajÄ™Ä‡", "ZajÄ™cia", "Pracownicy", "Sale" };
 
 	private JComboBox<String> comboBox1 = new JComboBox<String>(mainViewColNames);
 	private JComboBox<String> comboBox2; // = new JComboBox<String>(); //TODO
@@ -96,7 +96,7 @@ public class MyControlPanel extends JPanel {
 		});
 		
 		/*
-		 *  czy korzystaæ z metod klasy zewnêtrznej w actionlistenerze?
+		 *  czy korzystaÄ‡ z metod klasy zewnÄ™trznej w actionlistenerze?
 		 * 
 		 */
 		comboBox1.addActionListener(new ActionListener() {			
@@ -104,12 +104,13 @@ public class MyControlPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				comboBox1String = String.valueOf(comboBox1.getSelectedItem());
 				switch (comboBox1String) {
-					case "Plan zajêæ":
+					case "Plan zajÄ™Ä‡":
 						tableTypeLabel.setVisible(true);
+						comboBox2 = new JComboBox<String>(mDatabase.getGroupNames());
 						comboBox2.setVisible(true);
-						tableTypeLabel.setText("wybierz grupê");						
+						tableTypeLabel.setText("wybierz grupÄ™");						
 						break;
-					case "Zajêcia":
+					case "ZajÄ™cia":
 						tableTypeLabel.setVisible(false);
 						comboBox2.setVisible(false);
 						break;
