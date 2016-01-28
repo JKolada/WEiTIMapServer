@@ -106,6 +106,7 @@ public class MyControlPanel extends JPanel {
 				switch (comboBox1String) {
 					case "Plan zajêæ":
 						tableTypeLabel.setVisible(true);
+						comboBox2 = new JComboBox<String>(mDatabase.getGroupNames());
 						comboBox2.setVisible(true);
 						tableTypeLabel.setText("wybierz grupê");						
 						break;

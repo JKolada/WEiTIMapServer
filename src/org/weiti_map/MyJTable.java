@@ -19,9 +19,16 @@ public class MyJTable extends JTable {
 	private static final long serialVersionUID = 8925549787570334079L;
 
 	public MyJTable() {
-		
-//		super(); //new PlanTableModel());
-		super(new PlanTableModel());
+		super(new DefaultPlanTableModel());
+		configure();
+	}
+
+	public MyJTable(GroupPlanObject plan, char parzystosc) {
+		super(new CustomPlanTableModel(plan, parzystosc));
+		configure();
+	}
+	
+	private void configure() {
 		this.setFont(new Font("Arial", Font.BOLD, 15));
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 //		setLayout(new BorderLayout());
@@ -38,13 +45,13 @@ public class MyJTable extends JTable {
 //        getSelectionModel().addListSelectionListener(new RowListener());
 //        getColumnModel().getSelectionModel().
 //            addListSelectionListener(new ColumnListener());
-
 	}
 
 	public void setGroupPlan(GroupPlanObject plan, char parzystosc) {
 		// TODO Auto-generated method stub
 
-//		setValueAt(aValue, row, column);
+		setValueAt("sadas", 3, 3);
+		System.out.println("at least tried");
 	}
 	
 	@Override
