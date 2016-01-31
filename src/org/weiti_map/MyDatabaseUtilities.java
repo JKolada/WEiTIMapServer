@@ -81,7 +81,7 @@ public final class MyDatabaseUtilities {
 	
 	public final static String CREATE_PLAN_VIEW =
 	"CREATE VIEW IF NOT EXISTS VW_PLAN " +
-	"AS SELECT b.nazwa_grupy, c.nazwa_sali, d.nazwa_dnia, e.godz_id, a.parzystosc, f.nazwa_zajec, a.rodz_zajec " +
+	"AS SELECT b.nazwa_grupy, c.nazwa_sali, d.nazwa_dnia, e.godz_id, a.parzystosc, f.skrot_nazwy_zajec, a.rodz_zajec " +
 	"FROM tb_plan a " +
 	"LEFT JOIN tb_grupy b 	ON (a.grupa_id = b.grupa_id) " +
 	"LEFT JOIN tb_sale c  	ON (a.sala_id = c.sala_id) " +
@@ -97,11 +97,11 @@ public final class MyDatabaseUtilities {
 			
 	public final static String TB_DNI_TYG_INSERTS = 
 	"INSERT INTO tb_dni_tyg (nazwa_dnia) VALUES " +
-	"('poniedziaÅ‚ek'), " +
+	"('poniedzia³ek'), " +
 	"('wtorek')," +
-	"('Å›roda'), " +
+	"('œroda'), " +
 	"('czwartek'), " +
-	"('piÄ…tek')";			
+	"('pi¹tek')";			
 
  	public final static String TB_GODZINY_INSERTS = 
 	"INSERT INTO tb_godziny (godz_id, godziny) VALUES " +
@@ -124,16 +124,16 @@ public final class MyDatabaseUtilities {
 
 	public final static String TB_ZAJECIA_TEST_INSERTS =
 	"INSERT INTO tb_zajecia (skrot_nazwy_zajec, nazwa_zajec) VALUES " +
-	"('ALGTM', 'Algebra i teoria mnogoÅ›ci'), " +
+	"('ALGTM', 'Algebra i teoria mnogoœci'), " +
 	"('ANL1', 'Analiza 1'), " +
 	"('ORM', 'Orientacja - M'), " +
-	"('PPOM', 'Podstawy pomiarÃ³w'), " +
-	"('PRAWO', 'Podstawy prawa - ochrona wÅ‚asnoÅ›ci intelektualnej'), " +
+	"('PPOM', 'Podstawy pomiarów'), " +
+	"('PRAWO', 'Podstawy prawa - ochrona w³asnoœci intelektualnej'), " +
 	"('PRM', 'Podstawy programowania (M)'), " +
-	"('ULOG', 'UkÅ‚ady logiczne'), " +
+	"('ULOG', 'Uk³ady logiczne'), " +
 	"('WF1', 'Wychowanie fizyczne'), " +
 	
-	"('WFI', 'WstÄ™p do fizyki')";
+	"('WFI', 'Wstêp do fizyki')";
 
 	public final static String TB_SALE_TEST_INSERT =
 	"INSERT INTO tb_sale (nazwa_sali, pietro_sali, mapa_x, mapa_y) VALUES" +
@@ -151,7 +151,7 @@ public final class MyDatabaseUtilities {
 	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, 'W', e.sala_id, 'N' " +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = '1E1' " +
-	"AND b.nazwa_dnia = 'poniedziaÅ‚ek' " +
+	"AND b.nazwa_dnia = 'poniedzia³ek' " +
 	"AND c.godz_id = 8 " +
 	"AND d.skrot_nazwy_zajec = 'WFI' AND e.nazwa_sali = '105-AR'";
 	
@@ -160,7 +160,7 @@ public final class MyDatabaseUtilities {
 	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, 'W', e.sala_id, 'N' " +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = '1E1' " +
-	"AND b.nazwa_dnia = 'poniedziaÅ‚ek' " +
+	"AND b.nazwa_dnia = 'poniedzia³ek' " +
 	"AND c.godz_id =  9 " +
 	"AND d.skrot_nazwy_zajec = 'WFI' AND e.nazwa_sali = '105-AR'";
 	
@@ -170,7 +170,7 @@ public final class MyDatabaseUtilities {
 	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, 'L', e.sala_id " +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = '1E1' " +
-	"AND b.nazwa_dnia = 'poniedziaÅ‚ek' " +
+	"AND b.nazwa_dnia = 'poniedzia³ek' " +
 	"AND c.godz_id =  10 " +
 	"AND d.skrot_nazwy_zajec = 'PRM' AND e.nazwa_sali = '011'";
 	
@@ -179,7 +179,7 @@ public final class MyDatabaseUtilities {
 	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, 'L', e.sala_id " +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = '1E1' " +
-	"AND b.nazwa_dnia = 'poniedziaÅ‚ek' " +
+	"AND b.nazwa_dnia = 'poniedzia³ek' " +
 	"AND c.godz_id =  11 " +
 	"AND d.skrot_nazwy_zajec = 'PRM' AND e.nazwa_sali = '011'";
 	
@@ -188,7 +188,7 @@ public final class MyDatabaseUtilities {
 	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, 'C', e.sala_id, 'N'" +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = '1E1' " +
-	"AND b.nazwa_dnia = 'poniedziaÅ‚ek' " +
+	"AND b.nazwa_dnia = 'poniedzia³ek' " +
 	"AND c.godz_id =  12 " +
 	"AND d.skrot_nazwy_zajec = 'WFI' AND e.nazwa_sali = '106'";
 	
@@ -197,7 +197,7 @@ public final class MyDatabaseUtilities {
 	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, 'C', e.sala_id, 'N' " +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = '1E1' " +
-	"AND b.nazwa_dnia = 'poniedziaÅ‚ek' " +
+	"AND b.nazwa_dnia = 'poniedzia³ek' " +
 	"AND c.godz_id =  13 " +
 	"AND d.skrot_nazwy_zajec = 'WFI' AND e.nazwa_sali = '106'";
 	
@@ -206,7 +206,7 @@ public final class MyDatabaseUtilities {
 	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, 'C', e.sala_id, 'P'" +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = '1E1' " +
-	"AND b.nazwa_dnia = 'poniedziaÅ‚ek' " +
+	"AND b.nazwa_dnia = 'poniedzia³ek' " +
 	"AND c.godz_id =  12 " +
 	"AND d.skrot_nazwy_zajec = 'ULOG' AND e.nazwa_sali = '106'";
 	
@@ -215,7 +215,7 @@ public final class MyDatabaseUtilities {
 	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, 'C', e.sala_id, 'P' " +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = '1E1' " +
-	"AND b.nazwa_dnia = 'poniedziaÅ‚ek' " +
+	"AND b.nazwa_dnia = 'poniedzia³ek' " +
 	"AND c.godz_id =  13 " +
 	"AND d.skrot_nazwy_zajec = 'ULOG' AND e.nazwa_sali = '106'";
 	
@@ -224,7 +224,7 @@ public final class MyDatabaseUtilities {
 	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, 'L', e.sala_id " +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = '1E1' " +
-	"AND b.nazwa_dnia = 'poniedziaÅ‚ek' " +
+	"AND b.nazwa_dnia = 'poniedzia³ek' " +
 	"AND c.godz_id =  14 " +
 	"AND d.skrot_nazwy_zajec = 'PPOM' AND e.nazwa_sali = 'DS202'";
 
@@ -233,7 +233,7 @@ public final class MyDatabaseUtilities {
 	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, 'L', e.sala_id " +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = '1E1' " +
-	"AND b.nazwa_dnia = 'poniedziaÅ‚ek' " +
+	"AND b.nazwa_dnia = 'poniedzia³ek' " +
 	"AND c.godz_id =  15 " +
 	"AND d.skrot_nazwy_zajec = 'PPOM' AND e.nazwa_sali = 'DS202'";
 
@@ -242,7 +242,7 @@ public final class MyDatabaseUtilities {
 	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, 'L', e.sala_id " +
 	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
 	"WHERE	a.nazwa_grupy = '1E1' " +
-	"AND b.nazwa_dnia = 'poniedziaÅ‚ek' " +
+	"AND b.nazwa_dnia = 'poniedzia³ek' " +
 	"AND c.godz_id =  16 " +
 	"AND d.skrot_nazwy_zajec = 'PPOM' AND e.nazwa_sali = 'DS202'";
 
@@ -310,15 +310,15 @@ public final class MyDatabaseUtilities {
 
 /*
 
-//ALGTM		'Algebra i teoria mnogoÅ›ci'								W: Cz 8-10, C: Wt 8-10, Wt 8-10, Pn 14-16, Pn 12-14,
-//ANL1		'Analiza 1'												W: Åšr 12-15, C: Wt 10-12, Wt 12-14, Pt 10-12, Wt 10-12,
-//ORM		'Orientacja - M'										W: Åšr 15-17,
-//PPOM		'Podstawy pomiarÃ³w'										W: Åšr 10-12, R: Pt 8-10, L: Wt 12-15, Wt 9-12, Pn 11-14, Pn 14-17,
-//PRAWO		'Podstawy prawa - ochrona wÅ‚asnoÅ›ci intelektualnej'		W: Åšr 8-10,
+//ALGTM		'Algebra i teoria mnogoœci'								W: Cz 8-10, C: Wt 8-10, Wt 8-10, Pn 14-16, Pn 12-14,
+//ANL1		'Analiza 1'												W: Œr 12-15, C: Wt 10-12, Wt 12-14, Pt 10-12, Wt 10-12,
+//ORM		'Orientacja - M'										W: Œr 15-17,
+//PPOM		'Podstawy pomiarów'										W: Œr 10-12, R: Pt 8-10, L: Wt 12-15, Wt 9-12, Pn 11-14, Pn 14-17,
+//PRAWO		'Podstawy prawa - ochrona w³asnoœci intelektualnej'		W: Œr 8-10,
 //PRM		'Podstawy programowania (M)'							W: Cz 12-14, L: Pn 14-16, Pn 12-14, Pn 10-12, Pn 16-18,
 
 //WF1		'Wychowanie fizyczne'									C: Pt 12-14,
-//WFI		'WstÄ™p do fizyki'										W: PnN 8-10, C: PnN 10-12, PnN 12-14, WtN 14-16,
+//WFI		'Wstêp do fizyki'										W: PnN 8-10, C: PnN 10-12, PnN 12-14, WtN 14-16,
 
 
 */

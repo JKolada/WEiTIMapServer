@@ -43,10 +43,7 @@ public class MyJTable extends JTable {
 	}
 
 	public void setGroupPlan(GroupPlanObject plan, char parzystosc) {
-		// TODO Auto-generated method stub
-
 		setModel(new CustomPlanTableModel(plan, parzystosc));
-		System.out.println("at least tried");
 	}
 	
 	@Override

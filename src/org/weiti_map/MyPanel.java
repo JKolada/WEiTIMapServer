@@ -21,8 +21,8 @@ public class MyPanel extends JPanel {
 	private MyTablePanel tablePanelP = new MyTablePanel('P');
 	private MyTablePanel tablePanelN = new MyTablePanel('N');
 	private JTextArea groupNameJTextArea = new JTextArea("Nazwa grupy:");
-	private JTextField groupNameJTextField = new JTextField("wprowadź nazwę");
-	private JButton insertJButton = new JButton("Wprowadź");
+	private JTextField groupNameJTextField = new JTextField("wprowad� nazwę");
+	private JButton insertJButton = new JButton("Wprowad� dane");
 	private MyControlPanel controlPanel;
 
 	private JTextField logJTextField = new JTextField("Log programu");
@@ -37,9 +37,6 @@ public class MyPanel extends JPanel {
 		setLayout(new MigLayout(layoutConstraints));
 //    	setOpaque(true);
 		
-    	
-    	
-
 		groupNameJTextArea.setOpaque(true);
 		groupNameJTextArea.setEditable(false);
 
@@ -48,16 +45,12 @@ public class MyPanel extends JPanel {
 		logJTextField.setEditable(false);
 		
 		showGroupPlan("1E1");
-//		mDB.temp();
-		
-		
-		
+//		mDB.temp();			
 		
 //		insertJButton.addActionListener(this);
 //		insertJButton.setPreferredSize(new Dimension(50, 20));
 //		insertJButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
-	
 
 		add(controlPanel, "wrap");
 //		add(groupJPanel);
@@ -99,11 +92,8 @@ public class MyPanel extends JPanel {
     public void showGroupPlan(String groupName) {
     	GroupPlanObject plan = mDatabase.getGroupPlanObject(groupName);
     	System.out.println(groupName);
-    	tablePanelP.setGroupPlan(plan);
-    	tablePanelN.setGroupPlan(plan);
-    	
-    	
-    	
+//    	tablePanelP.setGroupPlan(plan);
+    	tablePanelN.setGroupPlan(plan);    	   	    	
     }
     
     

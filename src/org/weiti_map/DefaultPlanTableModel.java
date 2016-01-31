@@ -15,11 +15,11 @@ public class DefaultPlanTableModel extends AbstractTableModel {
 		
 		protected final String[] DNI_TYGODNIA =
 				{" ",
-				"poniedziaÅ‚ek",
+				"poniedzia³ek",
 				"wtorek",
-				"Å›roda",
+				"œroda",
 				"czwartek",
-				"piÄ…tek",
+				"pi¹tek",
 				" "};
 		
 		protected final static String[] GODZINY = 

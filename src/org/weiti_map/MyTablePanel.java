@@ -34,14 +34,13 @@ public class MyTablePanel extends JPanel {
 	public void setGroupPlan(GroupPlanObject plan) {
 		 planTable.setGroupPlan(plan, parzystosc);		 
 		 add(planTable);
-		 //		planTable.setGroupPlan(plan, parzystosc);
 	}
 	
 	private void setLabel() {
 		if (parzystosc == 'P') {			
-			parzystoscLabel.setText("TydzieÅ„ parzysty");
+			parzystoscLabel.setText("Tydzieñ parzysty");
 		} else {
-			parzystoscLabel.setText("TydzieÅ„ nieparzysty");
+			parzystoscLabel.setText("Tydzieñ nieparzysty");
 		}		
 	}
 	

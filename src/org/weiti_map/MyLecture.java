@@ -3,7 +3,7 @@ package org.weiti_map;
 import java.util.ArrayList;
 
 public class MyLecture {
-// "nazwa_sali", "nazwa_dnia", "godziny", "parzystosc", "nazwa_zajec", "rodz_zajec"
+// "nazwa_sali", "nazwa_dnia", "id_godziny", "parzystoœæ", "skrot_nazwy_zajec", "rodz_zajec"
 
 	private String[] lectureData = new String[6];	
 
@@ -17,11 +17,13 @@ public class MyLecture {
 		return lectureData;
 	}
 	
-	public boolean isP() {
+	public char isEven() {
 		if (lectureData[3].charAt(0) == 'P') {
-			return true;
+			return 'Y';
+		} else if (lectureData[3].charAt(0) == 'N') {
+			return 'N';
 		} else {
-			return false;
+			return 'X';
 		}
 	}
 
