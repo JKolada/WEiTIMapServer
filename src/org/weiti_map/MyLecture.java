@@ -5,9 +5,10 @@ import java.util.ArrayList;
 public class MyLecture {
 // "nazwa_sali", "nazwa_dnia", "id_godziny", "parzystoœæ", "skrot_nazwy_zajec", "rodz_zajec"
 
-	private String[] lectureData = new String[6];	
+	private String[] lectureData;	
 
 	public MyLecture(ArrayList<String> poj_zajecia) {
+		lectureData = new String[6];	
 		for (int i = 0; i < 6; i++) {
 			lectureData[i] = poj_zajecia.get(i);
 		}

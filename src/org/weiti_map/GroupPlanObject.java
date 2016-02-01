@@ -30,10 +30,7 @@ public class GroupPlanObject {
 		int row_no, col_no = 0;
 		char classesAreEven = 'X';
 		
-		System.out.println("parzystosc tygodnia: " + parzystosc); //TO DELETE
-		for (MyLecture poj_zaj: zajecia) {
-			System.out.print(poj_zaj.isEven() + " "); //TO DELETE
-			
+		for (MyLecture poj_zaj: zajecia) {			
 			switch (poj_zaj.isEven()) {
 				case 'Y':
 					classesAreEven = 'P';
@@ -44,14 +41,11 @@ public class GroupPlanObject {
 				case 'X':
 					classesAreEven = 'X';
 					break;
-			}
-			
+			}			
 			if (classesAreEven == parzystosc || classesAreEven == 'X') {
 				poj_zaj_info = poj_zaj.getLectureData();
 				// "nazwa_sali", "nazwa_dnia", "id_godziny", "parzystoœæ", "skrot_nazwy_zajec", "rodz_zajec"
 			} else {
-
-				System.out.print("\n"); //TO DELETE
 				continue;
 			}
 			
@@ -72,12 +66,9 @@ public class GroupPlanObject {
 				case "pi¹tek":
 					col_no = 5;
 					break; 
-			}
-			
+			}			
 			data[row_no][col_no] = poj_zaj_info[4] + " " + poj_zaj_info[5] + " " + poj_zaj_info[0];	
-
-			System.out.println(row_no + " " + col_no + " " + data[row_no][col_no]); //TO DELETE
-		
+//			System.out.println(row_no + " " + col_no + " " + data[row_no][col_no]); //TO DELETE		
 		}
 		
 		

@@ -9,17 +9,17 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
 public class MyJTable extends JTable {
 
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8925549787570334079L;
+	private TableModel tableModel;
 
 	public MyJTable() {
-		super(new DefaultPlanTableModel());
+		super();
+		tableModel = new DefaultPlanTableModel();
+		setModel(tableModel);
 		configure();
 	}
 
@@ -54,5 +54,9 @@ public class MyJTable extends JTable {
         tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width + 10, tableColumn.getPreferredWidth()));
         return component;
     }
+
+	public void resetTable() {
+		setModel(tableModel);		
+	}
 
 }

@@ -1,6 +1,7 @@
 package org.weiti_map;
 
 import java.awt.Color;
+import java.awt.Component;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -13,36 +14,33 @@ import net.miginfocom.swing.MigLayout;
 
 public class MyPanel extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5169492090332131771L;
 	private MyDatabase mDatabase;
-	private MyTablePanel tablePanelP = new MyTablePanel('P');
-	private MyTablePanel tablePanelN = new MyTablePanel('N');
-	private JTextArea groupNameJTextArea = new JTextArea("Nazwa grupy:");
-	private JTextField groupNameJTextField = new JTextField("wprowadü nazwƒô");
-	private JButton insertJButton = new JButton("Wprowadü dane");
-	private MyControlPanel controlPanel;
 
-	private JTextField logJTextField = new JTextField("Log programu");
+	private MyControlPanel controlPanel;
+	private MyShowPanel showPanel;
+	
+//	private JTextArea groupNameJTextArea = new JTextArea("Nazwa grupy:");
+//	private JTextField groupNameJTextField = new JTextField("wprowadü nazwÍ");
+//	private JButton insertJButton = new JButton("Wprowadü dane");
+
+//	private JTextField logJTextField = new JTextField("Log programu");
 	
     public MyPanel(MyDatabase mDB) {
 		super();
 		mDatabase = mDB;
 		controlPanel = new MyControlPanel(this, mDatabase);
+		showPanel = new MyShowPanel(mDatabase);
 
 		LC layoutConstraints = new LC();
 		layoutConstraints.setFillX(true);
 		setLayout(new MigLayout(layoutConstraints));
 //    	setOpaque(true);
 		
-		groupNameJTextArea.setOpaque(true);
-		groupNameJTextArea.setEditable(false);
-
-		groupNameJTextField.setForeground(Color.GRAY);
-
-		logJTextField.setEditable(false);
+//		groupNameJTextArea.setOpaque(true);
+//		groupNameJTextArea.setEditable(false);
+//		groupNameJTextField.setForeground(Color.GRAY);
+//		logJTextField.setEditable(false);
 		
 		showGroupPlan("1E1");
 //		mDB.temp();			
@@ -51,23 +49,15 @@ public class MyPanel extends JPanel {
 //		insertJButton.setPreferredSize(new Dimension(50, 20));
 //		insertJButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
-
-		add(controlPanel, "wrap");
-//		add(groupJPanel);
-		add(tablePanelP);
-		add(tablePanelN, "wrap");
-		add(insertJButton, "wrap");
-		add(logJTextField);
+		add(controlPanel, "wrap");		
+		add(showPanel, "wrap");
+//		add(insertJButton, "wrap");
+//		add(logJTextField);
 		
 		
-    }
-
-    static public void showWorkers() {
-    	
-    }
-    
+    }    
    
-    public void showLectures(String group_name) {
+    public void showLectures() {
 
 //		Map<String, String> zajecia_data = new HashMap<String, String>();
 //		String query = "SELECT nazwa_zajec, id_wykladowcy FROM tb_zajecia";	
@@ -91,10 +81,25 @@ public class MyPanel extends JPanel {
     
     public void showGroupPlan(String groupName) {
     	GroupPlanObject plan = mDatabase.getGroupPlanObject(groupName);
-    	tablePanelP.setGroupPlan(plan);
-    	tablePanelN.setGroupPlan(plan);    	   	    	
+    	showPanel.showGroupPlan(plan);  	    	
     }
-    
-    
+
+	public void insertRadioButtonClicked() {
+		showPanel.resetTable();
+		
+	}
+
+	public void showRadioButtonClicked() {
+		showPanel.setVisible(true);
+	}
+
+	public void showWorkers() {
+		// TODO Auto-generated method stub		
+	}
+
+
+	public void showRooms() {
+		// TODO Auto-generated method stub		
+	}        
 
 }
