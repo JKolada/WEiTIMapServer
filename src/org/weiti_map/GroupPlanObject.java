@@ -5,8 +5,8 @@ import java.util.List;
 
 public class GroupPlanObject {
 	
-	private String nazwa_grupy;	
-	private List<MyLecture> zajecia = new ArrayList<MyLecture>();
+	private final String nazwa_grupy;	
+	private final List<MyLecture> zajecia = new ArrayList<MyLecture>();
 	
 	public GroupPlanObject(String nazwa_gr) {
 		nazwa_grupy = nazwa_gr;	     
@@ -76,7 +76,7 @@ public class GroupPlanObject {
 			
 			data[row_no][col_no] = poj_zaj_info[4] + " " + poj_zaj_info[5] + " " + poj_zaj_info[0];	
 
-			System.out.println(row_no + " " + col_no + " " + poj_zaj_info[4] + " " + poj_zaj_info[5] + " " + poj_zaj_info[0]); //TO DELETE
+			System.out.println(row_no + " " + col_no + " " + data[row_no][col_no]); //TO DELETE
 		
 		}
 		

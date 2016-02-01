@@ -91,8 +91,7 @@ public class MyPanel extends JPanel {
     
     public void showGroupPlan(String groupName) {
     	GroupPlanObject plan = mDatabase.getGroupPlanObject(groupName);
-    	System.out.println(groupName);
-//    	tablePanelP.setGroupPlan(plan);
+    	tablePanelP.setGroupPlan(plan);
     	tablePanelN.setGroupPlan(plan);    	   	    	
     }
     

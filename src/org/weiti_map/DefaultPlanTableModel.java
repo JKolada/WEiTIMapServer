@@ -11,7 +11,7 @@ public class DefaultPlanTableModel extends AbstractTableModel {
 		protected final static int JTABLE_ROW_NUM = 12;
 		protected final static int JTABLE_COLS_NUM = 7;
 		
-		protected static String[][] data = new String[JTABLE_ROW_NUM][JTABLE_COLS_NUM];
+		protected String[][] data = new String[JTABLE_ROW_NUM][JTABLE_COLS_NUM];
 		
 		protected final String[] DNI_TYGODNIA =
 				{" ",
@@ -20,7 +20,8 @@ public class DefaultPlanTableModel extends AbstractTableModel {
 				"œroda",
 				"czwartek",
 				"pi¹tek",
-				" "};
+				" "
+				};
 		
 		protected final static String[] GODZINY = 
 				{"08:15-09:00",

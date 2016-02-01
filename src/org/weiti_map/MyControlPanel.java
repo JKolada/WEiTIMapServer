@@ -39,7 +39,7 @@ public class MyControlPanel extends JPanel {
 	private JPanel tableTypeJPanel = new JPanel(new MigLayout());
 	
 	private JTextField insertTypeTextField= new JTextField();
-	private JLabel tableTypeLabel = new JLabel("wybierz grupê™");
+	private JLabel tableTypeLabel = new JLabel("wybierz grupê");
 	private JButton printJButton = new JButton("Poka¿");
 	
 	private JRadioButton showDataRadioButton = new JRadioButton("wyœwietlanie danych");
@@ -84,14 +84,14 @@ public class MyControlPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				insertRadioButton.setSelected(true);
 				showDataRadioButton.setSelected(false);
-				insertTypeTextField.setVisible(false);
+				tableTypeJPanel.setVisible(false);
 			}
 		});
 		showDataRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showDataRadioButton.setSelected(true);
 				insertRadioButton.setSelected(false);
-				insertTypeTextField.setVisible(true);
+				tableTypeJPanel.setVisible(true);
 			}
 		});
 		
@@ -104,13 +104,13 @@ public class MyControlPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				comboBox1String = String.valueOf(comboBox1.getSelectedItem());
 				switch (comboBox1String) {
-					case "Plan zajÄ™Ä‡":
+					case "Plan zajêæ":
 						tableTypeLabel.setVisible(true);
 						comboBox2 = new JComboBox<String>(mDatabase.getGroupNames());
 						comboBox2.setVisible(true);
 						tableTypeLabel.setText("wybierz grupê");						
 						break;
-					case "ZajÄ™cia":
+					case "Zajêcia":
 						tableTypeLabel.setVisible(false);
 						comboBox2.setVisible(false);
 						break;
@@ -130,7 +130,7 @@ public class MyControlPanel extends JPanel {
 		comboBox2.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				parentJPanel.showGroupPlan(String.valueOf(comboBox1.getSelectedItem()));				
+				parentJPanel.showGroupPlan(String.valueOf(comboBox2.getSelectedItem()));				
 			}
 		});
 		

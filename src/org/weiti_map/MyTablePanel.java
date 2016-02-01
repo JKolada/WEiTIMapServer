@@ -33,7 +33,6 @@ public class MyTablePanel extends JPanel {
 
 	public void setGroupPlan(GroupPlanObject plan) {
 		 planTable.setGroupPlan(plan, parzystosc);		 
-		 add(planTable);
 	}
 	
 	private void setLabel() {
