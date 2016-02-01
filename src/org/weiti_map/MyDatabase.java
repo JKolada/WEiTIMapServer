@@ -146,38 +146,49 @@ public class MyDatabase extends SQLiteDataSource{
 		for(String i: MyDatabaseUtilities.TABLE_NAMES) {
 			try {
 				mConnection.createStatement().execute("DROP TABLE " + i);
-				System.out.println("Table \'" + i + "\' has been dropped succesfully");
+				System.out.println("Table '" + i + "' has been dropped succesfully");
 			} catch (SQLException e) {
-				System.out.println("Error: SQL Statement \'DROP TABLE " + i + "\' failed. StackTrace:");
+				System.out.println("Error: SQL Statement 'DROP TABLE " + i + "' failed. StackTrace:");
 				e.printStackTrace();
 				db_errors_num++ ;
 			}
 		}
+		
+		try {
+			mConnection.createStatement().execute("DROP VIEW VW_PLAN");
+			System.out.println("View VW_PLAN has been dropped succesfully");
+		} catch (SQLException e) {
+			System.out.println("Error: SQL Statement 'DROP VIEW VW_PLAN' failed. StackTrace:");
+			e.printStackTrace();
+			db_errors_num++ ;
+		}
+		
+		
 	}
 	
 	public GroupPlanObject getGroupPlanObject(String group_name) {
 		String query = "SELECT * FROM vw_plan WHERE nazwa_grupy = '" + group_name +"'";
     	GroupPlanObject groupObject = new GroupPlanObject();
-		List<String> pojedyncze_zajecia = new ArrayList<String>();		
+//		List<String> pojedyncze_zajecia = new ArrayList<String>();		
 		try {
 	    	ResultSet zajeciaRS = mConnection.createStatement().executeQuery(query);
 			groupObject = new GroupPlanObject(group_name);
 			if (!zajeciaRS.isClosed()) {
-			    while (zajeciaRS.next()) {	    	
-//			    	
+			    while (zajeciaRS.next()) {	 
+			    	List<String> pojedyncze_zajecia = new ArrayList<String>();	
 		    		for (int k = 2; k <= MyDatabaseUtilities.PLAN_VIEW_COL_NAMES.length; k++) {
 		    			pojedyncze_zajecia.add(zajeciaRS.getString(k));
+//		    			System.out.println(zajeciaRS.getString(k));  //TO DELETE
 		    		}
 		    		groupObject.add(new MyLecture((ArrayList<String>) pojedyncze_zajecia));		    	  	    	
 		    	} 
 		    		
 			} else {
-	    		System.out.println("Sth failed"); //TO DELETE
+	    		System.out.println("Result set is null"); //TO DELETE
 	    	}
 		    zajeciaRS.close();
 	    } catch (SQLException e) {
     		e.printStackTrace();
-    		System.out.println("WTF?!"); //TO DELETE
     	}
 	    return groupObject;
 	}

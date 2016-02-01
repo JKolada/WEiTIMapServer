@@ -8,18 +8,33 @@ import net.miginfocom.swing.MigLayout;
 
 public class MyTablePanel extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private MyJTable planTable = new MyJTable();
 	private char parzystosc;
-	private JLabel parzystoscLabel = new JLabel();
+	private MyJTable planTable;
+	private JLabel parzystoscLabel;
 	
 	public MyTablePanel(char _parzystosc) {
 		super();
 		parzystosc = _parzystosc;		
-		setLabel();
+		planTable = new MyJTable();
+		parzystoscLabel = new JLabel();
+		configure();		
+	}
+
+	public void setGroupPlan(GroupPlanObject plan) {
+		 planTable.setGroupPlan(plan, parzystosc);		 
+	}	
+
+	public void resetTable() {
+		planTable.resetTable();		
+	}	
+	
+	private void configure() {
+		if (parzystosc == 'P') {			
+			parzystoscLabel.setText("Tydzieñ parzysty");
+		} else {
+			parzystoscLabel.setText("Tydzieñ nieparzysty");
+		}
 		planTable.getTableHeader().setReorderingAllowed(false);		
 		LC layoutConstraints = new LC();
 		layoutConstraints.setFillX(true);
@@ -29,19 +44,4 @@ public class MyTablePanel extends JPanel {
 		add(planTable);		
 	}
 
-	public void setGroupPlan(GroupPlanObject plan) {
-		 planTable = new MyJTable(plan, parzystosc);
-		
-		
-//		planTable.setGroupPlan(plan, parzystosc);
-	}
-	
-	private void setLabel() {
-		if (parzystosc == 'P') {			
-			parzystoscLabel.setText("Tydzieñ parzysty");
-		} else {
-			parzystoscLabel.setText("Tydzieñ nieparzysty");
-		}		
-	}
-	
 }

@@ -81,7 +81,7 @@ public final class MyDatabaseUtilities {
 	
 	public final static String CREATE_PLAN_VIEW =
 	"CREATE VIEW IF NOT EXISTS VW_PLAN " +
-	"AS SELECT b.nazwa_grupy, c.nazwa_sali, d.nazwa_dnia, b.godziny, a.parzystosc, f.nazwa_zajec, a.rodz_zajec " +
+	"AS SELECT b.nazwa_grupy, c.nazwa_sali, d.nazwa_dnia, e.godz_id, a.parzystosc, f.skrot_nazwy_zajec, a.rodz_zajec " +
 	"FROM tb_plan a " +
 	"LEFT JOIN tb_grupy b 	ON (a.grupa_id = b.grupa_id) " +
 	"LEFT JOIN tb_sale c  	ON (a.sala_id = c.sala_id) " +

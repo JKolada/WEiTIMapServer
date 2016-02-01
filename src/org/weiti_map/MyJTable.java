@@ -9,25 +9,20 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
 public class MyJTable extends JTable {
 
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8925549787570334079L;
+	private TableModel tableModel;
 
 	public MyJTable() {
-		super(new DefaultPlanTableModel());
+		super();
+		tableModel = new DefaultPlanTableModel();
+		setModel(tableModel);
 		configure();
 	}
 
-	public MyJTable(GroupPlanObject plan, char parzystosc) {
-		super(new CustomPlanTableModel(plan, parzystosc));
-		configure();
-	}
-	
 	private void configure() {
 		this.setFont(new Font("Arial", Font.BOLD, 15));
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -39,19 +34,16 @@ public class MyJTable extends JTable {
 		for (int i = 0; i < 6; i++) {
 			getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 		}
-        
-        setPreferredScrollableViewportSize(new Dimension(500, 70));
-        setFillsViewportHeight(true);
+
+		setPreferredScrollableViewportSize(new Dimension(500, 70));
+		setFillsViewportHeight(true);
 //        getSelectionModel().addListSelectionListener(new RowListener());
 //        getColumnModel().getSelectionModel().
 //            addListSelectionListener(new ColumnListener());
 	}
 
 	public void setGroupPlan(GroupPlanObject plan, char parzystosc) {
-		// TODO Auto-generated method stub
-
-		setValueAt("sadas", 3, 3);
-		System.out.println("at least tried");
+		setModel(new CustomPlanTableModel(plan, parzystosc));
 	}
 	
 	@Override
@@ -62,5 +54,9 @@ public class MyJTable extends JTable {
         tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width + 10, tableColumn.getPreferredWidth()));
         return component;
     }
+
+	public void resetTable() {
+		setModel(tableModel);		
+	}
 
 }
