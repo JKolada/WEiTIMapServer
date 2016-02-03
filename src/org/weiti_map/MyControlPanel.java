@@ -5,12 +5,10 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -30,7 +28,7 @@ public class MyControlPanel extends JPanel {
 	private JPanel radioJPanel; 
 	private JPanel tableTypeJPanel; 
 	
-	private JTextField insertTypeTextField;
+//	private JTextField insertTypeTextField;
 	private JLabel tableTypeLabel; 
 	
 	private JRadioButton showDataRadioButton; 
@@ -41,7 +39,7 @@ public class MyControlPanel extends JPanel {
 
 	private String comboBox1String = new String("error");
 	
-    public MyControlPanel(MyPanel parent, MyDatabase mDB) {
+    MyControlPanel(MyPanel parent, MyDatabase mDB) {
 		super();
 		mDatabase = mDB;
 		parentJPanel = parent;

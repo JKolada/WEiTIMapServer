@@ -13,7 +13,7 @@ public class MyShowPanel extends JPanel {
 	private MyTablePanel tablePanelP;
 	private MyTablePanel tablePanelN;
 	
-	   public MyShowPanel(MyDatabase mDB) {
+	   MyShowPanel(MyDatabase mDB) {
 			super();			
 			mDatabase = mDB;
 			tablePanelP = new MyTablePanel('P');
@@ -30,12 +30,12 @@ public class MyShowPanel extends JPanel {
 	   }	   
 	   
 
-	    public void showGroupPlan(GroupPlanObject plan) {
+	    void showGroupPlan(GroupPlanObject plan) {
 	    	tablePanelP.setGroupPlan(plan);
 	    	tablePanelN.setGroupPlan(plan);    	   	    	
 	    }
 
-		public void resetTable() {
+		void resetTable() {
 			tablePanelP.resetTable();
 	    	tablePanelN.resetTable();  			
 		}

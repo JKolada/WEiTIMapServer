@@ -37,7 +37,7 @@ public class DefaultPlanTableModel extends AbstractTableModel {
 				 "18:15-19:00",
 				 "19:15-20:00"};
 		
-		public DefaultPlanTableModel() {
+		DefaultPlanTableModel() {
 			super();
 			for (int i = 0; i < 12; i++) {
 				data[i][0] = GODZINY[i];		
@@ -76,7 +76,7 @@ public class DefaultPlanTableModel extends AbstractTableModel {
             return data[row][col];
 		}
 		
-		public void setValueAt(String text, int row, int col) {
+		void setValueAt(String text, int row, int col) {
 			data[row][col] = text;
             fireTableCellUpdated(row, col);
         }

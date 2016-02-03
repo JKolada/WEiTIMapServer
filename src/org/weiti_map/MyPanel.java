@@ -26,7 +26,7 @@ public class MyPanel extends JPanel {
 
 //	private JTextField logJTextField = new JTextField("Log programu");
 	
-    public MyPanel(MyDatabase mDB) {
+    MyPanel(MyDatabase mDB) {
 		super();
 		mDatabase = mDB;
 		controlPanel = new MyControlPanel(this, mDatabase);
@@ -57,49 +57,33 @@ public class MyPanel extends JPanel {
 		
     }    
    
-    public void showLectures() {
+    void showLectures() {
 
-//		Map<String, String> zajecia_data = new HashMap<String, String>();
-//		String query = "SELECT nazwa_zajec, id_wykladowcy FROM tb_zajecia";	
-//		String query2 = "SELECT imie, nazwisko FROM tb_pracownicy WHERE pracownik_id = ";
-//		String nazwa_zajec, skrot_nazwy_zajec, id_wykladowcy;
-//		try {					
-//			ResultSet zajecia_rs = mStatement.executeQuery(query);
-//		    while (zajecia_rs.next() ) {	    	
-//		    	nazwa_zajec = zajecia_rs.getString("nazwa_zajec");
-//		    	skrot_nazwy_zajec = zajecia_rs.getString("skrot_nazwy_zajec");		    	
-//		    	id_wykladowcy = zajecia_rs.getString("id_wykladowcy");	
-//				ResultSet pracownicy_rs = mStatement.executeQuery(query2 + id_wykladowcy);
-//				pracownicy_rs.getString("imie"));
-//	    	}		    
-//		    
-//	    } catch (SQLException e) {
-//			e.printStackTrace();
-//		}
     	
     }
     
-    public void showGroupPlan(String groupName) {
+    void showGroupPlan(String groupName) {
     	GroupPlanObject plan = mDatabase.getGroupPlanObject(groupName);
     	showPanel.showGroupPlan(plan);  	    	
     }
 
-	public void insertRadioButtonClicked() {
-		showPanel.resetTable();
-		
-	}
 
-	public void showRadioButtonClicked() {
-		showPanel.setVisible(true);
-	}
-
-	public void showWorkers() {
-		// TODO Auto-generated method stub		
+	void showWorkers() {
+		WorkersTableObject table = mDatabase.getWorkersTableObject();
 	}
 
 
-	public void showRooms() {
+	void showRooms() {
 		// TODO Auto-generated method stub		
 	}        
+	
+
+	void insertRadioButtonClicked() {
+		showPanel.resetTable();		
+	}
+
+	void showRadioButtonClicked() {
+		showPanel.setVisible(true);
+	}
 
 }

@@ -92,6 +92,8 @@ public final class MyDatabaseUtilities {
 
 	public final static String PLAN_VIEW_COL_NAMES[] =
 		{"nazwa_grupy", "nazwa_sali", "nazwa_dnia", "godziny", "parzystosc", "nazwa_zajec", "rodz_zajec"};
+
+	
 	
 	// INSERTS // // // // // // // // // // // // // // // // // // // // // // //
 			
