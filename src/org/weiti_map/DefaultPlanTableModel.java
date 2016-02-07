@@ -49,7 +49,7 @@ public class DefaultPlanTableModel extends AbstractTableModel {
 			return DNI_TYGODNIA[col];
 	    }
 		
-		public Class getColumnClass(int c) {
+		public Class<?> getColumnClass(int c) {
             return String.class;
         }
 		

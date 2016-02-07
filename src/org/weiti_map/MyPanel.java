@@ -1,13 +1,8 @@
 package org.weiti_map;
 
-import java.awt.Color;
-import java.awt.Component;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+
+import org.weiti_map.MyShowPanel.SHOW_PANEL_TYPES;
 
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
@@ -30,7 +25,7 @@ public class MyPanel extends JPanel {
 		super();
 		mDatabase = mDB;
 		controlPanel = new MyControlPanel(this, mDatabase);
-		showPanel = new MyShowPanel(mDatabase);
+		showPanel = new MyShowPanel(mDatabase, SHOW_PANEL_TYPES.GROUP_TABLES);
 
 		LC layoutConstraints = new LC();
 		layoutConstraints.setFillX(true);
@@ -45,17 +40,26 @@ public class MyPanel extends JPanel {
 		showGroupPlan("1E1");
 //		mDB.temp();			
 		
+		refillPanel();
+		
 //		insertJButton.addActionListener(this);
 //		insertJButton.setPreferredSize(new Dimension(50, 20));
 //		insertJButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		add(controlPanel, "wrap");		
-		add(showPanel, "wrap");
 //		add(insertJButton, "wrap");
 //		add(logJTextField);
 		
 		
-    }    
+    }
+    
+    void refillPanel() {
+    	removeAll();
+		add(controlPanel, "wrap");	
+		showPanel = new MyShowPanel(mDatabase, SHOW_PANEL_TYPES.GROUP_TABLES);
+		add(showPanel, "wrap");
+		revalidate();
+		repaint();
+    }
    
     void showLectures() {
 
@@ -64,12 +68,14 @@ public class MyPanel extends JPanel {
     
     void showGroupPlan(String groupName) {
     	GroupPlanObject plan = mDatabase.getGroupPlanObject(groupName);
-    	showPanel.showGroupPlan(plan);  	    	
+    	showPanel.showGroupPlan(plan);    	
     }
 
 
 	void showWorkers() {
-		WorkersTableObject table = mDatabase.getWorkersTableObject();
+//		WorkersTableObject table = mDatabase.getWorkersTableObject();
+		System.out.println("lol");
+		refillPanel();
 	}
 
 

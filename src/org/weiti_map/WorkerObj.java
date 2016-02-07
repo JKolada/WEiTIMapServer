@@ -7,13 +7,13 @@ public class WorkerObj {
 	private String imiê;
 	private String nazwisko;
 	
-	public WorkerObj(ArrayList<String> poj_pracownik) {
+	WorkerObj(ArrayList<String> poj_pracownik) {
 		pracownik_id = poj_pracownik.get(0);
 		imiê = poj_pracownik.get(1);
 		nazwisko = poj_pracownik.get(2);
 	}
 	
-	public String[] getWorkerData() {
+	String[] getWorkerData() {
 		final String[] workerData = {pracownik_id, imiê, nazwisko}; 
 		return workerData;
 	}
