@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +13,10 @@ public class MyDatabase extends SQLiteDataSource{
 	
 	private Boolean isSet = false;
 	private Connection mConnection = null;
-//	private Statement mStatement = null;    
 	private int db_errors_num = 0;
 	
 	
-	public MyDatabase() {
+	 MyDatabase() {
 	      try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
@@ -42,7 +40,7 @@ public class MyDatabase extends SQLiteDataSource{
 	      
 	}
 	
-	public Boolean isSet() {
+	Boolean isSet() {
 		return isSet;
 	}
 	
@@ -165,65 +163,8 @@ public class MyDatabase extends SQLiteDataSource{
 		
 		
 	}
-	
-	public GroupPlanObject getGroupPlanObject(String group_name) {
-		String query = "SELECT * FROM vw_plan WHERE nazwa_grupy = '" + group_name +"'";
-    	GroupPlanObject groupObject = new GroupPlanObject();
-//		List<String> pojedyncze_zajecia = new ArrayList<String>();		
-		try {
-	    	ResultSet zajeciaRS = mConnection.createStatement().executeQuery(query);
-			groupObject = new GroupPlanObject(group_name);
-			if (!zajeciaRS.isClosed()) {
-			    while (zajeciaRS.next()) {	 
-			    	List<String> pojedyncze_zajecia = new ArrayList<String>();	
-		    		for (int k = 2; k <= MyDatabaseUtilities.PLAN_VIEW_COL_NAMES.length; k++) {
-		    			pojedyncze_zajecia.add(zajeciaRS.getString(k));
-//		    			System.out.println(zajeciaRS.getString(k));  //TO DELETE
-		    		}
-		    		groupObject.add(new MyLecture((ArrayList<String>) pojedyncze_zajecia));		    	  	    	
-		    	} 
-		    		
-			} else {
-	    		System.out.println("Result set is null"); //TO DELETE
-	    	}
-		    zajeciaRS.close();
-	    } catch (SQLException e) {
-    		e.printStackTrace();
-    	}
-	    return groupObject;
-	}
-	
-	public void temp() {
-		try {
-			
-			ResultSet zajeciaRS = mConnection.createStatement().executeQuery(
-					 "SELECT * FROM vw_plan WHERE nazwa_grupy = '1E1'");
-			
-			if (!zajeciaRS.isClosed()) {
-				while(zajeciaRS.next()) {
-//					for (int k = 1; k <= 2; k++) {
-						System.out.print(zajeciaRS.getString(1) + ' ');
-						System.out.print(zajeciaRS.getString(2) + ' ');
-						System.out.print(zajeciaRS.getString(3) + ' ');//
-						System.out.print(zajeciaRS.getString(4) + ' ');//
-						System.out.print(zajeciaRS.getString(5) + ' ');//
-						System.out.println(zajeciaRS.getString(6));
-//					}
-				}
-			} else {
-				System.out.println("dupa"); //TO DELETE
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("buu");
-		}
-		
-	}
-	
-	
-	public String[] getGroupNames() {
+
+	String[] getGroupNames() {
 		String query = "SELECT nazwa_grupy FROM tb_grupy";			
 		List<String> nazwy_grup = new ArrayList<String>();
 		try {					
@@ -237,6 +178,62 @@ public class MyDatabase extends SQLiteDataSource{
     	}
 		return nazwy_grup.toArray(new String[nazwy_grup.size()]);
 	}
+	
+	GroupPlanObject getGroupPlanObject(String group_name) {
+		String query = "SELECT * FROM vw_plan WHERE nazwa_grupy = '" + group_name +"'";
+		GroupPlanObject groupObject = null;
+//		List<String> pojedyncze_zajecia = new ArrayList<String>();		
+		try {
+	    	ResultSet zajeciaRS = mConnection.createStatement().executeQuery(query);
+			groupObject = new GroupPlanObject(group_name);
+			if (!zajeciaRS.isClosed()) {
+			    while (zajeciaRS.next()) {	 
+			    	List<String> pojedyncze_zajecia = new ArrayList<String>();	
+		    		for (int k = 2; k <= MyDatabaseUtilities.PLAN_VIEW_COL_NAMES.length; k++) {
+		    			pojedyncze_zajecia.add(zajeciaRS.getString(k));
+//		    			System.out.println(zajeciaRS.getString(k));  //TO DELETE
+		    		}
+		    		groupObject.add(new LectureViewObj((ArrayList<String>) pojedyncze_zajecia));		    	  	    	
+		    	} 
+		    		
+			} else {
+	    		System.out.println("Result set is null"); //TO DELETE
+	    	}
+		    zajeciaRS.close();
+	    } catch (SQLException e) {
+    		e.printStackTrace();
+    	}
+	    return groupObject;
+	}
+
+
+	 WorkersTableObject getWorkersTableObject() {
+		String query = "SELECT * FROM tb_pracownicy";
+    	WorkersTableObject workersTable = null;	
+		try {
+	    	ResultSet pracownicyRS = mConnection.createStatement().executeQuery(query);
+			workersTable = new WorkersTableObject();
+			if (!pracownicyRS.isClosed()) {
+			    while (pracownicyRS.next()) {	 
+			    	List<String> pojedynczy_pracownik = new ArrayList<String>();	
+		    		for (int k = 0; k < 3; k++) {
+		    			pojedynczy_pracownik.add(pracownicyRS.getString(k+1));
+//		    			System.out.println(pracownicyRS.getString(k+1));  //TO DELETE
+		    		}
+		    		workersTable.add(new WorkerObj((ArrayList<String>) pojedynczy_pracownik));		    	  	    	
+		    	} 
+		    		
+			} else {
+	    		System.out.println("Result set is null"); //TO DELETE
+	    	}
+		    pracownicyRS.close();
+	    } catch (SQLException e) {
+    		e.printStackTrace();
+    	}
+	    return workersTable;
+	 }
+	
+	
 	
 }
 

@@ -1,22 +1,20 @@
 package org.weiti_map;
 
-import java.awt.Dimension;
-
 import javax.swing.JFrame;
 
 public class MyGUI {	
 
 	private static MyDatabase mDB;
-    private static MyPanel newContentPane;       
-	
+//    private static MyPanel newContentPane;       
 
-    private static JFrame frame;
+    @SuppressWarnings("unused")
+	private static JFrame frame;
 	
-	public MyGUI(MyDatabase DB) {
+	MyGUI(MyDatabase DB) {
 		mDB = DB;
 	}
 	
-	public static void createAndShowGUI() {
+	 static void createAndShowGUI() {
 //		newContentPane = new MyPanel(mDB); 
 		frame = new MyFrame(mDB);
 //        frame.add(new JTextField());

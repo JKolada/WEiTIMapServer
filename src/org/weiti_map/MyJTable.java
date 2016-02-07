@@ -16,7 +16,7 @@ public class MyJTable extends JTable {
 	private static final long serialVersionUID = 8925549787570334079L;
 	private TableModel tableModel;
 
-	public MyJTable() {
+	MyJTable() {
 		super();
 		tableModel = new DefaultPlanTableModel();
 		setModel(tableModel);
@@ -42,12 +42,12 @@ public class MyJTable extends JTable {
 //            addListSelectionListener(new ColumnListener());
 	}
 
-	public void setGroupPlan(GroupPlanObject plan, char parzystosc) {
+	void setGroupPlan(GroupPlanObject plan, char parzystosc) {
 		setModel(new CustomPlanTableModel(plan, parzystosc));
 	}
 	
 	@Override
-	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+	public	Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
         Component component = super.prepareRenderer(renderer, row, column);
         int rendererWidth = component.getPreferredSize().width;
         TableColumn tableColumn = getColumnModel().getColumn(column);
@@ -55,7 +55,7 @@ public class MyJTable extends JTable {
         return component;
     }
 
-	public void resetTable() {
+	 void resetTable() {
 		setModel(tableModel);		
 	}
 

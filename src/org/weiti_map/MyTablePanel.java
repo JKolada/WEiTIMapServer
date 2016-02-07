@@ -6,14 +6,14 @@ import javax.swing.JPanel;
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
 
-public class MyTablePanel extends JPanel {
+class MyTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private char parzystosc;
 	private MyJTable planTable;
 	private JLabel parzystoscLabel;
 	
-	public MyTablePanel(char _parzystosc) {
+	MyTablePanel(char _parzystosc) {
 		super();
 		parzystosc = _parzystosc;		
 		planTable = new MyJTable();
@@ -21,11 +21,11 @@ public class MyTablePanel extends JPanel {
 		configure();		
 	}
 
-	public void setGroupPlan(GroupPlanObject plan) {
+	void setGroupPlan(GroupPlanObject plan) {
 		 planTable.setGroupPlan(plan, parzystosc);		 
 	}	
 
-	public void resetTable() {
+	void resetTable() {
 		planTable.resetTable();		
 	}	
 	

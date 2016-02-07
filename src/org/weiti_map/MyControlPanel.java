@@ -5,12 +5,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -21,27 +18,22 @@ public class MyControlPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -204928193180502263L;
 
-	private final String[] mainViewColNames = { "Plan zajêæ", "Zajêcia", "Pracownicy", "Sale" };
+	private final String[] viewsNames = { "Plan zajêæ", "Zajêcia", "Pracownicy", "Sale" };
 	
 	private MyPanel parentJPanel;
 	private MyDatabase mDatabase;
 	
 	private JPanel groupJPanel; 
 	private JPanel radioJPanel; 
-	private JPanel tableTypeJPanel; 
-	
-	private JTextField insertTypeTextField;
-	private JLabel tableTypeLabel; 
+	private GroupNameJPanel tableTypeJPanel; 	
 	
 	private JRadioButton showDataRadioButton; 
 	private JRadioButton insertRadioButton; 
 
-	private JComboBox<String> comboBox1; 
-	private JComboBox<String> comboBox2; 
-
-	private String comboBox1String = new String("error");
+	private MainViewsComboBox comboBox1; 
+	private GroupComboBox comboBox2; 
 	
-    public MyControlPanel(MyPanel parent, MyDatabase mDB) {
+    MyControlPanel(MyPanel parent, MyDatabase mDB) {
 		super();
 		mDatabase = mDB;
 		parentJPanel = parent;
@@ -49,17 +41,26 @@ public class MyControlPanel extends JPanel {
 		groupJPanel = new JPanel();
 		radioJPanel = new JPanel(new MigLayout());
 		
-		tableTypeJPanel = new JPanel(new MigLayout());
-		tableTypeLabel = new JLabel("wybierz grupê");
+		tableTypeJPanel = new GroupNameJPanel(mDatabase, parentJPanel);
 		
 		showDataRadioButton = new JRadioButton("wyœwietlanie danych");
 		insertRadioButton = new JRadioButton("wprowadzanie danych");
 		
-		comboBox1 = new JComboBox<String>(mainViewColNames);
-		comboBox2 = new JComboBox<String>(mDatabase.getGroupNames());
+		comboBox1 = new MainViewsComboBox(parentJPanel, this, tableTypeJPanel, viewsNames);
+		comboBox2 = new GroupComboBox(parent, mDatabase.getGroupNames());
 		
 		configure();				
 	}
+    
+   public JRadioButton getShowDataRadioButton() {
+	   return showDataRadioButton;
+   }
+   
+   public JRadioButton getInsertDataRadioButton() {
+	   return insertRadioButton;
+   }
+   
+   
     
     private void configure() {  	
 
@@ -67,12 +68,9 @@ public class MyControlPanel extends JPanel {
 		showDataRadioButton.setSelected(true);
 		
 		insertRadioButton.setFont(new Font("Calibri", Font.HANGING_BASELINE , 15));
-		showDataRadioButton.setFont(new Font("Calibri", Font.HANGING_BASELINE , 15));
-		
-		tableTypeLabel.setSize(new Dimension(50, 20));
-					
+		showDataRadioButton.setFont(new Font("Calibri", Font.HANGING_BASELINE , 15));							
 
-		comboBox2 = new JComboBox<String>(mDatabase.getGroupNames());
+		comboBox2 = new GroupComboBox(parentJPanel, mDatabase.getGroupNames());
 		comboBox2.setPreferredSize(new Dimension(100, 25));
 		
 		comboBox1.setSelectedIndex(0);
@@ -97,63 +95,22 @@ public class MyControlPanel extends JPanel {
 			}
 		});
 		
-		comboBox1.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				comboBox1String = String.valueOf(comboBox1.getSelectedItem());
-				switch (comboBox1String) {
-					case "Plan zajêæ":
-						tableTypeLabel.setVisible(true);
-						comboBox2 = new JComboBox<String>(mDatabase.getGroupNames());
-						comboBox2.setVisible(true);
-						tableTypeLabel.setText("wybierz grupê");
-						break;
-					case "Zajêcia":
-						tableTypeLabel.setVisible(false);
-						comboBox2.setVisible(false);
-						if (showDataRadioButton.isSelected()) {
-							parentJPanel.showLectures();
-						}
-						break;
-					case "Pracownicy":
-						tableTypeLabel.setVisible(false);
-						comboBox2.setVisible(false);
-						if (showDataRadioButton.isSelected()) {
-							parentJPanel.showWorkers();
-						}
-						break;
-					case "Sale":
-						tableTypeLabel.setVisible(false);
-						comboBox2.setVisible(false);
-						if (showDataRadioButton.isSelected()) {
-							parentJPanel.showRooms();
-						}
-						break;
-				}
-			}
-		});
 		
-		comboBox2.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				parentJPanel.showGroupPlan(String.valueOf(comboBox2.getSelectedItem()));				
-			}
-		});		
 		
 		radioJPanel.add(new JLabel("Wybierz tryb aplikacji:"), "wrap");
 		radioJPanel.add(showDataRadioButton, "wrap");
 		radioJPanel.add(insertRadioButton);				
 
-		tableTypeJPanel.add(tableTypeLabel, "wrap");
-		tableTypeJPanel.add(comboBox2);
-		
 		groupJPanel.add(radioJPanel);		
 		groupJPanel.add(comboBox1);		
 		groupJPanel.add(tableTypeJPanel);
 		
+		add(radioJPanel);
 		add(groupJPanel);
 		
     }
+    
+    
     
 	
 }

@@ -6,8 +6,9 @@ public class CustomPlanTableModel extends DefaultPlanTableModel	implements Table
 	
 	private static final long serialVersionUID = 1L;
 
-	public CustomPlanTableModel(GroupPlanObject plan, char parzystosc) {
+	CustomPlanTableModel(GroupPlanObject plan, char parzystosc) {
 		super();
 		plan.fillData(data, plan, parzystosc);	
-	}
+	}	
+
 }

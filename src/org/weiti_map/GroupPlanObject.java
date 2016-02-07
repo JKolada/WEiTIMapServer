@@ -3,34 +3,33 @@ package org.weiti_map;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupPlanObject {
+class GroupPlanObject {
 	
 	private final String nazwa_grupy;	
-	private final List<MyLecture> zajecia = new ArrayList<MyLecture>();
+	private final List<LectureViewObj> zajecia = new ArrayList<LectureViewObj>();
 	
-	public GroupPlanObject(String nazwa_gr) {
+	GroupPlanObject(String nazwa_gr) {
 		nazwa_grupy = nazwa_gr;	     
 	}
 	
-	public GroupPlanObject() {
+	GroupPlanObject() {
 		nazwa_grupy = "error";
-//		error = true;
 	}
 
-	public String getGroupName() {
+	String getGroupName() {
 		return nazwa_grupy;
 	}
 
-	public void add(MyLecture myLecture) {
+	void add(LectureViewObj myLecture) {
 		zajecia.add(myLecture);
 	}
 
-	public void fillData(String[][] data, GroupPlanObject plan, char parzystosc) {
+	void fillData(String[][] data, GroupPlanObject plan, char parzystosc) {
 		String[] poj_zaj_info = new String[6];
 		int row_no, col_no = 0;
 		char classesAreEven = 'X';
 		
-		for (MyLecture poj_zaj: zajecia) {			
+		for (LectureViewObj poj_zaj: zajecia) {			
 			switch (poj_zaj.isEven()) {
 				case 'Y':
 					classesAreEven = 'P';
@@ -69,11 +68,7 @@ public class GroupPlanObject {
 			}			
 			data[row_no][col_no] = poj_zaj_info[4] + " " + poj_zaj_info[5] + " " + poj_zaj_info[0];	
 //			System.out.println(row_no + " " + col_no + " " + data[row_no][col_no]); //TO DELETE		
-		}
-		
+		}		
 		
 	}
-	
-	
-
 }
