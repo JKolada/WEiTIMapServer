@@ -6,17 +6,17 @@ import javax.swing.JPanel;
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
 
-class MyTablePanel extends JPanel {
+class PlanTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private char parzystosc;
-	private MyJTable planTable;
+	private PlanJTable planTable;
 	private JLabel parzystoscLabel;
 	
-	MyTablePanel(char _parzystosc) {
+	PlanTablePanel(char _parzystosc) {
 		super();
 		parzystosc = _parzystosc;		
-		planTable = new MyJTable();
+		planTable = new PlanJTable();
 		parzystoscLabel = new JLabel();
 		configure();		
 	}

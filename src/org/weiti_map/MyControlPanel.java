@@ -1,6 +1,5 @@
 package org.weiti_map;
 
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,6 +46,7 @@ public class MyControlPanel extends JPanel {
 		insertRadioButton = new JRadioButton("wprowadzanie danych");
 		
 		comboBox1 = new MainViewsComboBox(parentJPanel, this, tableTypeJPanel, viewsNames);
+//		comboBox1.setSelectedIndex(0);	
 		comboBox2 = new GroupComboBox(parent, mDatabase.getGroupNames());
 		
 		configure();				
@@ -60,21 +60,13 @@ public class MyControlPanel extends JPanel {
 	   return insertRadioButton;
    }
    
-   
-    
     private void configure() {  	
-
-    	setOpaque(true);
+//    	setOpaque(true);
 		showDataRadioButton.setSelected(true);
 		
 		insertRadioButton.setFont(new Font("Calibri", Font.HANGING_BASELINE , 15));
 		showDataRadioButton.setFont(new Font("Calibri", Font.HANGING_BASELINE , 15));							
-
-		comboBox2 = new GroupComboBox(parentJPanel, mDatabase.getGroupNames());
-		comboBox2.setPreferredSize(new Dimension(100, 25));
-		
-		comboBox1.setSelectedIndex(0);
-		
+	
 		
 		insertRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -93,9 +85,7 @@ public class MyControlPanel extends JPanel {
 				parentJPanel.showRadioButtonClicked();
 				comboBox1.setSelectedIndex(0);
 			}
-		});
-		
-		
+		});	
 		
 		radioJPanel.add(new JLabel("Wybierz tryb aplikacji:"), "wrap");
 		radioJPanel.add(showDataRadioButton, "wrap");

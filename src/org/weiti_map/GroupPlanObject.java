@@ -3,7 +3,7 @@ package org.weiti_map;
 import java.util.ArrayList;
 import java.util.List;
 
-class GroupPlanObject {
+public class GroupPlanObject {
 	
 	private final String nazwa_grupy;	
 	private final List<LectureViewObj> zajecia = new ArrayList<LectureViewObj>();

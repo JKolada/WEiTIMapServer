@@ -208,7 +208,7 @@ public class MyDatabase extends SQLiteDataSource{
 
 
 	 WorkersTableObject getWorkersTableObject() {
-		String query = "SELECT * FROM tb_pracownicy";
+		String query = "SELECT * FROM tb_pracownicy ORDER BY 1";
     	WorkersTableObject workersTable = null;	
 		try {
 	    	ResultSet pracownicyRS = mConnection.createStatement().executeQuery(query);
@@ -232,8 +232,32 @@ public class MyDatabase extends SQLiteDataSource{
     	}
 	    return workersTable;
 	 }
-	
-	
+
+	RoomsTableObject getRoomsTableObject() {
+		String query = "SELECT * FROM tb_sale ORDER BY 1";
+    	RoomsTableObject roomsTable = null;	
+		try {
+	    	ResultSet saleRS = mConnection.createStatement().executeQuery(query);
+			roomsTable = new RoomsTableObject();
+			if (!saleRS.isClosed()) {
+			    while (saleRS.next()) {	 
+			    	List<String> pojedyncza_sala = new ArrayList<String>();	
+		    		for (int k = 0; k < 5; k++) {
+		    			pojedyncza_sala.add(saleRS.getString(k+1));
+//		    			System.out.println(saleRS.getString(k+1));  //TO DELETE
+		    		}
+		    		roomsTable.add(new RoomObj((ArrayList<String>) pojedyncza_sala));		    	  	    	
+		    	} 
+		    		
+			} else {
+	    		System.out.println("Result set is null"); //TO DELETE
+	    	}
+		    saleRS.close();
+	    } catch (SQLException e) {
+    		e.printStackTrace();
+    	}
+	    return roomsTable;
+	}
 	
 }
 

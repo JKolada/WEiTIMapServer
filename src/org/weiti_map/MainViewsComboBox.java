@@ -7,6 +7,8 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import org.weiti_map.MyShowPanel.SHOW_PANEL_TYPES;
+
 public class MainViewsComboBox extends JComboBox<String> {
 
 	private static final long serialVersionUID = 1L;
@@ -32,25 +34,26 @@ public class MainViewsComboBox extends JComboBox<String> {
 			public void actionPerformed(ActionEvent e) {
 				String selectedItem = String.valueOf(getSelectedItem());
 				switch (selectedItem) {
-					case "Plan zajêæ":
+					case "Plan zajêæ":						
+						myGrandPanel.showGroupPlan();		
 						typeJPanel.restart();
 						break;
 					case "Zajêcia":
 						typeJPanel.setVisible(false);
-						if (showDataRadioButton.isSelected()) {
-							myGrandPanel.showLectures();
-						}
+//						if (showDataRadioButton.isSelected()) {
+//							myGrandPanel.refillPanel(SHOW_PANEL_TYPES.ROOMS_TABLE);
+//						}
 						break;
 					case "Pracownicy":
 						typeJPanel.setVisible(false);
-						if (showDataRadioButton.isSelected()) {
-							myGrandPanel.showWorkers();
-						}
+//						if (showDataRadioButton.isSelected()) {
+//							myGrandPanel.refillPanel(SHOW_PANEL_TYPES.WORKERS_TABLE);
+//						}
 						break;
 					case "Sale":
 						typeJPanel.setVisible(false);
 						if (showDataRadioButton.isSelected()) {
-							myGrandPanel.showRooms();
+							myGrandPanel.refillPanel(SHOW_PANEL_TYPES.ROOMS_TABLE);
 						}
 						break;
 				}

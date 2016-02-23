@@ -11,14 +11,16 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-public class MyJTable extends JTable {
-
-	private static final long serialVersionUID = 8925549787570334079L;
+public class RoomsJTable extends JTable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private TableModel tableModel;
 
-	MyJTable() {
+	RoomsJTable(RoomsTableObject rooms) {
 		super();
-		tableModel = new DefaultPlanTableModel();
+		tableModel = new RoomTableModel(rooms);
 		setModel(tableModel);
 		configure();
 	}
@@ -31,7 +33,7 @@ public class MyJTable extends JTable {
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < tableModel.getColumnCount(); i++) {
 			getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 		}
 
@@ -40,10 +42,6 @@ public class MyJTable extends JTable {
 //        getSelectionModel().addListSelectionListener(new RowListener());
 //        getColumnModel().getSelectionModel().
 //            addListSelectionListener(new ColumnListener());
-	}
-
-	void setGroupPlan(GroupPlanObject plan, char parzystosc) {
-		setModel(new CustomPlanTableModel(plan, parzystosc));
 	}
 	
 	@Override
@@ -54,9 +52,5 @@ public class MyJTable extends JTable {
         tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width + 10, tableColumn.getPreferredWidth()));
         return component;
     }
-
-	 void resetTable() {
-		setModel(tableModel);		
-	}
 
 }

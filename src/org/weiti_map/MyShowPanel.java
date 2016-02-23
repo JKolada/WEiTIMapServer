@@ -9,34 +9,51 @@ public class MyShowPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;	
 			
-	public enum SHOW_PANEL_TYPES {GROUP_TABLES, WORKERS_TABLE, ROOM_TABLE, LECTURES_TABLE};
+	public enum SHOW_PANEL_TYPES {GROUP_TABLES, WORKERS_TABLE, ROOMS_TABLE, LECTURES_TABLE};
 	private SHOW_PANEL_TYPES panel_type;
 	
 	private MyDatabase mDatabase;
-	private MyTablePanel tablePanelP;
-	private MyTablePanel tablePanelN;
+	private PlanTablePanel tablePanelP;
+	private PlanTablePanel tablePanelN;
+	private RoomsTablePanel roomsTable;
+//	private WorkersTablePanel workersTable;
 	
 	   MyShowPanel(MyDatabase mDB, SHOW_PANEL_TYPES type) {
 			super();			
 			mDatabase = mDB;
-			panel_type = type;
-			tablePanelP = new MyTablePanel('P');
-			tablePanelN = new MyTablePanel('N');			
+			panel_type = type;			
 
 			LC layoutConstraints = new LC();
 			layoutConstraints.setFillX(true);
 			setLayout(new MigLayout(layoutConstraints));
 			
-			add(tablePanelP);
-			add(tablePanelN);
-//			add(insertJButton, "wrap");
-						
-	   }	   
-	   	   
+			switch (panel_type) {
+			case GROUP_TABLES:
+				tablePanelP = new PlanTablePanel('P');
+				tablePanelN = new PlanTablePanel('N');	
+				add(tablePanelP);
+				add(tablePanelN);
+				break;
+			case WORKERS_TABLE:				
+				break;
+			case ROOMS_TABLE:
+				roomsTable = new RoomsTablePanel(mDatabase.getRoomsTableObject());				
+				add(roomsTable);
+				break;
+			case LECTURES_TABLE:
+				break;
+			}		
+	   }	   	   	   
 
-	    void showGroupPlan(GroupPlanObject plan) {
-	    	tablePanelP.setGroupPlan(plan);
-	    	tablePanelN.setGroupPlan(plan);    	   	    	
+	    void setGroupPlanObject(GroupPlanObject plan) {	    	
+	    	if (panel_type == SHOW_PANEL_TYPES.GROUP_TABLES) {
+	    		tablePanelP.setGroupPlan(plan);
+    	    	tablePanelN.setGroupPlan(plan);
+	    	} else {
+	    		System.out.println("BAD SHOW PANEL TYPE");
+	    		return;
+	    	}
+	    	
 	    }
 
 		void resetTable() {
@@ -46,5 +63,13 @@ public class MyShowPanel extends JPanel {
 	    
 		SHOW_PANEL_TYPES getPanelType() {
 			return panel_type; 
+		}
+
+		public void showWorkersTable(WorkersTableObject table) {
+			// TODO Auto-generated method stub			
+		}
+
+		public void showRoomsTable(RoomsTableObject table) {
+			// TODO Auto-generated method stub			
 		}
 }

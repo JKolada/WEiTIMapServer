@@ -2,7 +2,9 @@ package org.weiti_map;
 
 import javax.swing.table.TableModel;
 
-public class CustomPlanTableModel extends DefaultPlanTableModel	implements TableModel {
+import org.weiti_map.GroupPlanObject;
+
+public class CustomPlanTableModel extends PlanTableModel implements TableModel {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -10,5 +12,4 @@ public class CustomPlanTableModel extends DefaultPlanTableModel	implements Table
 		super();
 		plan.fillData(data, plan, parzystosc);	
 	}	
-
 }
