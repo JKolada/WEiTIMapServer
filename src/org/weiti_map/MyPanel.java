@@ -54,6 +54,8 @@ public class MyPanel extends JPanel {
 				showPanel = new MyShowPanel(mDatabase, type);
 				showWorkers();
 				break;
+			default:
+				break;
 		}
 		add(showPanel, "wrap");
 		revalidate();

@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import org.weiti_map.MyShowPanel.SHOW_PANEL_TYPES;

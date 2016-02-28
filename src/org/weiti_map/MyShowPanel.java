@@ -17,6 +17,7 @@ public class MyShowPanel extends JPanel {
 	private PlanTablePanel tablePanelN;
 	private RoomsTablePanel roomsTable;
 //	private WorkersTablePanel workersTable;
+//	private LecturesTablePanel lecturesTable;
 	
 	   MyShowPanel(MyDatabase mDB, SHOW_PANEL_TYPES type) {
 			super();			
@@ -34,7 +35,7 @@ public class MyShowPanel extends JPanel {
 				add(tablePanelP);
 				add(tablePanelN);
 				break;
-			case WORKERS_TABLE:				
+			case WORKERS_TABLE:
 				break;
 			case ROOMS_TABLE:
 				roomsTable = new RoomsTablePanel(mDatabase.getRoomsTableObject());				

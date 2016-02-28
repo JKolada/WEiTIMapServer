@@ -87,13 +87,32 @@ public final class MyDatabaseUtilities {
 	"LEFT JOIN tb_sale c  	ON (a.sala_id = c.sala_id) " +
 	"LEFT JOIN tb_dni_tyg d  ON (a.dzien_tyg_id = d.dzien_tyg_id) " +
 	"LEFT JOIN tb_godziny e  ON (a.godz_id = e.godz_id) " +
-	"LEFT JOIN tb_zajecia f  ON (a.id_zajec = f.id_zajec)";
+	"LEFT JOIN tb_zajecia f  ON (a.id_zajec = f.id_zajec)";	
 	
+	public final static String CREATE_LECTURES_VIEW =
+	"CREATE VIEW IF NOT EXISTS VW_LECTURES " +
+	"AS SELECT a.id_zajec, a.skrot_nazwy_zajec, a.nazwa_zajec, a.id_wykladowcy, b.imie, b.nazwisko " +
+	"FROM tb_zajecia a " +
+	"LEFT JOIN tb_pracownicy b " +
+	"ON (a.id_wykladowcy = b.pracownik_id)";
+	
+	public final static String CREATE_KONSULTACJE_VIEW =
+	"CREATE VIEW IF NOT EXISTS VW_KONSUL " +
+	"AS SELECT b.imie, b.nazwisko, c.nazwa_dnia, d.godziny, e.nazwa_sali " +
+	"FROM tb_plan_konsul a " +
+	"LEFT JOIN tb_pracownicy b ON (a.pracownik_id = b.pracownik_id) " +	
+	"LEFT JOIN tb_dni_tyg c ON (a.dzien_tyg_id = c.dzien_tyg_id) " +
+	"LEFT JOIN tb_godziny d ON (a.godz_id = d.godz_id) " +
+	"LEFT JOIN tb_sale e ON (a.sala_id = e.sala_id) ";		
 
 	public final static String PLAN_VIEW_COL_NAMES[] =
 		{"nazwa_grupy", "nazwa_sali", "nazwa_dnia", "godziny", "parzystosc", "nazwa_zajec", "rodz_zajec"};
-
 	
+	public final static String LECTURES_VIEW_COL_NAMES[] =
+		{"id_zajec", "skrot_nazwy_zajec", "nazwa_zajec", "id_wykladowcy", "imie", "nazwisko"};	
+
+	public final static String KONSUL_VIEW_COL_NAMES[] =
+		{"imie", "nazwisko", "nazwa_dnia", "godziny", "nazwa_sali"};
 	
 	// INSERTS // // // // // // // // // // // // // // // // // // // // // // //
 			
@@ -248,7 +267,7 @@ public final class MyDatabaseUtilities {
 	"AND c.godz_id =  16 " +
 	"AND d.skrot_nazwy_zajec = 'PPOM' AND e.nazwa_sali = 'DS202'";
 
-	public final static String[] TABLE_CREATES_STATEMENTS = {
+	public final static String[] CREATE_TABLE_STATEMENTS = {
 								CREATE_TB_PRACOWNICY,
 								CREATE_TB_GRUPY,
 								CREATE_TB_DNI_TYG,
@@ -256,7 +275,13 @@ public final class MyDatabaseUtilities {
 								CREATE_TB_SALE,
 								CREATE_TB_ZAJECIA,
 								CREATE_TB_PLAN,
-								CREATE_TB_PLAN_KONSUL,
+								CREATE_TB_PLAN_KONSUL
+							};
+	
+	public final static String[] CREATE_VIEW_STATEMENTS = {
+								CREATE_PLAN_VIEW,
+								CREATE_LECTURES_VIEW,
+								CREATE_KONSULTACJE_VIEW
 							};
 
 	public final static String[] INSERT_INTO_STATEMENT_LIST = {
@@ -288,6 +313,8 @@ public final class MyDatabaseUtilities {
 								"tb_plan",
 								"tb_plan_konsul"
 							};
+	
+	public final static String[] VIEW_NAMES = {"vw_plan", "vw_lectures", "vw_konsul"};						
 
 	public final static String[] INSERT_STATEMENT_NAMES = {
 								"TB_DNI_TYG_INSERTS",
