@@ -74,15 +74,16 @@ public class MyPanel extends JPanel {
     }
 
 	private void showWorkers() {
-		WorkersTableObject table = mDatabase.getWorkersTableObject();
-		showPanel.showWorkersTable(table);
+//		WorkersTableObject table = mDatabase.getWorkersTableObject();
+//		showPanel.showWorkersTable(table);
 		refillPanel(SHOW_PANEL_TYPES.WORKERS_TABLE);
 	}
 
 
 	void showRooms() {
-		RoomsTableObject table = mDatabase.getRoomsTableObject();
-		showPanel.showRoomsTable(table);
+//		RoomsTableObject table = mDatabase.getRoomsTableObject();
+//		CustomTableObject<RoomObj> table = mDatabase.getRoomsTableObject();
+//		showPanel.vshowRoomsTable(table);
 		refillPanel(SHOW_PANEL_TYPES.ROOMS_TABLE);
 	}        
 	

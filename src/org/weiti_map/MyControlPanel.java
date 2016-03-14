@@ -11,10 +11,6 @@ import javax.swing.JRadioButton;
 import net.miginfocom.swing.MigLayout;
 
 public class MyControlPanel extends JPanel {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -204928193180502263L;
 
 	private final String[] viewsNames = { "Plan zajêæ", "Zajêcia", "Pracownicy", "Sale" };

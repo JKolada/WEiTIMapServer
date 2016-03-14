@@ -12,9 +12,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 public class RoomsJTable extends JTable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private TableModel tableModel;
 

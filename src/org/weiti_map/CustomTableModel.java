@@ -3,29 +3,25 @@ package org.weiti_map;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-public class RoomTableModel extends AbstractTableModel implements TableModel {	
+public class CustomTableModel<TableObjectClass extends AbstractTableObject> extends AbstractTableModel implements TableModel {	
 	
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = -5198952496046156405L;
 	private final int JTABLE_ROW_NUM;		
-	private final int JTABLE_COLS_NUM = 5;
+	private final int JTABLE_COLS_NUM;
 	
 	private String[][] data;
 	
-	private final static String[] COLUMNS = 
-		{"ID",
-		 "Nazwa Sali",
-		 "Piêtro",
-		 "X",
-		 "Y",
-		 " "};
+	private static String[] COLUMNS;
 	
-	
-	public RoomTableModel(RoomsTableObject rooms) {
+	CustomTableModel(int ColCount, String[] ColNames, TableObjectClass tabObj) {
 		super();
-		JTABLE_ROW_NUM = rooms.getRowCount();
+		JTABLE_COLS_NUM = ColCount;
+		JTABLE_ROW_NUM = tabObj.getRowCount();
+		COLUMNS = new String[ColCount + 1];
+		System.arraycopy(ColNames, 0, COLUMNS, 0, ColNames.length);
+		COLUMNS[ColCount] = " ";
 		data = new String[JTABLE_ROW_NUM][JTABLE_COLS_NUM];
-		rooms.fillData(data);
+		tabObj.fillData(data);
 	}
 
 	public String getColumnName(int col) {

@@ -240,13 +240,39 @@ public class MyDatabase extends SQLiteDataSource{
     	}
 	    return workersTable;
 	 }
-
-	RoomsTableObject getRoomsTableObject() {
+//
+//	RoomsTableObject getRoomsTableObject() {
+//		String query = "SELECT * FROM tb_sale ORDER BY 1";
+//    	RoomsTableObject roomsTable = null;	
+//		try {
+//	    	ResultSet saleRS = mConnection.createStatement().executeQuery(query);
+//			roomsTable = new RoomsTableObject();
+//			if (!saleRS.isClosed()) {
+//			    while (saleRS.next()) {	 
+//			    	List<String> pojedyncza_sala = new ArrayList<String>();	
+//		    		for (int k = 0; k < 5; k++) {
+//		    			pojedyncza_sala.add(saleRS.getString(k+1));
+////		    			System.out.println(saleRS.getString(k+1));  //TO DELETE
+//		    		}
+//		    		roomsTable.add(new RoomObj((ArrayList<String>) pojedyncza_sala));		    	  	    	
+//		    	} 
+//		    		
+//			} else {
+//	    		System.out.println("Result set is null"); //TO DELETE
+//	    	}
+//		    saleRS.close();
+//	    } catch (SQLException e) {
+//    		e.printStackTrace();
+//    	}
+//	    return roomsTable;
+//	}	
+	
+	CustomTableObject<RoomObj> getRoomsTableObject() {		
 		String query = "SELECT * FROM tb_sale ORDER BY 1";
-    	RoomsTableObject roomsTable = null;	
+		CustomTableObject<RoomObj> roomsTable = null;	
 		try {
 	    	ResultSet saleRS = mConnection.createStatement().executeQuery(query);
-			roomsTable = new RoomsTableObject();
+			roomsTable = new CustomTableObject<RoomObj>(5);
 			if (!saleRS.isClosed()) {
 			    while (saleRS.next()) {	 
 			    	List<String> pojedyncza_sala = new ArrayList<String>();	
@@ -265,7 +291,7 @@ public class MyDatabase extends SQLiteDataSource{
     		e.printStackTrace();
     	}
 	    return roomsTable;
-	}	
+	}
 
 //	LecturesTableObject getLectureTableObject() { //TODO 
 //		String query = "SELECT * FROM VW_LECTURES ORDER BY 1";

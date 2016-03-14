@@ -6,60 +6,40 @@ import java.awt.Font;
 
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-public class PlanJTable extends JTable /* implements TableModelListener */{
+public class CustomJTable<TableModelClass, TableObjectClass> extends JTable {
 
-	private static final long serialVersionUID = 8925549787570334079L;
-	private TableModel tableModel;
-	private FilledPlanTableModel filledTableModel;
+	private static final long serialVersionUID = 1L;
+	private TableModelClass tableModel;
 
-	public PlanJTable() {
+	CustomJTable(TableObjectClass tableObj, TableModelClass tableMod) {
 		super();
-		tableModel = new PlanTableModel();
-		resetTable();
+		tableModel = tableMod;
+		setModel((javax.swing.table.TableModel) tableModel);
 		configure();
 	}
-
+	
 	private void configure() {
 		this.setFont(new Font("Arial", Font.BOLD, 15));
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//		setLayout(new BorderLayout());
 		
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		for (int i = 0; i < tableModel.getColumnCount(); i++) {
+		for (int i = 0; i < ((TableModel) tableModel).getColumnCount(); i++) {
 			getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 		}
 
 		setPreferredScrollableViewportSize(new Dimension(500, 70));
 		setFillsViewportHeight(true);
-	}
-
-	void setGroupPlan(GroupPlanObject plan, char parzystosc) {
-		filledTableModel = new FilledPlanTableModel(plan, parzystosc);
-
-		System.out.print("roftl");
-		filledTableModel.addTableModelListener(new TableModelListener() {
-			
-			@Override
-			public void tableChanged(TableModelEvent e) {
-				int row = e.getFirstRow();
-				int column = e.getColumn();
-//				FilledPlanTableModel model = (FilledPlanTableModel) e.getSource();
-				String columnName = tableModel.getColumnName(column);
-				String data = (String) tableModel.getValueAt(row, column);
-				System.out.print(data);
-				
-			}
-		});
-
-		setModel(filledTableModel);
+//        getSelectionModel().addListSelectionListener(new RowListener());
+//        getColumnModel().getSelectionModel().
+//            addListSelectionListener(new ColumnListener());
 	}
 	
 	@Override
@@ -70,9 +50,5 @@ public class PlanJTable extends JTable /* implements TableModelListener */{
         tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width + 10, tableColumn.getPreferredWidth()));
         return component;
     }
-
-	 void resetTable() {
-		setModel(tableModel);
-	}
 
 }

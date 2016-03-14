@@ -9,12 +9,13 @@ import net.miginfocom.swing.MigLayout;
 class RoomsTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private RoomsJTable roomTable;
+	private CustomJTable<RoomTableModel, RoomsTableObject> roomTable;
 	private JLabel label;
 	
 	RoomsTablePanel(RoomsTableObject roomsTableObject) {
 		super();
-		roomTable = new RoomsJTable(roomsTableObject);
+//		roomTable = new RoomsJTable(roomsTableObject);
+		roomTable = new CustomJTable<RoomTableModel, RoomsTableObject>(roomsTableObject, new RoomTableModel(roomsTableObject));
 		label = new JLabel("Sale");
 		configure();		
 	}
