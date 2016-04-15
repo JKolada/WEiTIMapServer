@@ -13,6 +13,8 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
+import org.weiti_map.db.GroupPlanObject;
+
 public class PlanJTable extends JTable /* implements TableModelListener */{
 
 	private static final long serialVersionUID = 8925549787570334079L;

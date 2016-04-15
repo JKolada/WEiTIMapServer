@@ -1,6 +1,6 @@
-package org.weiti_map;
+package org.weiti_map.db;
 
-public final class MyDatabaseUtilities {	
+public final class MyDatabaseUtilities {		
 	
 	// 'CREATE TABLES' STATEMENTS // // // // // // // //
 	

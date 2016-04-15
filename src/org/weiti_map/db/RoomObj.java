@@ -1,8 +1,8 @@
-package org.weiti_map;
+package org.weiti_map.db;
 
 import java.util.ArrayList;
 
-class RoomObj extends AbstractRowObject {
+public class RoomObj extends AbstractRowObject {
 	private String sala_id;
 	private String nazwa_sali;
 	private String piêtro_sali;

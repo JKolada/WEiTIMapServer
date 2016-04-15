@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import org.weiti_map.db.MyDatabase;
+
 import net.miginfocom.swing.MigLayout;
 
 public class MyControlPanel extends JPanel {

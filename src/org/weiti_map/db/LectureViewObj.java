@@ -1,6 +1,8 @@
-package org.weiti_map;
+package org.weiti_map.db;
 
 import java.util.ArrayList;
+
+import org.weiti_map.LectureParentObj;
 
 public class LectureViewObj extends LectureParentObj {
 
@@ -20,7 +22,7 @@ public class LectureViewObj extends LectureParentObj {
 		nazwisko_wyk³adowcy = poj_zajêcia.get(5);
 	}
 	
-	String[] getLectureData() {
+	protected String[] getLectureData() {
 		final String[] lectureData = {id_zajêæ, skrót_nazwy_zajêæ, nazwa_zajêæ, id_wyk³adowcy, imie_wyk³adowcy, nazwisko_wyk³adowcy}; 
 		return lectureData;
 	}

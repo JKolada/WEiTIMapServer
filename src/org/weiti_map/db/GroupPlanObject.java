@@ -1,4 +1,4 @@
-package org.weiti_map;
+package org.weiti_map.db;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class GroupPlanObject {
 		zajecia.add(myLecture);
 	}
 
-	void fillData(String[][] data, GroupPlanObject plan, char parzystosc) {
+	public void fillData(String[][] data, GroupPlanObject plan, char parzystosc) {
 		String[] poj_zaj_info = new String[6];
 		int row_no, col_no = 0;
 		char classesAreEven = 'X';

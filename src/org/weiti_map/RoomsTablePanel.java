@@ -3,6 +3,8 @@ package org.weiti_map;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.weiti_map.db.RoomsTableObject;
+
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
 

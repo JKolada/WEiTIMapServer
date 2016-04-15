@@ -11,6 +11,8 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
+import org.weiti_map.db.RoomsTableObject;
+
 public class RoomsJTable extends JTable {
 
 	private static final long serialVersionUID = 1L;

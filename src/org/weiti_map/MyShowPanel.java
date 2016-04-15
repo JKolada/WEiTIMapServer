@@ -2,6 +2,13 @@ package org.weiti_map;
 
 import javax.swing.JPanel;
 
+import org.weiti_map.db.CustomTableObject;
+import org.weiti_map.db.GroupPlanObject;
+import org.weiti_map.db.MyDatabase;
+import org.weiti_map.db.RoomObj;
+import org.weiti_map.db.RoomsTableObject;
+import org.weiti_map.db.WorkersTableObject;
+
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
 

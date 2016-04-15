@@ -1,4 +1,4 @@
-package org.weiti_map;
+package org.weiti_map.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,7 +16,7 @@ public class MyDatabase extends SQLiteDataSource{
 	private int db_errors_num = 0;
 	
 	
-	 MyDatabase() {
+	 public MyDatabase() {
 	      try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
@@ -172,7 +172,7 @@ public class MyDatabase extends SQLiteDataSource{
 		
 	}
 
-	String[] getGroupNames() {
+	public String[] getGroupNames() {
 		String query = "SELECT nazwa_grupy FROM tb_grupy";			
 		List<String> nazwy_grup = new ArrayList<String>();
 		try {					
@@ -187,7 +187,7 @@ public class MyDatabase extends SQLiteDataSource{
 		return nazwy_grup.toArray(new String[nazwy_grup.size()]);
 	}
 	
-	GroupPlanObject getGroupPlanObject(String group_name) {
+	public GroupPlanObject getGroupPlanObject(String group_name) {
 		String query = "SELECT * FROM vw_plan WHERE nazwa_grupy = '" + group_name +"'";
 		GroupPlanObject groupObject = null;
 //		List<String> pojedyncze_zajecia = new ArrayList<String>();		
@@ -215,7 +215,7 @@ public class MyDatabase extends SQLiteDataSource{
 	}
 
 
-	 WorkersTableObject getWorkersTableObject() {
+	 public WorkersTableObject getWorkersTableObject() {
 		String query = "SELECT * FROM tb_pracownicy ORDER BY 1";
     	WorkersTableObject workersTable = null;	
 		try {
@@ -267,7 +267,7 @@ public class MyDatabase extends SQLiteDataSource{
 //	    return roomsTable;
 //	}	
 	
-	CustomTableObject<RoomObj> getRoomsTableObject() {		
+	public CustomTableObject<RoomObj> getRoomsTableObject() {		
 		String query = "SELECT * FROM tb_sale ORDER BY 1";
 		CustomTableObject<RoomObj> roomsTable = null;	
 		try {

@@ -1,4 +1,4 @@
-package org.weiti_map;
+package org.weiti_map.db;
 
 import java.util.ArrayList;
 

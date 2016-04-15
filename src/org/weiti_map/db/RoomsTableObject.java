@@ -1,4 +1,4 @@
-package org.weiti_map;
+package org.weiti_map.db;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class RoomsTableObject extends AbstractTableObject{
 		sala.add(room);
 	}
 
-	void fillData(String[][] data) {
+	public void fillData(String[][] data) {
 		String[] poj_sala = new String[5];
 		int row_no = 0;
 		
@@ -30,7 +30,7 @@ public class RoomsTableObject extends AbstractTableObject{
 		
 	}
 
-	int getRowCount() {
+	public int getRowCount() {
 		return sala.size();
 	}
 

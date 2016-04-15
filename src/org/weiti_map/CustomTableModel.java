@@ -3,6 +3,8 @@ package org.weiti_map;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
+import org.weiti_map.db.AbstractTableObject;
+
 public class CustomTableModel<TableObjectClass extends AbstractTableObject> extends AbstractTableModel implements TableModel {	
 	
 	private static final long serialVersionUID = -5198952496046156405L;
