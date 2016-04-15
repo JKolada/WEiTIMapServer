@@ -4,6 +4,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.weiti_map.db.RoomsTableObject;
+import org.weiti_map.table_models.RoomTableModel;
 
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;

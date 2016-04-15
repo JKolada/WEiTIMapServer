@@ -1,4 +1,4 @@
-package org.weiti_map;
+package org.weiti_map.table_models;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -34,7 +34,7 @@ public class PlanTableModel extends AbstractTableModel {
 				 "18:15-19:00",
 				 "19:15-20:00"};
 		
-		PlanTableModel() {
+		public PlanTableModel() {
 			super();
 			for (int i = 0; i < 12; i++) {
 				data[i][0] = GODZINY[i];		

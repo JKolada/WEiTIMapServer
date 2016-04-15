@@ -14,6 +14,8 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import org.weiti_map.db.GroupPlanObject;
+import org.weiti_map.table_models.FilledPlanTableModel;
+import org.weiti_map.table_models.PlanTableModel;
 
 public class PlanJTable extends JTable /* implements TableModelListener */{
 

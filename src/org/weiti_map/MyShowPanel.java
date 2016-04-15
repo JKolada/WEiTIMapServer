@@ -8,6 +8,8 @@ import org.weiti_map.db.MyDatabase;
 import org.weiti_map.db.RoomObj;
 import org.weiti_map.db.RoomsTableObject;
 import org.weiti_map.db.WorkersTableObject;
+import org.weiti_map.table_models.CustomTableModel;
+import org.weiti_map.table_models.WorkersTableModel;
 
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;

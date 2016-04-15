@@ -1,4 +1,4 @@
-package org.weiti_map;
+package org.weiti_map.table_models;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
@@ -15,7 +15,7 @@ public class CustomTableModel<TableObjectClass extends AbstractTableObject> exte
 	
 	private static String[] COLUMNS;
 	
-	CustomTableModel(int ColCount, String[] ColNames, TableObjectClass tabObj) {
+	public CustomTableModel(int ColCount, String[] ColNames, TableObjectClass tabObj) {
 		super();
 		JTABLE_COLS_NUM = ColCount;
 		JTABLE_ROW_NUM = tabObj.getRowCount();

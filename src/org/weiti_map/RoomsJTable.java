@@ -12,6 +12,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import org.weiti_map.db.RoomsTableObject;
+import org.weiti_map.table_models.RoomTableModel;
 
 public class RoomsJTable extends JTable {
 

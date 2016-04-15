@@ -1,30 +1,33 @@
-package org.weiti_map;
+package org.weiti_map.table_models;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-import org.weiti_map.db.WorkersTableObject;
+import org.weiti_map.db.RoomsTableObject;
 
-public class WorkersTableModel extends AbstractTableModel implements TableModel {	
+public class RoomTableModel extends AbstractTableModel implements TableModel {	
 	
-	private static final long serialVersionUID = 4812024452486877443L;
+	private static final long serialVersionUID = 1L;
+	
 	private final int JTABLE_ROW_NUM;		
-	private final int JTABLE_COLS_NUM = 3;
+	private final int JTABLE_COLS_NUM = 5;
 	
 	private String[][] data;
 	
 	private final static String[] COLUMNS = 
 		{"ID",
-		 "Imiê",
-		 "Nazwisko",
+		 "Nazwa Sali",
+		 "Piêtro",
+		 "X",
+		 "Y",
 		 " "};
 	
 	
-	public WorkersTableModel(WorkersTableObject workers) {
+	public RoomTableModel(RoomsTableObject rooms) {
 		super();
-		JTABLE_ROW_NUM = workers.getRowCount();
+		JTABLE_ROW_NUM = rooms.getRowCount();
 		data = new String[JTABLE_ROW_NUM][JTABLE_COLS_NUM];
-		workers.fillData(data);
+		rooms.fillData(data);
 	}
 
 	public String getColumnName(int col) {
