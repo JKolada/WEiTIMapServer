@@ -1,5 +1,6 @@
 package org.weiti_map;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import org.weiti_map.db.CustomTableObject;
@@ -24,10 +25,12 @@ public class MyShowPanel extends JPanel {
 	private MyDatabase mDatabase;
 	private PlanTablePanel tablePanelP;
 	private PlanTablePanel tablePanelN;
-//	private CustomTablePanel<CustomTableModel<RoomsTableObject>, RoomsTableObject> roomsTable;
 
+//	private CustomTablePanel<CustomTableModel<RoomsTableObject>, RoomsTableObject> roomsTable;
 	private CustomTablePanel<CustomTableModel<CustomTableObject<RoomObj>>, CustomTableObject<RoomObj>> roomsTable;
+	
 	private CustomTablePanel<WorkersTableModel, WorkersTableObject> workersTable;
+	
 //	private LecturesTablePanel lecturesTable;
 	
 	   MyShowPanel(MyDatabase mDB, SHOW_PANEL_TYPES type) {
@@ -44,8 +47,8 @@ public class MyShowPanel extends JPanel {
 			
 			switch (panel_type) {
 			case GROUP_TABLES:
-				tablePanelP = new PlanTablePanel('P');
-				tablePanelN = new PlanTablePanel('N');	
+				tablePanelP = new PlanTablePanel(mDatabase, 'P');
+				tablePanelN = new PlanTablePanel(mDatabase, 'N');
 				add(tablePanelP);
 				add(tablePanelN);
 				break;

@@ -12,6 +12,7 @@ public class CustomTableModel<TableObjectClass extends AbstractTableObject> exte
 	private final int JTABLE_COLS_NUM;
 	
 	private String[][] data;
+	//asdas
 	
 	private static String[] COLUMNS;
 	
@@ -31,7 +32,7 @@ public class CustomTableModel<TableObjectClass extends AbstractTableObject> exte
     }	
 
 	public Class<?> getColumnClass(int c) {
-        return String.class;
+        return getValueAt(0, c).getClass();
     }
 	
     @Override
@@ -54,7 +55,7 @@ public class CustomTableModel<TableObjectClass extends AbstractTableObject> exte
         return data[row][col];
 	}	
 	
-	void setValueAt(String text, int row, int col) {
+	public void setValueAt(String text, int row, int col) {
 		data[row][col] = text;
         fireTableCellUpdated(row, col);
     }

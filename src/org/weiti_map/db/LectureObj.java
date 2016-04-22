@@ -26,13 +26,13 @@ public class LectureObj extends LectureParentObj{
 		return lectureData;
 	}
 	
-	char isEven() {
+	Boolean isEven() {
 		if (parzystoœæ.charAt(0) == 'P') {
-			return 'Y';
+			return true;
 		} else if (parzystoœæ.charAt(0) == 'N') {
-			return 'N';
+			return false;
 		} else {
-			return 'X';
+			return null;
 		}
 	}
 

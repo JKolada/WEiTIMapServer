@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.sqlite.SQLiteDataSource;
 
@@ -45,8 +47,7 @@ public class MyDatabase extends SQLiteDataSource{
 	Boolean isSet() {
 		return isSet;
 	}
-	
-	
+		
 	private int setDatabase() {
 			
 			int k = 0;
@@ -292,6 +293,61 @@ public class MyDatabase extends SQLiteDataSource{
     	}
 	    return roomsTable;
 	}
+
+	public void addGroup(String groupName) {		
+		String query = "INSERT INTO tb_grupy (nazwa_grupy) VALUES ('" + groupName + "')";		
+		executeQuery(query);		
+	}
+
+	public void removeGroup(String groupName) {
+		String query = "DELETE FROM tb_plan WHERE grupa_id = (SELECT grupa_id FROM tb_grupy WHERE nazwa_grupy = '" + groupName + "')";		
+		executeQuery(query);				
+		query = "DELETE FROM tb_grupy WHERE nazwa_grupy = '" + groupName + "'";		
+		executeQuery(query);	
+	}
+
+	public void updatePlanCell(int row, int col, GroupPlanObject planObject, char p, String cellValue) {
+				
+		if (cellValue == null) {		//
+			String nazwa_grupy = planObject.getGroupName();			
+	
+			String query = "DELETE FROM tb_plan WHERE 1=1 " +
+					        "AND grupa_id = (SELECT grupa_id FROM tb_grupy WHERE nazwa_grupy = '" + nazwa_grupy +"') "+
+							"AND dzien_tyg_id  = " + (col) + " " +
+							"AND godz_id = " + (row+8) + " " +
+							"AND parzystosc IN ('" + p +"', 'X')";
+			executeQuery(query);
+			
+		} else {
+			Pattern pattern = Pattern.compile("([A-Z]+)[ ]([WLCR])[ ]([0-9A-Z-]+)");
+			Matcher m = pattern.matcher(cellValue);
+			m.matches();
+			
+			String nazwa_zajec = m.group(1);
+			String rodzaj_zajec = m.group(2);
+			String nazwa_sali = m.group(3);
+			
+			String query =
+					"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, rodz_zajec, sala_id, parzystosc) " +
+					"SELECT a.grupa_id, " + (col) + ", " + (row+8) + ", d.id_zajec, '" + rodzaj_zajec + "', e.sala_id, '" + p + "' " +
+					"FROM tb_grupy a, tb_zajecia d, tb_sale e " +
+					"WHERE a.nazwa_grupy = '" + planObject.getGroupName() + "' " +
+					"AND d.skrot_nazwy_zajec = '" + nazwa_zajec + "' " +
+					"AND e.nazwa_sali = '" + nazwa_sali +"'";
+
+			executeQuery(query);
+		};		
+	}
+	
+		private void executeQuery(String query) {
+		try {
+    		mConnection.createStatement().executeUpdate(query);
+	    	System.out.println("\'" + query  + "\' succesfully executed." );	    
+		} catch (SQLException e) {
+			System.out.println("\'" + query  + "\' failed. StackTrace:" );	    
+			e.printStackTrace();
+		}			
+	}	
 
 //	LecturesTableObject getLectureTableObject() { //TODO 
 //		String query = "SELECT * FROM VW_LECTURES ORDER BY 1";

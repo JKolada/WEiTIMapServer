@@ -11,7 +11,7 @@ public class MyGUI {
 
     @SuppressWarnings("unused")
 	private static JFrame frame;
-	
+    	
 	MyGUI(MyDatabase DB) {
 		mDB = DB;
 	}

@@ -4,6 +4,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.weiti_map.db.GroupPlanObject;
+import org.weiti_map.db.MyDatabase;
 
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
@@ -14,17 +15,19 @@ class PlanTablePanel extends JPanel {
 	private char parzystosc;
 	private PlanJTable planTable;
 	private JLabel parzystoscLabel;
+	private MyDatabase mDB;
 	
-	PlanTablePanel(char _parzystosc) {
+	PlanTablePanel(MyDatabase mDatabase, char _parzystosc) {
 		super();
+		mDB = mDatabase;
 		parzystosc = _parzystosc;		
-		planTable = new PlanJTable();
+		planTable = new PlanJTable(mDB);
 		parzystoscLabel = new JLabel();
 		configure();		
 	}
 
 	void setGroupPlan(GroupPlanObject plan) {
-		 planTable.setGroupPlan(plan, parzystosc);		 
+		 planTable.setGroupPlan(plan, parzystosc); 
 	}	
 
 	void resetTable() {

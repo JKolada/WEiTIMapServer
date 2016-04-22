@@ -46,16 +46,14 @@ public class PlanTableModel extends AbstractTableModel {
 			return DNI_TYGODNIA[col];
 	    }
 		
+		@Override
 		public Class<?> getColumnClass(int c) {
-            return String.class;
+			return String.class;
         }
 		
 	    @Override
 	    public boolean isCellEditable(int row, int column) {
-	    	if ((column == 0) && (row < 13)) {
-		       return false;
-	    	}
-	    	return true;
+	    	return false;
 	    }
 
 		@Override
@@ -73,8 +71,9 @@ public class PlanTableModel extends AbstractTableModel {
             return data[row][col];
 		}
 		
-		void setValueAt(String text, int row, int col) {
-			data[row][col] = text;
+		@Override
+		public void setValueAt(Object value, int row, int col) {
+			data[row][col] = (String) value;
             fireTableCellUpdated(row, col);
         }
 		

@@ -3,6 +3,7 @@ package org.weiti_map;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 
@@ -21,7 +22,7 @@ public class MainViewsComboBox extends JComboBox<String> {
 		typeJPanel = tableTypeJPanel;
 		myGrandPanel = myPanel;
 		myParentPanel = myControlPanel;
-		showDataRadioButton = myControlPanel.getShowDataRadioButton();	
+//		showDataRadioButton = myControlPanel.getShowDataRadioButton();	
 		configure();
 	}
 	
@@ -51,12 +52,16 @@ public class MainViewsComboBox extends JComboBox<String> {
 						break;
 					case "Sale":
 						typeJPanel.setVisible(false);
-						if (showDataRadioButton.isSelected()) {
+//						if (showDataRadioButton.isSelected()) {
 							myGrandPanel.refillPanel(SHOW_PANEL_TYPES.ROOMS_TABLE);
-						}
+//						}
 						break;
 				}
 			}
 		});
 	}
+	
+	
+	
+	
 }

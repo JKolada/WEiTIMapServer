@@ -16,11 +16,6 @@ public class MyPanel extends JPanel {
 	private MyControlPanel controlPanel;
 	private MyShowPanel showPanel;
 	
-//	private JTextArea groupNameJTextArea = new JTextArea("Nazwa grupy:");
-//	private JTextField groupNameJTextField = new JTextField("wprowadü nazwÍ");
-//	private JButton insertJButton = new JButton("Wprowadü dane");
-
-//	private JTextField logJTextField = new JTextField("Log programu");
 	
     MyPanel(MyDatabase mDB) {
 		super();
@@ -34,7 +29,6 @@ public class MyPanel extends JPanel {
 		
 //    	setOpaque(true);
 //		groupNameJTextField.setForeground(Color.GRAY);
-
 		
 		showGroupPlan();
 //		insertJButton.setPreferredSize(new Dimension(50, 20));
@@ -53,7 +47,7 @@ public class MyPanel extends JPanel {
 				break;
 			case ROOMS_TABLE:
 				showPanel = new MyShowPanel(mDatabase, type);
-				showWorkers();
+//				showWorkers();
 				break;
 			default:
 				break;
