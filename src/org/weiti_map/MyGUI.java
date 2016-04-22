@@ -2,6 +2,8 @@ package org.weiti_map;
 
 import javax.swing.JFrame;
 
+import org.weiti_map.db.MyDatabase;
+
 public class MyGUI {	
 
 	private static MyDatabase mDB;
@@ -9,7 +11,7 @@ public class MyGUI {
 
     @SuppressWarnings("unused")
 	private static JFrame frame;
-	
+    	
 	MyGUI(MyDatabase DB) {
 		mDB = DB;
 	}

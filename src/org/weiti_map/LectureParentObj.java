@@ -4,5 +4,5 @@ public abstract class LectureParentObj {
 	
 	protected String skrót_nazwy_zajêæ;	
 	
-	abstract String[] getLectureData();
+	protected abstract String[] getLectureData();
 }

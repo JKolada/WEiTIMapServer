@@ -3,26 +3,31 @@ package org.weiti_map;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.weiti_map.db.GroupPlanObject;
+import org.weiti_map.db.MyDatabase;
+
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
 
-class MyTablePanel extends JPanel {
+class PlanTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private char parzystosc;
-	private MyJTable planTable;
+	private PlanJTable planTable;
 	private JLabel parzystoscLabel;
+	private MyDatabase mDB;
 	
-	MyTablePanel(char _parzystosc) {
+	PlanTablePanel(MyDatabase mDatabase, char _parzystosc) {
 		super();
+		mDB = mDatabase;
 		parzystosc = _parzystosc;		
-		planTable = new MyJTable();
+		planTable = new PlanJTable(mDB);
 		parzystoscLabel = new JLabel();
 		configure();		
 	}
 
 	void setGroupPlan(GroupPlanObject plan) {
-		 planTable.setGroupPlan(plan, parzystosc);		 
+		 planTable.setGroupPlan(plan, parzystosc); 
 	}	
 
 	void resetTable() {

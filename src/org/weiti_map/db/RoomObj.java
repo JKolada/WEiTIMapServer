@@ -1,8 +1,8 @@
-package org.weiti_map;
+package org.weiti_map.db;
 
 import java.util.ArrayList;
 
-class RoomObj {
+public class RoomObj extends AbstractRowObject {
 	private String sala_id;
 	private String nazwa_sali;
 	private String piêtro_sali;
@@ -18,10 +18,9 @@ class RoomObj {
 		mapa_y = poj_sala.get(4);
 	}
 	
-	String[] getRoomData() {
+	String[] getData() {
 		final String[] roomData = {sala_id, nazwa_sali, piêtro_sali, mapa_x, mapa_y};
 		return roomData;
-	}
-	
+	}	
 
 }

@@ -1,5 +1,7 @@
 package org.weiti_map;
 
+import org.weiti_map.db.*;
+
 public class WEITImap {
 	
 	@SuppressWarnings("unused")
