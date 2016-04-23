@@ -1,11 +1,12 @@
 package org.weiti_map.db;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class GroupPlanObject {
+public class GroupPlanObject implements Serializable{
+	
+	private static final long serialVersionUID = 2366854110722067579L;
 	
 	private char parzystosc_tabeli;
 	private final String nazwa_grupy;	
