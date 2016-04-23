@@ -12,12 +12,13 @@ public class MyFrame extends JFrame {
 	
 	public MyFrame(MyDatabase mDB) {
 		super("WEiTIstrator");		
-		add(new MyPanel(mDB));
+		add(new MyPanel(mDB, this));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(450,500); //TODO
 		setMinimumSize(new Dimension(1000, 600));
         pack();
 		setVisible(true);	        
+		
 		
 	}
 }

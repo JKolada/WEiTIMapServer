@@ -15,8 +15,7 @@ public class MyDatabase extends SQLiteDataSource{
 	
 	private Boolean isSet = false;
 	private Connection mConnection = null;
-	private int db_errors_num = 0;
-	
+	private int db_errors_num = 0;	
 	
 	 public MyDatabase() {
 	      try {
@@ -43,6 +42,18 @@ public class MyDatabase extends SQLiteDataSource{
 	      }	      
 	      
 	}
+	 
+	public void close() {
+		 if (mConnection != null) {
+			 try {
+				mConnection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 }
+	}
+	 
 	
 	Boolean isSet() {
 		return isSet;

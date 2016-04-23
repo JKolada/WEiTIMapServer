@@ -1,5 +1,7 @@
 package org.weiti_map;
 
+import java.awt.event.WindowEvent;
+
 import javax.swing.JPanel;
 
 import org.weiti_map.MyShowPanel.SHOW_PANEL_TYPES;
@@ -13,15 +15,26 @@ public class MyPanel extends JPanel {
 	private static final long serialVersionUID = 5169492090332131771L;
 	private MyDatabase mDatabase;
 
+	private MyFrame myParent;
+	
 	private MyControlPanel controlPanel;
 	private MyShowPanel showPanel;
+	private MyServerPanel serverPanel;
 	
-	
-    MyPanel(MyDatabase mDB) {
+    MyPanel(MyDatabase mDB, MyFrame myFrame) {
 		super();
 		mDatabase = mDB;
+		myParent = myFrame;
 		controlPanel = new MyControlPanel(this, mDatabase);
 		showPanel = new MyShowPanel(mDatabase, SHOW_PANEL_TYPES.GROUP_TABLES);
+		serverPanel = new MyServerPanel(mDatabase);
+		
+		myParent.addWindowListener(new java.awt.event.WindowAdapter() {
+	        public void windowClosing(WindowEvent winEvt) {
+	            mDB.close();
+	            serverPanel.closeServer();
+	        }
+	    });		
 
 		LC layoutConstraints = new LC();
 		layoutConstraints.setFillX(true);
@@ -39,6 +52,7 @@ public class MyPanel extends JPanel {
     
     void refillPanel(SHOW_PANEL_TYPES type) {
     	removeAll();
+		add(serverPanel, "wrap");
 		add(controlPanel, "wrap");
 		
 		switch (type) {
