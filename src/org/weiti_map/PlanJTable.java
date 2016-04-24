@@ -1,8 +1,6 @@
 package org.weiti_map;
 
-import org.weiti_map.*;
 import java.awt.Component;
-
 import java.awt.Dimension;
 import java.awt.Font;
 

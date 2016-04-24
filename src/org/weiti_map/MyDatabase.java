@@ -36,7 +36,9 @@ public class MyDatabase extends SQLiteDataSource{
 	      resetDB();
 	      checkTables(true);
 	      setDatabase();
-	      isSet = true; //TODO
+	      if (db_errors_num == 0) {
+	    	  isSet = true; //TODO
+	      }	      
 	      
 	}
 	
@@ -48,7 +50,7 @@ public class MyDatabase extends SQLiteDataSource{
 	private int setDatabase() {
 			
 			int k = 0;
-			for (String i: MyDatabaseUtilities.TABLE_CREATES_STATEMENTS) {
+			for (String i: MyDatabaseUtilities.CREATE_TABLE_STATEMENTS) {
 				
 		    	try {
 		    		mConnection.createStatement().executeUpdate(i);
@@ -61,16 +63,20 @@ public class MyDatabase extends SQLiteDataSource{
 		    	k++;
 			}   
 			
-			try {
-				mConnection.createStatement().executeUpdate(MyDatabaseUtilities.CREATE_PLAN_VIEW);
-		    	System.out.println("VW_PLAN succesfully created or it exists." );
-		    	
-			} catch (SQLException e) {
-				System.out.println("VW_PLAN creation failed. StackTrace:" );		
-				e.printStackTrace();
-				db_errors_num++ ;
-			}  	
-			
+			k = 0;
+			for (String i: MyDatabaseUtilities.CREATE_VIEW_STATEMENTS) {
+				
+		    	try {
+		    		mConnection.createStatement().executeUpdate(i);
+			    	System.out.println("View " + MyDatabaseUtilities.VIEW_NAMES[k]+ " succesfully created or it exists." );	    
+				} catch (SQLException e) {
+					System.out.println("View " + MyDatabaseUtilities.VIEW_NAMES[k] + " creation failed. StackTrace:" );		
+					e.printStackTrace();
+					db_errors_num++ ;
+				}
+		    	k++;
+			}
+						
 			k = 0;
 			for (String i: MyDatabaseUtilities.INSERT_INTO_STATEMENT_LIST) {
 		    	try {
@@ -146,19 +152,21 @@ public class MyDatabase extends SQLiteDataSource{
 				mConnection.createStatement().execute("DROP TABLE " + i);
 				System.out.println("Table '" + i + "' has been dropped succesfully");
 			} catch (SQLException e) {
-				System.out.println("Error: SQL Statement 'DROP TABLE " + i + "' failed. StackTrace:");
+				System.out.println("Error: SQL Statement 'DROP TABLE '" + i + "' failed. StackTrace:");
 				e.printStackTrace();
 				db_errors_num++ ;
 			}
 		}
 		
-		try {
-			mConnection.createStatement().execute("DROP VIEW VW_PLAN");
-			System.out.println("View VW_PLAN has been dropped succesfully");
-		} catch (SQLException e) {
-			System.out.println("Error: SQL Statement 'DROP VIEW VW_PLAN' failed. StackTrace:");
-			e.printStackTrace();
-			db_errors_num++ ;
+		for(String i: MyDatabaseUtilities.VIEW_NAMES) {
+			try {
+				mConnection.createStatement().execute("DROP VIEW " + i);
+				System.out.println("View '" + i + "' has been dropped succesfully");
+			} catch (SQLException e) {
+				System.out.println("Error: SQL Statement 'DROP VIEW '" + i + "' failed. StackTrace:");
+				e.printStackTrace();
+				db_errors_num++ ;
+			}
 		}
 		
 		
@@ -193,7 +201,7 @@ public class MyDatabase extends SQLiteDataSource{
 		    			pojedyncze_zajecia.add(zajeciaRS.getString(k));
 //		    			System.out.println(zajeciaRS.getString(k));  //TO DELETE
 		    		}
-		    		groupObject.add(new LectureViewObj((ArrayList<String>) pojedyncze_zajecia));		    	  	    	
+		    		groupObject.add(new LectureObj((ArrayList<String>) pojedyncze_zajecia));		    	  	    	
 		    	} 
 		    		
 			} else {
@@ -257,7 +265,59 @@ public class MyDatabase extends SQLiteDataSource{
     		e.printStackTrace();
     	}
 	    return roomsTable;
-	}
+	}	
+
+//	LecturesTableObject getLectureTableObject() { //TODO 
+//		String query = "SELECT * FROM VW_LECTURES ORDER BY 1";
+//		LecturesTableObject lecturesTable = null;	
+//		try {
+//	    	ResultSet lecturesRS = mConnection.createStatement().executeQuery(query);
+//			lecturesTable = new LecturesTableObject();
+//			if (!lecturesRS.isClosed()) {
+//			    while (lecturesRS.next()) {	 
+//			    	List<String> pojedyncze_zajecia = new ArrayList<String>();	
+//		    		for (int k = 0; k < 6; k++) {
+//		    			pojedyncze_zajecia.add(lecturesRS.getString(k+1));
+////		    			System.out.println(lecturesRS.getString(k+1));  //TO DELETE
+//		    		}
+//		    		lecturesTable.add(new RoomObj((ArrayList<String>) pojedyncze_zajecia );		    	  	    	
+//		    	} 
+//		    		
+//			} else {
+//	    		System.out.println("Result set is null"); //TO DELETE
+//	    	}
+//		    lecturesRS.close();
+//	    } catch (SQLException e) {
+//    		e.printStackTrace();
+//    	}
+//	    return lecturesTable;
+//	}
+	
+//	KonsulTableObject getKonsulTableObject() { //TODO 
+//		String query = "SELECT * FROM VW_KONSUL ORDER BY 1";
+//		KonsulTableObject konsulTable = null;	
+//		try {
+//	    	ResultSet konsulRS = mConnection.createStatement().executeQuery(query);
+//			konsulTable = new KonsulTableObject();
+//			if (!konsulRS.isClosed()) {
+//			    while (konsulRS.next()) {	 
+//			    	List<String> pojedyncze_konsul = new ArrayList<String>();	
+//		    		for (int k = 0; k < 6; k++) {
+//		    			pojedyncze_konsul.add(konsulRS.getString(k+1));
+////		    			System.out.println(konsulRS.getString(k+1));  //TO DELETE
+//		    		}
+//		    		konsulTable.add(new KonsulObj((ArrayList<String>) pojedyncze_konsul );		    	  	    	
+//		    	} 
+//		    		
+//			} else {
+//	    		System.out.println("Result set is null"); //TO DELETE
+//	    	}
+//		    konsulRS.close();
+//	    } catch (SQLException e) {
+//   		e.printStackTrace();
+//   	}
+//	    return konsulTable;
+//	}
 	
 }
 

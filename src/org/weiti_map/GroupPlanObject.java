@@ -6,7 +6,7 @@ import java.util.List;
 public class GroupPlanObject {
 	
 	private final String nazwa_grupy;	
-	private final List<LectureViewObj> zajecia = new ArrayList<LectureViewObj>();
+	private final List<LectureObj> zajecia = new ArrayList<LectureObj>();
 	
 	GroupPlanObject(String nazwa_gr) {
 		nazwa_grupy = nazwa_gr;	     
@@ -20,7 +20,7 @@ public class GroupPlanObject {
 		return nazwa_grupy;
 	}
 
-	void add(LectureViewObj myLecture) {
+	void add(LectureObj myLecture) {
 		zajecia.add(myLecture);
 	}
 
@@ -29,7 +29,7 @@ public class GroupPlanObject {
 		int row_no, col_no = 0;
 		char classesAreEven = 'X';
 		
-		for (LectureViewObj poj_zaj: zajecia) {			
+		for (LectureObj poj_zaj: zajecia) {			
 			switch (poj_zaj.isEven()) {
 				case 'Y':
 					classesAreEven = 'P';

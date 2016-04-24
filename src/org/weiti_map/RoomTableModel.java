@@ -3,10 +3,11 @@ package org.weiti_map;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-public class RoomTableModel extends AbstractTableModel implements TableModel {
+public class RoomTableModel extends AbstractTableModel implements TableModel {	
 	
+	private static final long serialVersionUID = 1L;
 	
-	private final int JTABLE_ROW_NUM;	
+	private final int JTABLE_ROW_NUM;		
 	private final int JTABLE_COLS_NUM = 5;
 	
 	private String[][] data;
