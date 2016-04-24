@@ -1,4 +1,4 @@
-package org.weiti_map;
+package org.weiti_map.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.sqlite.SQLiteDataSource;
 
@@ -13,10 +15,9 @@ public class MyDatabase extends SQLiteDataSource{
 	
 	private Boolean isSet = false;
 	private Connection mConnection = null;
-	private int db_errors_num = 0;
+	private int db_errors_num = 0;	
 	
-	
-	 MyDatabase() {
+	 public MyDatabase() {
 	      try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
@@ -41,12 +42,23 @@ public class MyDatabase extends SQLiteDataSource{
 	      }	      
 	      
 	}
+	 
+	public void close() {
+		 if (mConnection != null) {
+			 try {
+				mConnection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 }
+	}
+	 
 	
 	Boolean isSet() {
 		return isSet;
 	}
-	
-	
+		
 	private int setDatabase() {
 			
 			int k = 0;
@@ -172,7 +184,7 @@ public class MyDatabase extends SQLiteDataSource{
 		
 	}
 
-	String[] getGroupNames() {
+	public String[] getGroupNames() {
 		String query = "SELECT nazwa_grupy FROM tb_grupy";			
 		List<String> nazwy_grup = new ArrayList<String>();
 		try {					
@@ -187,7 +199,7 @@ public class MyDatabase extends SQLiteDataSource{
 		return nazwy_grup.toArray(new String[nazwy_grup.size()]);
 	}
 	
-	GroupPlanObject getGroupPlanObject(String group_name) {
+	public GroupPlanObject getGroupPlanObject(String group_name) {
 		String query = "SELECT * FROM vw_plan WHERE nazwa_grupy = '" + group_name +"'";
 		GroupPlanObject groupObject = null;
 //		List<String> pojedyncze_zajecia = new ArrayList<String>();		
@@ -215,7 +227,7 @@ public class MyDatabase extends SQLiteDataSource{
 	}
 
 
-	 WorkersTableObject getWorkersTableObject() {
+	 public WorkersTableObject getWorkersTableObject() {
 		String query = "SELECT * FROM tb_pracownicy ORDER BY 1";
     	WorkersTableObject workersTable = null;	
 		try {
@@ -240,13 +252,39 @@ public class MyDatabase extends SQLiteDataSource{
     	}
 	    return workersTable;
 	 }
-
-	RoomsTableObject getRoomsTableObject() {
+//
+//	RoomsTableObject getRoomsTableObject() {
+//		String query = "SELECT * FROM tb_sale ORDER BY 1";
+//    	RoomsTableObject roomsTable = null;	
+//		try {
+//	    	ResultSet saleRS = mConnection.createStatement().executeQuery(query);
+//			roomsTable = new RoomsTableObject();
+//			if (!saleRS.isClosed()) {
+//			    while (saleRS.next()) {	 
+//			    	List<String> pojedyncza_sala = new ArrayList<String>();	
+//		    		for (int k = 0; k < 5; k++) {
+//		    			pojedyncza_sala.add(saleRS.getString(k+1));
+////		    			System.out.println(saleRS.getString(k+1));  //TO DELETE
+//		    		}
+//		    		roomsTable.add(new RoomObj((ArrayList<String>) pojedyncza_sala));		    	  	    	
+//		    	} 
+//		    		
+//			} else {
+//	    		System.out.println("Result set is null"); //TO DELETE
+//	    	}
+//		    saleRS.close();
+//	    } catch (SQLException e) {
+//    		e.printStackTrace();
+//    	}
+//	    return roomsTable;
+//	}	
+	
+	public CustomTableObject<RoomObj> getRoomsTableObject() {		
 		String query = "SELECT * FROM tb_sale ORDER BY 1";
-    	RoomsTableObject roomsTable = null;	
+		CustomTableObject<RoomObj> roomsTable = null;	
 		try {
 	    	ResultSet saleRS = mConnection.createStatement().executeQuery(query);
-			roomsTable = new RoomsTableObject();
+			roomsTable = new CustomTableObject<RoomObj>(5);
 			if (!saleRS.isClosed()) {
 			    while (saleRS.next()) {	 
 			    	List<String> pojedyncza_sala = new ArrayList<String>();	
@@ -265,6 +303,61 @@ public class MyDatabase extends SQLiteDataSource{
     		e.printStackTrace();
     	}
 	    return roomsTable;
+	}
+
+	public void addGroup(String groupName) {		
+		String query = "INSERT INTO tb_grupy (nazwa_grupy) VALUES ('" + groupName + "')";		
+		executeQuery(query);		
+	}
+
+	public void removeGroup(String groupName) {
+		String query = "DELETE FROM tb_plan WHERE grupa_id = (SELECT grupa_id FROM tb_grupy WHERE nazwa_grupy = '" + groupName + "')";		
+		executeQuery(query);				
+		query = "DELETE FROM tb_grupy WHERE nazwa_grupy = '" + groupName + "'";		
+		executeQuery(query);	
+	}
+
+	public void updatePlanCell(int row, int col, GroupPlanObject planObject, char p, String cellValue) {
+				
+		if (cellValue == null) {		//
+			String nazwa_grupy = planObject.getGroupName();			
+	
+			String query = "DELETE FROM tb_plan WHERE 1=1 " +
+					        "AND grupa_id = (SELECT grupa_id FROM tb_grupy WHERE nazwa_grupy = '" + nazwa_grupy +"') "+
+							"AND dzien_tyg_id  = " + (col) + " " +
+							"AND godz_id = " + (row+8) + " " +
+							"AND parzystosc IN ('" + p +"', 'X')";
+			executeQuery(query);
+			
+		} else {
+			Pattern pattern = Pattern.compile("([A-Z]+)[ ]([WLCR])[ ]([0-9A-Z-]+)");
+			Matcher m = pattern.matcher(cellValue);
+			m.matches();
+			
+			String nazwa_zajec = m.group(1);
+			String rodzaj_zajec = m.group(2);
+			String nazwa_sali = m.group(3);
+			
+			String query =
+					"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, rodz_zajec, sala_id, parzystosc) " +
+					"SELECT a.grupa_id, " + (col) + ", " + (row+8) + ", d.id_zajec, '" + rodzaj_zajec + "', e.sala_id, '" + p + "' " +
+					"FROM tb_grupy a, tb_zajecia d, tb_sale e " +
+					"WHERE a.nazwa_grupy = '" + planObject.getGroupName() + "' " +
+					"AND d.skrot_nazwy_zajec = '" + nazwa_zajec + "' " +
+					"AND e.nazwa_sali = '" + nazwa_sali +"'";
+
+			executeQuery(query);
+		};		
+	}
+	
+		private void executeQuery(String query) {
+		try {
+    		mConnection.createStatement().executeUpdate(query);
+	    	System.out.println("\'" + query  + "\' succesfully executed." );	    
+		} catch (SQLException e) {
+			System.out.println("\'" + query  + "\' failed. StackTrace:" );	    
+			e.printStackTrace();
+		}			
 	}	
 
 //	LecturesTableObject getLectureTableObject() { //TODO 

@@ -11,21 +11,18 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-import org.weiti_map.db.RoomsTableObject;
-import org.weiti_map.table_models.RoomTableModel;
-
-public class RoomsJTable extends JTable {
+public class CustomJTable<TableModelClass, TableObjectClass> extends JTable {
 
 	private static final long serialVersionUID = 1L;
-	private TableModel tableModel;
+	private TableModelClass tableModel;
 
-	RoomsJTable(RoomsTableObject rooms) {
+	CustomJTable(TableObjectClass tableObj, TableModelClass tableMod) {
 		super();
-		tableModel = new RoomTableModel(rooms);
-		setModel(tableModel);
+		tableModel = tableMod;
+		setModel((javax.swing.table.TableModel) tableModel);
 		configure();
 	}
-
+	
 	private void configure() {
 		this.setFont(new Font("Arial", Font.BOLD, 15));
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -34,7 +31,7 @@ public class RoomsJTable extends JTable {
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		for (int i = 0; i < tableModel.getColumnCount(); i++) {
+		for (int i = 0; i < ((TableModel) tableModel).getColumnCount(); i++) {
 			getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 		}
 

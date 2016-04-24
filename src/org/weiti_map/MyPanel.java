@@ -1,8 +1,11 @@
 package org.weiti_map;
 
+import java.awt.event.WindowEvent;
+
 import javax.swing.JPanel;
 
 import org.weiti_map.MyShowPanel.SHOW_PANEL_TYPES;
+import org.weiti_map.db.MyDatabase;
 
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
@@ -12,20 +15,26 @@ public class MyPanel extends JPanel {
 	private static final long serialVersionUID = 5169492090332131771L;
 	private MyDatabase mDatabase;
 
+	private MyFrame myParent;
+	
 	private MyControlPanel controlPanel;
 	private MyShowPanel showPanel;
+	private MyServerPanel serverPanel;
 	
-//	private JTextArea groupNameJTextArea = new JTextArea("Nazwa grupy:");
-//	private JTextField groupNameJTextField = new JTextField("wprowadü nazwÍ");
-//	private JButton insertJButton = new JButton("Wprowadü dane");
-
-//	private JTextField logJTextField = new JTextField("Log programu");
-	
-    MyPanel(MyDatabase mDB) {
+    MyPanel(MyDatabase mDB, MyFrame myFrame) {
 		super();
 		mDatabase = mDB;
+		myParent = myFrame;
 		controlPanel = new MyControlPanel(this, mDatabase);
 		showPanel = new MyShowPanel(mDatabase, SHOW_PANEL_TYPES.GROUP_TABLES);
+		serverPanel = new MyServerPanel(mDatabase);
+		
+		myParent.addWindowListener(new java.awt.event.WindowAdapter() {
+	        public void windowClosing(WindowEvent winEvt) {
+	            mDB.close();
+	            serverPanel.closeServer();
+	        }
+	    });		
 
 		LC layoutConstraints = new LC();
 		layoutConstraints.setFillX(true);
@@ -33,7 +42,6 @@ public class MyPanel extends JPanel {
 		
 //    	setOpaque(true);
 //		groupNameJTextField.setForeground(Color.GRAY);
-
 		
 		showGroupPlan();
 //		insertJButton.setPreferredSize(new Dimension(50, 20));
@@ -44,6 +52,7 @@ public class MyPanel extends JPanel {
     
     void refillPanel(SHOW_PANEL_TYPES type) {
     	removeAll();
+		add(serverPanel, "wrap");
 		add(controlPanel, "wrap");
 		
 		switch (type) {
@@ -52,7 +61,9 @@ public class MyPanel extends JPanel {
 				break;
 			case ROOMS_TABLE:
 				showPanel = new MyShowPanel(mDatabase, type);
-				showWorkers();
+//				showWorkers();
+				break;
+			default:
 				break;
 			default:
 				break;
@@ -74,15 +85,16 @@ public class MyPanel extends JPanel {
     }
 
 	private void showWorkers() {
-		WorkersTableObject table = mDatabase.getWorkersTableObject();
-		showPanel.showWorkersTable(table);
+//		WorkersTableObject table = mDatabase.getWorkersTableObject();
+//		showPanel.showWorkersTable(table);
 		refillPanel(SHOW_PANEL_TYPES.WORKERS_TABLE);
 	}
 
 
 	void showRooms() {
-		RoomsTableObject table = mDatabase.getRoomsTableObject();
-		showPanel.showRoomsTable(table);
+//		RoomsTableObject table = mDatabase.getRoomsTableObject();
+//		CustomTableObject<RoomObj> table = mDatabase.getRoomsTableObject();
+//		showPanel.vshowRoomsTable(table);
 		refillPanel(SHOW_PANEL_TYPES.ROOMS_TABLE);
 	}        
 	

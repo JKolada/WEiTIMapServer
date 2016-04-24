@@ -1,6 +1,6 @@
-package org.weiti_map;
+package org.weiti_map.db;
 
-public final class MyDatabaseUtilities {	
+public final class MyDatabaseUtilities {		
 	
 	// 'CREATE TABLES' STATEMENTS // // // // // // // //
 	
@@ -140,8 +140,11 @@ public final class MyDatabaseUtilities {
 	 "(19,'19:15-20:00')";	
 
 			// TEST 'INSERT INTO' STATEMENTS
-	public final static String TB_GRUPY_TEST_INSERT =
+	public final static String TB_GRUPY_TEST_INSERT_0 =
 	"INSERT INTO tb_grupy (nazwa_grupy) VALUES ('1E1')";
+
+	public final static String TB_GRUPY_TEST_INSERT_1 =
+	"INSERT INTO tb_grupy (nazwa_grupy) VALUES ('2T2')";
 
 	public final static String TB_ZAJECIA_TEST_INSERTS =
 	"INSERT INTO tb_zajecia (skrot_nazwy_zajec, nazwa_zajec) VALUES " +
@@ -166,7 +169,7 @@ public final class MyDatabaseUtilities {
 	"('120', '1', 0, 0)," +
 	"('161', '0', 0, 0)," +
 	"('118-AL', '0', 0, 0)";	
-
+	
 	public final static String TB_PLAN_TEST_INS_0 = 
 	"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, rodz_zajec, sala_id, parzystosc) " +
 	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, 'W', e.sala_id, 'N' " +
@@ -265,7 +268,17 @@ public final class MyDatabaseUtilities {
 	"WHERE	a.nazwa_grupy = '1E1' " +
 	"AND b.nazwa_dnia = 'poniedzia³ek' " +
 	"AND c.godz_id =  16 " +
-	"AND d.skrot_nazwy_zajec = 'PPOM' AND e.nazwa_sali = 'DS202'";
+	"AND d.skrot_nazwy_zajec = 'PPOM' AND e.nazwa_sali = 'DS202'";	
+
+
+//	public final static String TB_PLAN_TEST_INS_2T2 = 
+//	"INSERT INTO tb_plan (grupa_id, dzien_tyg_id, godz_id, id_zajec, rodz_zajec, sala_id, parzystosc) " +
+//	"SELECT a.grupa_id, b.dzien_tyg_id, c.godz_id, d.id_zajec, 'W', e.sala_id, 'N' " +
+//	"FROM tb_grupy a, tb_dni_tyg b, tb_godziny c, tb_zajecia d, tb_sale e " +
+//	"WHERE	a.nazwa_grupy = '2T2' " +
+//	"AND b.nazwa_dnia = 'poniedzia³ek' " +
+//	"AND c.godz_id = 8 " +
+//	"AND d.skrot_nazwy_zajec = 'WFI' AND e.nazwa_sali = '105-AR'";
 
 	public final static String[] CREATE_TABLE_STATEMENTS = {
 								CREATE_TB_PRACOWNICY,
@@ -287,7 +300,8 @@ public final class MyDatabaseUtilities {
 	public final static String[] INSERT_INTO_STATEMENT_LIST = {
 								TB_DNI_TYG_INSERTS,
 								TB_GODZINY_INSERTS,
-								TB_GRUPY_TEST_INSERT, 
+								TB_GRUPY_TEST_INSERT_0,
+								TB_GRUPY_TEST_INSERT_1,
 								TB_ZAJECIA_TEST_INSERTS, 
 								TB_SALE_TEST_INSERT, 
 								TB_PLAN_TEST_INS_0,
@@ -319,7 +333,8 @@ public final class MyDatabaseUtilities {
 	public final static String[] INSERT_STATEMENT_NAMES = {
 								"TB_DNI_TYG_INSERTS",
 								"TB_GODZINY_INSERTS",
-								"TB_GRUPY_TEST_INSERT", 
+								"TB_GRUPY_TEST_INSERT_1E1",
+								"TB_GRUPY_TEST_INSERT_2T2",
 								"TB_ZAJECIA_TEST_INSERTS", 
 								"TB_SALE_TEST_INSERT", 
 								"TB_PLAN_TEST_INS_0",

@@ -1,10 +1,14 @@
-package org.weiti_map;
+package org.weiti_map.db;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupPlanObject {
+public class GroupPlanObject implements Serializable{
 	
+	private static final long serialVersionUID = 2366854110722067579L;
+	
+	private char parzystosc_tabeli;
 	private final String nazwa_grupy;	
 	private final List<LectureObj> zajecia = new ArrayList<LectureObj>();
 	
@@ -16,32 +20,40 @@ public class GroupPlanObject {
 		nazwa_grupy = "error";
 	}
 
-	String getGroupName() {
+	public String getGroupName() {
 		return nazwa_grupy;
 	}
 
 	void add(LectureObj myLecture) {
 		zajecia.add(myLecture);
 	}
+	
+	char getParzystosc() {
+		return parzystosc_tabeli;				
+	}	
 
-	void fillData(String[][] data, GroupPlanObject plan, char parzystosc) {
+	public void fillData(String[][] data, GroupPlanObject plan, char parzystosc) {
+		
+		parzystosc_tabeli = parzystosc;
 		String[] poj_zaj_info = new String[6];
 		int row_no, col_no = 0;
 		char classesAreEven = 'X';
 		
-		for (LectureObj poj_zaj: zajecia) {			
-			switch (poj_zaj.isEven()) {
-				case 'Y':
-					classesAreEven = 'P';
-					break;
-				case 'N':
-					classesAreEven = 'N';
-					break;
-				case 'X':
-					classesAreEven = 'X';
-					break;
-			}			
-			if (classesAreEven == parzystosc || classesAreEven == 'X') {
+		for (LectureObj poj_zaj: zajecia) {		
+			Boolean tmp = poj_zaj.isEven();
+			
+			if (tmp == null) {
+				classesAreEven = 'X';
+			} else {
+				boolean b = tmp.booleanValue();
+				if (b == true) {
+					classesAreEven = 'P';					
+				} else {
+					classesAreEven = 'N';					
+				}
+			}
+							
+			if (classesAreEven == parzystosc_tabeli || classesAreEven == 'X') {
 				poj_zaj_info = poj_zaj.getLectureData();
 				// "nazwa_sali", "nazwa_dnia", "id_godziny", "parzystoœæ", "skrot_nazwy_zajec", "rodz_zajec"
 			} else {

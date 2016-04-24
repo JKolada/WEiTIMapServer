@@ -1,7 +1,9 @@
-package org.weiti_map;
+package org.weiti_map.table_models;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
+
+import org.weiti_map.db.RoomsTableObject;
 
 public class RoomTableModel extends AbstractTableModel implements TableModel {	
 	
@@ -23,7 +25,7 @@ public class RoomTableModel extends AbstractTableModel implements TableModel {
 	
 	public RoomTableModel(RoomsTableObject rooms) {
 		super();
-		JTABLE_ROW_NUM = rooms.getRoomsCount();
+		JTABLE_ROW_NUM = rooms.getRowCount();
 		data = new String[JTABLE_ROW_NUM][JTABLE_COLS_NUM];
 		rooms.fillData(data);
 	}
