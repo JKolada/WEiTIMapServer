@@ -2,8 +2,6 @@ package org.weiti_map.db;
 
 import java.util.ArrayList;
 
-import org.weiti_map.LectureParentObj;
-
 public class LectureObj extends LectureParentObj{ 	
 	
 	private String nazwa_sali;
