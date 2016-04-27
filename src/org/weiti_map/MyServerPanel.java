@@ -83,6 +83,7 @@ public class MyServerPanel extends javax.swing.JPanel {
 			e.printStackTrace();
 		}		
 		
+		/*
 		while(true) {
 			// accept a new connection
 			Socket client;
@@ -102,7 +103,7 @@ public class MyServerPanel extends javax.swing.JPanel {
 //			System.out.println("Thread " + numThreads.get() + " started.");
 
 		}		
-		
+		*/
 	}
 
 	private void setServerButton() {		

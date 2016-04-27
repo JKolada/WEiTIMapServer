@@ -65,8 +65,6 @@ public class MyPanel extends JPanel {
 				break;
 			default:
 				break;
-			default:
-				break;
 		}
 		add(showPanel, "wrap");
 		revalidate();
