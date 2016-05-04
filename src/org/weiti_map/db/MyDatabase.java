@@ -199,6 +199,22 @@ public class MyDatabase extends SQLiteDataSource{
 		return nazwy_grup.toArray(new String[nazwy_grup.size()]);
 	}
 	
+	public Integer checkGroupNameEx(String groupName) {
+		String query = "SELECT grupa_id FROM tb_grupy WHERE nazwa_grupy = " + groupName;
+		String groupId;
+		try {					
+			ResultSet groupIdRS = mConnection.createStatement().executeQuery(query);
+			groupIdRS.next();	    	
+		    groupId = groupIdRS.getString("grupa_id");	 
+		    groupIdRS.close();
+			return Integer.parseInt(groupId);
+	    } catch (SQLException e) {
+    		e.printStackTrace();
+	    	return -1;
+    	}
+	}
+	
+	
 	public GroupPlanObject getGroupPlanObject(String group_name) {
 		String query = "SELECT * FROM vw_plan WHERE nazwa_grupy = '" + group_name +"'";
 		GroupPlanObject groupObject = null;

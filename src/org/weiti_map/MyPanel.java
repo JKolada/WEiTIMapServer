@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 import org.weiti_map.MyShowPanel.SHOW_PANEL_TYPES;
 import org.weiti_map.db.MyDatabase;
+import org.weiti_map.server.MyServerPanel;
 
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
