@@ -88,7 +88,16 @@ public class GroupNameJPanel extends JPanel {
 //				JOptionPane optionPane = new JOptionPane("Question?",  JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
 				
 				//accept input and convert (parse) if needed
-				String x = JOptionPane.showInputDialog(null,"enter num!");
+
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+//				String x = JOptionPane.showInputDialog(null,"enter num!");
+				int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to remove " + groupName + " group plan?", "Warning", dialogButton);
+				
+                if(dialogResult == JOptionPane.YES_OPTION){
+    				mDB.removeGroup(groupName);
+                }
+
+				
 //				int x = Integer.parseInt();
 				//assign variable and accept input
 //				name = JOptionPane.showInputDialog(	null, "enter your name");
@@ -100,7 +109,6 @@ public class GroupNameJPanel extends JPanel {
 				//welcome message
 //				JOptionPane.showMessageDialog(null, "your name is " + name + ". The num plus 5 is " + x + ".");
 
-				mDB.removeGroup(groupName);
 			}
 			restart();
 		}

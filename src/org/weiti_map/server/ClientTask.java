@@ -6,7 +6,15 @@ import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.security.acl.Group;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.naming.SizeLimitExceededException;
+
+import org.weiti_map.db.GroupPlanObject;
 import org.weiti_map.db.MyDatabase;
 
 public class ClientTask implements Runnable {
@@ -25,6 +33,7 @@ public class ClientTask implements Runnable {
 
 	@Override
     public void run() {
+
         System.out.println("Client connected");
         printSocketInfo(clientSocket);
         
@@ -49,8 +58,6 @@ public class ClientTask implements Runnable {
 			}
 //            ObjectInputStream clientInputStream = new
 //            		   ObjectInputStream(clientSocket.getInputStream());            
-
-			out.println(ServerUtils.EMAIL_ADDRESS);
             if (handshake(out, in)) {
             	sendGroupPlan(out, objOut, in);
             }
@@ -75,10 +82,39 @@ public class ClientTask implements Runnable {
         }
 	}
     
-    private void sendGroupPlan(PrintWriter out, ObjectOutputStream objOut,
-			BufferedReader in) {
-		// TODO Auto-generated method stub
-		
+    private void sendGroupPlan(PrintWriter out, ObjectOutputStream objOut, BufferedReader in) {
+    	String clientInput;
+		try {
+			while (true) {
+				clientInput = in.readLine();
+				if (clientInput != null) {
+					System.out.print(clientInput);
+					break;
+				}		
+			}			
+			
+			Pattern pattern = Pattern.compile("GET_GROUP:_([\\S]+)");
+			Matcher m = pattern.matcher(clientInput);
+			boolean b = m.matches();
+			if (!b) {
+				System.out.print("Wrong request");
+				out.println("WRONG_REQUEST");
+			} else {							
+				String groupName = m.group(1);
+				System.out.println(groupName);
+	
+				if (myDB.checkGroupNameEx(groupName) == -1) {
+					out.println("GROUP_DOESNT_EXIST");
+					System.out.println("Wrong group object requested");
+				} else {
+					out.println("GROUP_EXISTS");
+					GroupPlanObject groupObjToSend = myDB.getGroupPlanObject(groupName);				
+				}			
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 
 	private void printSocketInfo(Socket clientSocket2) {
@@ -102,6 +138,7 @@ public class ClientTask implements Runnable {
 		if (!areStreamsActive) {
 			return false;
 		}
+
     	String clientInput;
     	try {
 			out.println(ServerUtils.EMAIL_ADDRESS);
@@ -124,4 +161,72 @@ public class ClientTask implements Runnable {
 		}
 	}
     
+	private byte[] getMessageBytes(String message){
+		byte[] msgBytes = message.getBytes();
+		int msgLength = 4 + msgBytes.length;
+		byte[] msgLengthBytes = ByteBuffer.allocate(4).putInt(msgLength).array();				
+		byte[] combined = new byte[msgLengthBytes.length + msgBytes.length];
+		System.arraycopy(msgLengthBytes, 0, combined, 0                    , msgLengthBytes.length);
+		System.arraycopy(msgBytes,       0, combined, msgLengthBytes.length, msgBytes.length);
+		return combined;		
+//		String s = new String(combined);
+//		char[] chars = s.toCharArray();
+//		out.write(chars);
+		
+	}
+	
+	private String receivePrefixedMessage() {
+		char[] prefixBuffer = new char[4];
+        int prefixBytesToRead = 4;
+        int prefixBytesRead = 0;
+        
+        // prefix reading
+        while (prefixBytesRead > 0) {
+        	try {
+				int n = in.read(prefixBuffer, prefixBytesRead, prefixBytesToRead);
+				if (n == 0) {
+					return null;
+				}
+				prefixBytesRead += n;
+			    prefixBytesToRead -= n;
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        }
+        // end of prefix reading        	
+        	
+        // actual message reading        	        
+        final ByteBuffer b = ByteBuffer.wrap(new String(prefixBuffer).getBytes());
+        b.order(ByteOrder.BIG_ENDIAN);
+        int dataLength = b.getInt();
+        
+        System.out.println(dataLength);
+        
+        int dataBytesToRead = dataLength;
+        int dataBytesRead = 0;
+        // if dataLenght < 0 || > INFINITY ... throw something throwable
+        
+        char[] dataBuffer = new char[dataLength];
+        while (dataBytesToRead > 0) {
+            int n;
+			try {
+				n = in.read(dataBuffer, dataBytesRead, dataBytesToRead);
+	            if (n == 0) return null;
+	            dataBytesRead += n;
+	            dataBytesToRead -= n;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }        
+        // end of actual message reading
+        String ret = new String(dataBuffer);
+        System.out.println(ret);
+        return ret;  
+	}
+	
+	
+	
+	
 }
