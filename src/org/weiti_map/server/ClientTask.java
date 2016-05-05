@@ -1,10 +1,13 @@
 package org.weiti_map.server;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -21,6 +24,8 @@ public class ClientTask implements Runnable {
     private final Socket clientSocket;
     private MyDatabase myDB;
     private PrintWriter out;
+    private DataOutputStream outData;
+    private DataInputStream inData;
     private BufferedReader in;
     private ObjectOutputStream objOut;
     private boolean areStreamsActive;
@@ -45,6 +50,8 @@ public class ClientTask implements Runnable {
 //        }   
         
         try {
+        	inData = new DataInputStream(clientSocket.getInputStream());
+        	outData = new DataOutputStream(clientSocket.getOutputStream());
         	
 			out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(
@@ -58,9 +65,11 @@ public class ClientTask implements Runnable {
 			}
 //            ObjectInputStream clientInputStream = new
 //            		   ObjectInputStream(clientSocket.getInputStream());            
-            if (handshake(out, in)) {
-            	sendGroupPlan(out, objOut, in);
-            }
+//            if (handshake(out, in)) {
+//            	sendGroupPlan(out, objOut, in);
+//            }
+			
+			sendMessageBytes("eloeloelo");
             
 		} catch (IOException e) {
             System.out.println("Writers/readers creation failed");            
@@ -82,7 +91,7 @@ public class ClientTask implements Runnable {
         }
 	}
     
-    private void sendGroupPlan(PrintWriter out, ObjectOutputStream objOut, BufferedReader in) {
+    private void sendGroupPlan() {
     	String clientInput;
 		try {
 			while (true) {
@@ -161,29 +170,36 @@ public class ClientTask implements Runnable {
 		}
 	}
     
-	private byte[] getMessageBytes(String message){
+	private void sendMessageBytes(String message){
 		byte[] msgBytes = message.getBytes();
 		int msgLength = 4 + msgBytes.length;
-		byte[] msgLengthBytes = ByteBuffer.allocate(4).putInt(msgLength).array();				
+		byte[] msgLengthBytes = ByteBuffer.allocate(4).putInt(msgLength).array();
+
 		byte[] combined = new byte[msgLengthBytes.length + msgBytes.length];
 		System.arraycopy(msgLengthBytes, 0, combined, 0                    , msgLengthBytes.length);
 		System.arraycopy(msgBytes,       0, combined, msgLengthBytes.length, msgBytes.length);
-		return combined;		
-//		String s = new String(combined);
-//		char[] chars = s.toCharArray();
-//		out.write(chars);
 		
+		System.out.println(combined);
+		
+		try {
+			outData.write(combined);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return;
 	}
 	
 	private String receivePrefixedMessage() {
-		char[] prefixBuffer = new char[4];
+		byte[] prefixBuffer = new byte[4];
         int prefixBytesToRead = 4;
         int prefixBytesRead = 0;
         
         // prefix reading
         while (prefixBytesRead > 0) {
         	try {
-				int n = in.read(prefixBuffer, prefixBytesRead, prefixBytesToRead);
+				int n = inData.read(prefixBuffer, prefixBytesRead, prefixBytesToRead);
 				if (n == 0) {
 					return null;
 				}
@@ -207,11 +223,11 @@ public class ClientTask implements Runnable {
         int dataBytesRead = 0;
         // if dataLenght < 0 || > INFINITY ... throw something throwable
         
-        char[] dataBuffer = new char[dataLength];
+        byte[] dataBuffer = new byte[dataLength];
         while (dataBytesToRead > 0) {
             int n;
 			try {
-				n = in.read(dataBuffer, dataBytesRead, dataBytesToRead);
+				n = inData.read(dataBuffer, dataBytesRead, dataBytesToRead);
 	            if (n == 0) return null;
 	            dataBytesRead += n;
 	            dataBytesToRead -= n;
@@ -224,9 +240,6 @@ public class ClientTask implements Runnable {
         String ret = new String(dataBuffer);
         System.out.println(ret);
         return ret;  
-	}
-	
-	
-	
+	}	
 	
 }
