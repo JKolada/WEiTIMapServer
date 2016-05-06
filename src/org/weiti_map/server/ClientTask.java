@@ -7,16 +7,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
 import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.security.acl.Group;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.naming.SizeLimitExceededException;
 
 import org.weiti_map.db.GroupPlanObject;
 import org.weiti_map.db.MyDatabase;
@@ -57,10 +51,9 @@ public class ClientTask implements Runnable {
 			out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(
                     new InputStreamReader(clientSocket.getInputStream()));
-//            BufferedReader stdIn =
-//                new BufferedReader(
-//                    new InputStreamReader(System.in));
+            
 			objOut = new ObjectOutputStream(clientSocket.getOutputStream());
+			
 			if (out != null && in != null && objOut != null) {
 				areStreamsActive = true;
 			}
@@ -70,6 +63,7 @@ public class ClientTask implements Runnable {
 //            	sendGroupPlan(out, objOut, in);
 //            }
 			
+			// TA DA! //
 			sendMessageBytes("A");
             
 		} catch (IOException e) {
@@ -144,32 +138,33 @@ public class ClientTask implements Runnable {
 //         System.out.println("   Protocol = "+ss.getProtocol());		
 	}
 
-	private boolean handshake(PrintWriter out, BufferedReader reader) {
-		if (!areStreamsActive) {
-			return false;
-		}
-
-    	String clientInput;
-    	try {
-			out.println(ServerUtils.EMAIL_ADDRESS);
-//			while (true /* (clientInput = reader.readLine()) != null */) {
-				clientInput = reader.readLine();				
-				System.out.println(clientInput);
-				if (clientInput != null && clientInput.equals(ServerUtils.EMAIL_ADDRESS)) {
-			    	System.out.println("Handshake suceeded");
-					return true;					
-				} else {
-			    	System.out.println("Handshake failed");
-					return false;
-				}
-//				wait(500);			
-//			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;	
-		}
-	}
+	//TODO
+//	private boolean handshake(PrintWriter out, BufferedReader reader) {
+//		if (!areStreamsActive) {
+//			return false;
+//		}
+//
+//    	String clientInput;
+//    	try {
+//			out.println(ServerUtils.EMAIL_ADDRESS);
+////			while (true /* (clientInput = reader.readLine()) != null */) {
+//				clientInput = reader.readLine();				
+//				System.out.println(clientInput);
+//				if (clientInput != null && clientInput.equals(ServerUtils.EMAIL_ADDRESS)) {
+//			    	System.out.println("Handshake suceeded");
+//					return true;					
+//				} else {
+//			    	System.out.println("Handshake failed");
+//					return false;
+//				}
+////				wait(500);			
+////			}
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return false;	
+//		}
+//	}
     
 	private void sendMessageBytes(String message){
 		byte[] msgBytes = message.getBytes();
@@ -206,66 +201,61 @@ public class ClientTask implements Runnable {
 		return;
 	}
 	
-	private String receivePrefixedMessage() {
-		byte[] prefixBuffer = new byte[4];
+    private String receivePrefixedMessage() {
+        byte[] prefixBuffer = new byte[4];
         int prefixBytesToRead = 4;
         int prefixBytesRead = 0;
-        
+
         // prefix reading
         while (prefixBytesToRead > 0) {
-        	try {
-				int n = inData.read(prefixBuffer, prefixBytesRead, prefixBytesToRead);
-				if (n == 0) {
-					return null;
-				}
-			    prefixBytesToRead -= n;
-			    prefixBytesRead += n;
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-        }     		        
-        
-		String hexString = ServerUtils.bytesToHex(prefixBuffer);	
-		System.out.println("Hex of message's length:");		
-		System.out.println(hexString);
-        
-        // end of prefix reading        	
+            try {
+                int n = inData.read(prefixBuffer, prefixBytesRead, prefixBytesToRead);
+                if (n == 0) {
+                    return null;
+                }
+                prefixBytesToRead -= n;
+                prefixBytesRead += n;
 
-        // actual message reading       
-        final ByteBuffer b = ByteBuffer.wrap(new String(prefixBuffer).getBytes());      
-        b.order(ByteOrder.BIG_ENDIAN);     
-        int dataLength = b.getInt();        
-        System.out.println("DataLength = " + dataLength);
-        
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-        // actual message reading    
+        String hexString = ServerUtils.bytesToHex(prefixBuffer);
+        System.out.println("Hex of message's length: " + hexString);
+        // end of prefix reading
+
+        final ByteBuffer b = ByteBuffer.wrap(new String(prefixBuffer).getBytes());
+//        b.order(ByteOrder.BIG_ENDIAN);
+        int dataLength = b.getInt() - 4;
+        System.out.println("DataLength: " + dataLength);
+
+        // actual message reading
         int dataBytesToRead = dataLength;
         int dataBytesRead = 0;
         // if dataLenght < 0 || > INFINITY ... throw something throwable
-        
+
         byte[] dataBuffer = new byte[dataLength];
         while (dataBytesToRead > 0) {
             int n;
-			try {
-				n = inData.read(dataBuffer, dataBytesRead, dataBytesToRead);
-	            if (n == 0) return null;
-	            dataBytesRead += n;
-	            dataBytesToRead -= n;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        }        
-        
-		hexString = ServerUtils.bytesToHex(dataBuffer);	
-		System.out.println("Hex actual message:");		
-		System.out.println(hexString);        
-        
+            try {
+                n = inData.read(dataBuffer, dataBytesRead, dataBytesToRead);
+                System.out.println("read bytes number: " + n);
+                if (n == 0) return null;
+                dataBytesRead += n;
+                dataBytesToRead -= n;
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
         // end of actual message reading
+
+        hexString = ServerUtils.bytesToHex(dataBuffer);
+        System.out.println("Hex actual message: " + hexString);
+
         String ret = new String(dataBuffer);
         System.out.println(ret);
-        return ret;  
-	}	
-	
+        return ret;
+    }
 }
