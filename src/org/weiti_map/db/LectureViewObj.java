@@ -2,6 +2,8 @@ package org.weiti_map.db;
 
 import java.util.ArrayList;
 
+import com.example.kuba.weitimap.db.LectureParentObj;
+
 public class LectureViewObj extends LectureParentObj {
 
 	private String id_zajêæ;

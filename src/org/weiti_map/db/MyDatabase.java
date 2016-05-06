@@ -11,6 +11,9 @@ import java.util.regex.Pattern;
 
 import org.sqlite.SQLiteDataSource;
 
+import com.example.kuba.weitimap.db.GroupPlanObject;
+import com.example.kuba.weitimap.db.LectureObj;
+
 public class MyDatabase extends SQLiteDataSource{
 	
 	private Boolean isSet = false;
@@ -199,15 +202,17 @@ public class MyDatabase extends SQLiteDataSource{
 		return nazwy_grup.toArray(new String[nazwy_grup.size()]);
 	}
 	
-	public Integer checkGroupNameEx(String groupName) {
-		String query = "SELECT grupa_id FROM tb_grupy WHERE nazwa_grupy = " + groupName;
+	public int checkGroupNameEx(String groupName) {
+		String query = "SELECT grupa_id FROM tb_grupy WHERE nazwa_grupy = '" + groupName + "'";
 		String groupId;
 		try {					
 			ResultSet groupIdRS = mConnection.createStatement().executeQuery(query);
-			groupIdRS.next();	    	
-		    groupId = groupIdRS.getString("grupa_id");	 
-		    groupIdRS.close();
-			return Integer.parseInt(groupId);
+			groupIdRS.next();    	
+			if (!groupIdRS.isClosed()) {
+			    groupId = groupIdRS.getString("grupa_id");	 
+			    groupIdRS.close();
+				return Integer.parseInt(groupId);
+			} else return -1;
 	    } catch (SQLException e) {
     		e.printStackTrace();
 	    	return -1;

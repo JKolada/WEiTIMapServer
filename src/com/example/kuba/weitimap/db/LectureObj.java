@@ -1,16 +1,18 @@
-package org.weiti_map.db;
+package com.example.kuba.weitimap.db;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class LectureObj extends LectureParentObj{ 	
+public class LectureObj extends LectureParentObj implements Serializable { 	
 	
+	private static final long serialVersionUID = -4013067156404407589L;
 	private String nazwa_sali;
 	private String nazwa_dnia;
 	private String id_godziny;
 	private String parzystoœæ;
 	private String rodz_zajêæ;
 	 
-	LectureObj(ArrayList<String> poj_zajêcia) {	
+	public LectureObj(ArrayList<String> poj_zajêcia) {	
 		nazwa_sali = poj_zajêcia.get(0);
 		nazwa_dnia = poj_zajêcia.get(1);
 		id_godziny = poj_zajêcia.get(2);

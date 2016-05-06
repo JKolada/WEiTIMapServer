@@ -1,16 +1,16 @@
 package org.weiti_map;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import org.weiti_map.db.CustomTableObject;
-import org.weiti_map.db.GroupPlanObject;
 import org.weiti_map.db.MyDatabase;
 import org.weiti_map.db.RoomObj;
 import org.weiti_map.db.RoomsTableObject;
 import org.weiti_map.db.WorkersTableObject;
 import org.weiti_map.table_models.CustomTableModel;
 import org.weiti_map.table_models.WorkersTableModel;
+
+import com.example.kuba.weitimap.db.GroupPlanObject;
 
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;

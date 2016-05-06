@@ -3,9 +3,9 @@ package org.weiti_map.table_models;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.weiti_map.db.GroupPlanObject;
-import org.weiti_map.db.LectureObj;
 import org.weiti_map.db.MyDatabase;
+
+import com.example.kuba.weitimap.db.GroupPlanObject;
 
 public class FilledPlanTableModel extends PlanTableModel {
 	

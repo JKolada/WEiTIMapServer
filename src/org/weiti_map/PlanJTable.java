@@ -15,10 +15,11 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-import org.weiti_map.db.GroupPlanObject;
 import org.weiti_map.db.MyDatabase;
 import org.weiti_map.table_models.FilledPlanTableModel;
 import org.weiti_map.table_models.PlanTableModel;
+
+import com.example.kuba.weitimap.db.GroupPlanObject;
 
 public class PlanJTable extends JTable /* implements TableModelListener */{
 
