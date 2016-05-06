@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.security.acl.Group;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,7 +70,7 @@ public class ClientTask implements Runnable {
 //            	sendGroupPlan(out, objOut, in);
 //            }
 			
-			sendMessageBytes("eloeloelo");
+			sendMessageBytes("A");
             
 		} catch (IOException e) {
             System.out.println("Writers/readers creation failed");            
@@ -172,14 +173,28 @@ public class ClientTask implements Runnable {
     
 	private void sendMessageBytes(String message){
 		byte[] msgBytes = message.getBytes();
+		String hexString = ServerUtils.bytesToHex(msgBytes);		
+		System.out.println("\nHex of actual message:");
+		System.out.println(hexString);
+		
 		int msgLength = 4 + msgBytes.length;
+		
 		byte[] msgLengthBytes = ByteBuffer.allocate(4).putInt(msgLength).array();
-
+		hexString = ServerUtils.bytesToHex(msgLengthBytes);		
+		System.out.println("Hex of string length:");
+		System.out.println(hexString);
+		
 		byte[] combined = new byte[msgLengthBytes.length + msgBytes.length];
 		System.arraycopy(msgLengthBytes, 0, combined, 0                    , msgLengthBytes.length);
 		System.arraycopy(msgBytes,       0, combined, msgLengthBytes.length, msgBytes.length);
+				
+//		byte[] byteArray = new byte[] { -1, -128, 1, 127 };
+//		System.out.println(Arrays.toString(combined));
+			  
+		hexString = ServerUtils.bytesToHex(combined);	
+		System.out.println("Hex of overall message:");		
+		System.out.println(hexString);
 		
-		System.out.println(combined);
 		
 		try {
 			outData.write(combined);
@@ -197,28 +212,34 @@ public class ClientTask implements Runnable {
         int prefixBytesRead = 0;
         
         // prefix reading
-        while (prefixBytesRead > 0) {
+        while (prefixBytesToRead > 0) {
         	try {
 				int n = inData.read(prefixBuffer, prefixBytesRead, prefixBytesToRead);
 				if (n == 0) {
 					return null;
 				}
-				prefixBytesRead += n;
 			    prefixBytesToRead -= n;
+			    prefixBytesRead += n;
 				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-        }
+        }     		        
+        
+		String hexString = ServerUtils.bytesToHex(prefixBuffer);	
+		System.out.println("Hex of message's length:");		
+		System.out.println(hexString);
+        
         // end of prefix reading        	
-        	
-        // actual message reading        	        
-        final ByteBuffer b = ByteBuffer.wrap(new String(prefixBuffer).getBytes());
-        b.order(ByteOrder.BIG_ENDIAN);
-        int dataLength = b.getInt();
+
+        // actual message reading       
+        final ByteBuffer b = ByteBuffer.wrap(new String(prefixBuffer).getBytes());      
+        b.order(ByteOrder.BIG_ENDIAN);     
+        int dataLength = b.getInt();        
+        System.out.println("DataLength = " + dataLength);
         
-        System.out.println(dataLength);
-        
+
+        // actual message reading    
         int dataBytesToRead = dataLength;
         int dataBytesRead = 0;
         // if dataLenght < 0 || > INFINITY ... throw something throwable
@@ -236,6 +257,11 @@ public class ClientTask implements Runnable {
 				e.printStackTrace();
 			}
         }        
+        
+		hexString = ServerUtils.bytesToHex(dataBuffer);	
+		System.out.println("Hex actual message:");		
+		System.out.println(hexString);        
+        
         // end of actual message reading
         String ret = new String(dataBuffer);
         System.out.println(ret);
