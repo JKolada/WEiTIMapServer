@@ -2,9 +2,16 @@ package org.weiti_map.server;
 
 class ServerUtils {
 //	final static String DEFAULT_KEYSTORE_NAME = "wmapdefaultkeystore_";
-	final static String EMAIL_ADDRESS = "<HANDSHAKE/jakubkoladadev@gmail.com>";
 	final static char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
-	final static String GET_GROUP = "<GET_GROUP/";
+    final static String EMAIL_ADDRESS = "jakubkoladadev@gmail.com";
+	final static String GROUP_EXISTS = "GROUP_EXISTS";
+	final static String GROUP_DOESNT_EXIST = "GROUP_DOESNT_EXIST";
+
+    final static String HANDSHAKE_MSG_TYPE = "HANDSHAKE";
+    final static String GET_GROUP_MSG_TYPE = "GET_GROUP";
+    final static String SEND_GROUP_MSG_TYPE = "SEND_GROUP";
+
+    final static String MSG_TYPES_REGEXP = HANDSHAKE_MSG_TYPE + '|' + GET_GROUP_MSG_TYPE + '|' + SEND_GROUP_MSG_TYPE;
 	
 	public static String bytesToHex(byte[] bytes) {
 	    char[] hexChars = new char[bytes.length * 2];

@@ -1,34 +1,28 @@
 package org.weiti_map.server;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.weiti_map.db.GroupPlanObject;
 import org.weiti_map.db.MyDatabase;
+
+import com.example.kuba.weitimap.db.GroupPlanObject;
 
 public class ClientTask implements Runnable {
     private final Socket clientSocket;
     private MyDatabase myDB;
-    private PrintWriter out;
     private DataOutputStream outData;
     private DataInputStream inData;
-    private BufferedReader in;
     private ObjectOutputStream objOut;
-    private boolean areStreamsActive;
 
     public ClientTask(MyDatabase mDB, Socket clientSocket2) {
     	myDB = mDB;
         this.clientSocket = clientSocket2;
-        areStreamsActive = false;
     }
 
 	@Override
@@ -46,25 +40,31 @@ public class ClientTask implements Runnable {
         
         try {
         	inData = new DataInputStream(clientSocket.getInputStream());
-        	outData = new DataOutputStream(clientSocket.getOutputStream());
-        	
-			out = new PrintWriter(clientSocket.getOutputStream(), true);
-            in = new BufferedReader(
-                    new InputStreamReader(clientSocket.getInputStream()));
-            
-			objOut = new ObjectOutputStream(clientSocket.getOutputStream());
+        	outData = new DataOutputStream(clientSocket.getOutputStream());        	
 			
-			if (out != null && in != null && objOut != null) {
-				areStreamsActive = true;
-			}
-//            ObjectInputStream clientInputStream = new
-//            		   ObjectInputStream(clientSocket.getInputStream());            
-//            if (handshake(out, in)) {
-//            	sendGroupPlan(out, objOut, in);
-//            }
+			Message msg;
+			while ((msg = receiveMessageObj()) == null) {};
 			
-			// TA DA! //
-			sendMessageBytes("A");
+            if (msg.getType() == Message.MessageType.HANDSHAKE) {
+            	sendMessage(new Message(Message.MessageType.HANDSHAKE));
+            	
+            	Message getGroupMessage = null;
+    			while ((getGroupMessage = receiveMessageObj()) == null) {};
+    			GroupPlanObject groupObjToSend = getGroupMessage.getGroupPlanobject(myDB);
+                if (groupObjToSend == null) {
+                    sendMessage(new Message(Message.MessageType.SEND_GROUP, ServerUtils.GROUP_DOESNT_EXIST));
+                } else {
+                    sendMessage(new Message(Message.MessageType.SEND_GROUP, ServerUtils.GROUP_EXISTS));
+                    objOut = new ObjectOutputStream(clientSocket.getOutputStream());
+                    objOut.writeObject(groupObjToSend);
+                    System.out.println("Group object sent and closing object stream.");
+                    objOut.close();
+                }
+            } else {
+            	System.out.println("Received a message that is not a handshake message.");
+            	shutdown();
+            }
+
             
 		} catch (IOException e) {
             System.out.println("Writers/readers creation failed");            
@@ -75,50 +75,14 @@ public class ClientTask implements Runnable {
     }
 	
 	private void shutdown() {
-		try {
-        	out.close();
-        	in.close();
-        	objOut.close();
+		try {			
+        	outData.close();
+        	inData.close();
             clientSocket.close();
             System.out.println("Connection ended");
         } catch (IOException e) {
             e.printStackTrace();
         }
-	}
-    
-    private void sendGroupPlan() {
-    	String clientInput;
-		try {
-			while (true) {
-				clientInput = in.readLine();
-				if (clientInput != null) {
-					System.out.print(clientInput);
-					break;
-				}		
-			}			
-			
-			Pattern pattern = Pattern.compile("GET_GROUP:_([\\S]+)");
-			Matcher m = pattern.matcher(clientInput);
-			boolean b = m.matches();
-			if (!b) {
-				System.out.print("Wrong request");
-				out.println("WRONG_REQUEST");
-			} else {							
-				String groupName = m.group(1);
-				System.out.println(groupName);
-	
-				if (myDB.checkGroupNameEx(groupName) == -1) {
-					out.println("GROUP_DOESNT_EXIST");
-					System.out.println("Wrong group object requested");
-				} else {
-					out.println("GROUP_EXISTS");
-					GroupPlanObject groupObjToSend = myDB.getGroupPlanObject(groupName);				
-				}			
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
 	}
 
 	private void printSocketInfo(Socket clientSocket2) {
@@ -137,35 +101,11 @@ public class ClientTask implements Runnable {
 //         System.out.println("   Cipher suite = "+ss.getCipherSuite());
 //         System.out.println("   Protocol = "+ss.getProtocol());		
 	}
+        
+    private void sendMessage(Message msg) {
+        sendMessageBytes(msg.toString());       
+    }
 
-	//TODO
-//	private boolean handshake(PrintWriter out, BufferedReader reader) {
-//		if (!areStreamsActive) {
-//			return false;
-//		}
-//
-//    	String clientInput;
-//    	try {
-//			out.println(ServerUtils.EMAIL_ADDRESS);
-////			while (true /* (clientInput = reader.readLine()) != null */) {
-//				clientInput = reader.readLine();				
-//				System.out.println(clientInput);
-//				if (clientInput != null && clientInput.equals(ServerUtils.EMAIL_ADDRESS)) {
-//			    	System.out.println("Handshake suceeded");
-//					return true;					
-//				} else {
-//			    	System.out.println("Handshake failed");
-//					return false;
-//				}
-////				wait(500);			
-////			}
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			return false;	
-//		}
-//	}
-    
 	private void sendMessageBytes(String message){
 		byte[] msgBytes = message.getBytes();
 		String hexString = ServerUtils.bytesToHex(msgBytes);		
@@ -182,25 +122,36 @@ public class ClientTask implements Runnable {
 		byte[] combined = new byte[msgLengthBytes.length + msgBytes.length];
 		System.arraycopy(msgLengthBytes, 0, combined, 0                    , msgLengthBytes.length);
 		System.arraycopy(msgBytes,       0, combined, msgLengthBytes.length, msgBytes.length);
-				
-//		byte[] byteArray = new byte[] { -1, -128, 1, 127 };
-//		System.out.println(Arrays.toString(combined));
-			  
+							  
 		hexString = ServerUtils.bytesToHex(combined);	
 		System.out.println("Hex of overall message:");		
-		System.out.println(hexString);
-		
+		System.out.println(hexString);		
 		
 		try {
 			outData.write(combined);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}		
 		return;
-	}
-	
+	}	
+
+    private Message receiveMessageObj() {
+        String msgString = receivePrefixedMessage();
+        if (msgString == null) return null;
+        String regexp = "<(" + ServerUtils.MSG_TYPES_REGEXP + ")/([\\S]+)>";
+        Pattern pattern = Pattern.compile(regexp);
+        Matcher m = pattern.matcher(msgString);
+        boolean b = m.matches();
+        if (!b) {
+        	System.out.println("Wrong message received");
+        	shutdown();
+        }
+        String msg_type = m.group(1);
+        String msg_param = m.group(2);
+
+        return new Message(msg_type, msg_param);
+    }
+
     private String receivePrefixedMessage() {
         byte[] prefixBuffer = new byte[4];
         int prefixBytesToRead = 4;
@@ -233,7 +184,10 @@ public class ClientTask implements Runnable {
         // actual message reading
         int dataBytesToRead = dataLength;
         int dataBytesRead = 0;
-        // if dataLenght < 0 || > INFINITY ... throw something throwable
+        
+        if (dataLength <= 0) {
+        	return null;
+        }
 
         byte[] dataBuffer = new byte[dataLength];
         while (dataBytesToRead > 0) {
