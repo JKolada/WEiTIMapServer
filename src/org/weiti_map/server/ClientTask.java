@@ -21,11 +21,11 @@ public class ClientTask implements Runnable {
     private ObjectOutputStream objOut;
 
     public ClientTask(MyDatabase mDB, Socket clientSocket2) {
-    	myDB = mDB;
+        myDB = mDB;
         this.clientSocket = clientSocket2;
     }
 
-	@Override
+    @Override
     public void run() {
 
         System.out.println("Client connected");
@@ -39,54 +39,55 @@ public class ClientTask implements Runnable {
 //        }   
         
         try {
-        	inData = new DataInputStream(clientSocket.getInputStream());
-        	outData = new DataOutputStream(clientSocket.getOutputStream());        	
-			
-			Message msg;
-			while ((msg = receiveMessageObj()) == null) {};
-			
-            if (msg.getType() == Message.MessageType.HANDSHAKE) {
-            	sendMessage(new Message(Message.MessageType.HANDSHAKE));
-            	
-            	Message getGroupMessage = null;
-    			while ((getGroupMessage = receiveMessageObj()) == null) {};
-    			GroupPlanObject groupObjToSend = getGroupMessage.getGroupPlanobject(myDB);
-                if (groupObjToSend == null) {
-                    sendMessage(new Message(Message.MessageType.SEND_GROUP, ServerUtils.GROUP_DOESNT_EXIST));
-                } else {
-                    sendMessage(new Message(Message.MessageType.SEND_GROUP, ServerUtils.GROUP_EXISTS));
+            inData = new DataInputStream(clientSocket.getInputStream());
+            outData = new DataOutputStream(clientSocket.getOutputStream());         
+        } catch (IOException e) {
+            System.out.println("Writers/readers creation failed");            
+            e.printStackTrace();
+        }
+            
+        Message msg;
+        while ((msg = receiveMessageObj()) == null) {};
+        
+        if (msg.getType() == Message.MessageType.HANDSHAKE) {
+            sendMessage(new Message(Message.MessageType.HANDSHAKE));
+            
+            Message getGroupMessage = null;
+            while ((getGroupMessage = receiveMessageObj()) == null) {};
+            GroupPlanObject groupObjToSend = getGroupMessage.getGroupPlanobject(myDB);
+            if (groupObjToSend == null) {
+                sendMessage(new Message(Message.MessageType.SEND_GROUP, ServerUtils.GROUP_DOESNT_EXIST));
+            } else {
+                sendMessage(new Message(Message.MessageType.SEND_GROUP, ServerUtils.GROUP_EXISTS));
+                try {
                     objOut = new ObjectOutputStream(clientSocket.getOutputStream());
                     objOut.writeObject(groupObjToSend);
                     System.out.println("Group object sent and closing object stream.");
                     objOut.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
-            } else {
-            	System.out.println("Received a message that is not a handshake message.");
-            	shutdown();
             }
-
-            
-		} catch (IOException e) {
-            System.out.println("Writers/readers creation failed");            
-			e.printStackTrace();
-		}
-        
+        } else {
+            System.out.println("Received a message that is not a handshake message.");
+        }
         shutdown();       
     }
-	
-	private void shutdown() {
-		try {			
-        	outData.close();
-        	inData.close();
+    
+    private void shutdown() {
+        try {           
+            outData.close();
+            inData.close();
             clientSocket.close();
             System.out.println("Connection ended");
         } catch (IOException e) {
             e.printStackTrace();
         }
-	}
+    }
 
-	private void printSocketInfo(Socket clientSocket2) {
-    	 System.out.println("   Socket class:          " + clientSocket2.getClass());
+    private void printSocketInfo(Socket clientSocket2) {
+         System.out.println("   Socket class:          " + clientSocket2.getClass());
          System.out.println("   Remote address       = "
             + clientSocket2.getInetAddress().toString());
          System.out.println("   Remote port          = " + clientSocket2.getPort());
@@ -99,41 +100,41 @@ public class ClientTask implements Runnable {
 //            + clientSocket2.getNeedClientAuth());
 //         SSLSession ss = clientSocket2.getSession();
 //         System.out.println("   Cipher suite = "+ss.getCipherSuite());
-//         System.out.println("   Protocol = "+ss.getProtocol());		
-	}
+//         System.out.println("   Protocol = "+ss.getProtocol());       
+    }
         
     private void sendMessage(Message msg) {
         sendMessageBytes(msg.toString());       
     }
 
-	private void sendMessageBytes(String message){
-		byte[] msgBytes = message.getBytes();
-		String hexString = ServerUtils.bytesToHex(msgBytes);		
-		System.out.println("\nHex of actual message:");
-		System.out.println(hexString);
-		
-		int msgLength = 4 + msgBytes.length;
-		
-		byte[] msgLengthBytes = ByteBuffer.allocate(4).putInt(msgLength).array();
-		hexString = ServerUtils.bytesToHex(msgLengthBytes);		
-		System.out.println("Hex of string length:");
-		System.out.println(hexString);
-		
-		byte[] combined = new byte[msgLengthBytes.length + msgBytes.length];
-		System.arraycopy(msgLengthBytes, 0, combined, 0                    , msgLengthBytes.length);
-		System.arraycopy(msgBytes,       0, combined, msgLengthBytes.length, msgBytes.length);
-							  
-		hexString = ServerUtils.bytesToHex(combined);	
-		System.out.println("Hex of overall message:");		
-		System.out.println(hexString);		
-		
-		try {
-			outData.write(combined);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
-		return;
-	}	
+    private void sendMessageBytes(String message){
+        byte[] msgBytes = message.getBytes();
+        String hexString = ServerUtils.bytesToHex(msgBytes);        
+        System.out.println("\nHex of actual message:");
+        System.out.println(hexString);
+        
+        int msgLength = 4 + msgBytes.length;
+        
+        byte[] msgLengthBytes = ByteBuffer.allocate(4).putInt(msgLength).array();
+        hexString = ServerUtils.bytesToHex(msgLengthBytes);     
+        System.out.println("Hex of string length:");
+        System.out.println(hexString);
+        
+        byte[] combined = new byte[msgLengthBytes.length + msgBytes.length];
+        System.arraycopy(msgLengthBytes, 0, combined, 0                    , msgLengthBytes.length);
+        System.arraycopy(msgBytes,       0, combined, msgLengthBytes.length, msgBytes.length);
+                              
+        hexString = ServerUtils.bytesToHex(combined);   
+        System.out.println("Hex of overall message:");      
+        System.out.println(hexString);      
+        
+        try {
+            outData.write(combined);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }       
+        return;
+    }   
 
     private Message receiveMessageObj() {
         String msgString = receivePrefixedMessage();
@@ -143,8 +144,8 @@ public class ClientTask implements Runnable {
         Matcher m = pattern.matcher(msgString);
         boolean b = m.matches();
         if (!b) {
-        	System.out.println("Wrong message received");
-        	shutdown();
+            System.out.println("Wrong message received");
+            shutdown();
         }
         String msg_type = m.group(1);
         String msg_param = m.group(2);
@@ -186,7 +187,7 @@ public class ClientTask implements Runnable {
         int dataBytesRead = 0;
         
         if (dataLength <= 0) {
-        	return null;
+            return null;
         }
 
         byte[] dataBuffer = new byte[dataLength];

@@ -11,7 +11,8 @@ public class LectureObj extends LectureParentObj implements Serializable {
 	private String id_godziny;
 	private String parzystoœæ;
 	private String rodz_zajêæ;
-	 
+	
+	
 	public LectureObj(ArrayList<String> poj_zajêcia) {	
 		nazwa_sali = poj_zajêcia.get(0);
 		nazwa_dnia = poj_zajêcia.get(1);

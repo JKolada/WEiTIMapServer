@@ -28,6 +28,11 @@ public class GroupPlanObject implements Serializable{
 		zajecia.add(myLecture);
 	}
 	
+	public List<LectureObj> getLectureArray() {
+		return zajecia;
+	}
+	
+	
 	char getParzystosc() {
 		return parzystosc_tabeli;				
 	}	
