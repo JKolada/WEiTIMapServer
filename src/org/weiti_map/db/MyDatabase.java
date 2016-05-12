@@ -220,7 +220,7 @@ public class MyDatabase extends SQLiteDataSource{
 	}
 	
 	
-	public GroupPlanObject getGroupPlanObject(String group_name) {
+	public GroupPlanObject getGroupPlanObject(String group_name) {		
 		String query = "SELECT * FROM vw_plan WHERE nazwa_grupy = '" + group_name +"'";
 		GroupPlanObject groupObject = null;
 //		List<String> pojedyncze_zajecia = new ArrayList<String>();		
@@ -234,6 +234,8 @@ public class MyDatabase extends SQLiteDataSource{
 		    			pojedyncze_zajecia.add(zajeciaRS.getString(k));
 //		    			System.out.println(zajeciaRS.getString(k));  //TO DELETE
 		    		}
+//		    		String[] temp = new LectureObj((ArrayList<String>) pojedyncze_zajecia).getLectureData(); //TO DELETE
+//		    		System.out.println(temp[0] + " " + temp[1] + " " + temp[2] + " " + temp[3] + " " + temp[4] + " " + temp[5]);		    		
 		    		groupObject.add(new LectureObj((ArrayList<String>) pojedyncze_zajecia));		    	  	    	
 		    	} 
 		    		

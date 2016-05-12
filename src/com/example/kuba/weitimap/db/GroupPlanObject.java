@@ -84,7 +84,6 @@ public class GroupPlanObject implements Serializable{
 					break; 
 			}			
 			data[row_no][col_no] = poj_zaj_info[4] + " " + poj_zaj_info[5] + " " + poj_zaj_info[0];	
-//			System.out.println(row_no + " " + col_no + " " + data[row_no][col_no]); //TO DELETE		
 		}		
 		
 	}
