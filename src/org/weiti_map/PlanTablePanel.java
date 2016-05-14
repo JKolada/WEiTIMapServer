@@ -3,8 +3,9 @@ package org.weiti_map;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.weiti_map.db.GroupPlanObject;
 import org.weiti_map.db.MyDatabase;
+
+import com.example.kuba.weitimap.db.GroupPlanObject;
 
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;

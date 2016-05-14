@@ -28,6 +28,7 @@ public class GroupNameJPanel extends JPanel {
 	private JButton addGroupBtn;
 	private JButton removeGroupBtn;
 	private JTextField newGroupName;
+	private JLabel newGroupLabel;
 	
 	private ListenForAction classListener;
 	
@@ -37,13 +38,14 @@ public class GroupNameJPanel extends JPanel {
 		grandparentPanel = gparentJPanel;
 		
 		classListener = new ListenForAction();
-		addGroupBtn = new JButton("Dodaj grupê");
+		addGroupBtn = new JButton("Dodaj grupê ");
 		addGroupBtn.addActionListener(classListener);
 //		classListener = new ListenForAction();
-		removeGroupBtn =  new JButton("Usuñ grupê");
+		removeGroupBtn =  new JButton("Usuñ grupê ");
 		removeGroupBtn.addActionListener(classListener);
 		tableTypeLabel = new JLabel("Wybierz grupê:  ");
-		newGroupName = new JTextField("nazwa nowej grupy");
+		newGroupName = new JTextField("Nazwa nowej grupy ");
+		newGroupLabel = new JLabel("Dodaj now¹ grupê: ");
 		comboBox = new GroupComboBox(grandparentPanel, mDB.getGroupNames());		
 		restart();
 	}
@@ -54,6 +56,7 @@ public class GroupNameJPanel extends JPanel {
 		add(tableTypeLabel);		
 		add(comboBox);	
 		add(removeGroupBtn, "wrap");
+		add(newGroupLabel);
 		add(newGroupName);
 		add(addGroupBtn);	
 		setVisible(true);	
@@ -88,7 +91,16 @@ public class GroupNameJPanel extends JPanel {
 //				JOptionPane optionPane = new JOptionPane("Question?",  JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
 				
 				//accept input and convert (parse) if needed
-				String x = JOptionPane.showInputDialog(null,"enter num!");
+
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+//				String x = JOptionPane.showInputDialog(null,"enter num!");
+				int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to remove " + groupName + " group plan?", "Warning", dialogButton);
+				
+                if(dialogResult == JOptionPane.YES_OPTION){
+    				mDB.removeGroup(groupName);
+                }
+
+				
 //				int x = Integer.parseInt();
 				//assign variable and accept input
 //				name = JOptionPane.showInputDialog(	null, "enter your name");
@@ -100,7 +112,6 @@ public class GroupNameJPanel extends JPanel {
 				//welcome message
 //				JOptionPane.showMessageDialog(null, "your name is " + name + ". The num plus 5 is " + x + ".");
 
-				mDB.removeGroup(groupName);
 			}
 			restart();
 		}

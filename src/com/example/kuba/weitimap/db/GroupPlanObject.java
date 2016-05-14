@@ -1,18 +1,27 @@
-package org.weiti_map.db;
+package com.example.kuba.weitimap.db;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
+import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
+@XmlRootElement
+@XmlSeeAlso({LectureObj.class})
 public class GroupPlanObject implements Serializable{
 	
 	private static final long serialVersionUID = 2366854110722067579L;
 	
 	private char parzystosc_tabeli;
-	private final String nazwa_grupy;	
-	private final List<LectureObj> zajecia = new ArrayList<LectureObj>();
+	private String nazwa_grupy;	
 	
-	GroupPlanObject(String nazwa_gr) {
+	private ArrayList<LectureObj> zajecia = new ArrayList<LectureObj>();
+	
+	public GroupPlanObject(String nazwa_gr) {
 		nazwa_grupy = nazwa_gr;	     
 	}
 	
@@ -20,14 +29,28 @@ public class GroupPlanObject implements Serializable{
 		nazwa_grupy = "error";
 	}
 
+	public void setGroupName(String group) {
+		nazwa_grupy = group;
+	}	
+
+	@XmlAttribute(name = "lectures")
 	public String getGroupName() {
 		return nazwa_grupy;
 	}
 
-	void add(LectureObj myLecture) {
+	public void add(LectureObj myLecture) {
 		zajecia.add(myLecture);
 	}
 	
+	public void setLectureArray(ArrayList<LectureObj> lectures) {
+		zajecia = lectures;
+	}
+
+	@XmlElementRef
+	public ArrayList<LectureObj> getLectureArray() {
+		return zajecia;
+	}
+
 	char getParzystosc() {
 		return parzystosc_tabeli;				
 	}	
@@ -79,7 +102,6 @@ public class GroupPlanObject implements Serializable{
 					break; 
 			}			
 			data[row_no][col_no] = poj_zaj_info[4] + " " + poj_zaj_info[5] + " " + poj_zaj_info[0];	
-//			System.out.println(row_no + " " + col_no + " " + data[row_no][col_no]); //TO DELETE		
 		}		
 		
 	}

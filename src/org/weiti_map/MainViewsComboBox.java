@@ -41,15 +41,15 @@ public class MainViewsComboBox extends JComboBox<String> {
 					case "Zajêcia":
 						typeJPanel.setVisible(false);
 //						if (showDataRadioButton.isSelected()) {
-//							myGrandPanel.refillPanel(SHOW_PANEL_TYPES.ROOMS_TABLE);
+							myGrandPanel.refillPanel(SHOW_PANEL_TYPES.LECTURES_TABLE);
 //						}
 						break;
-					case "Pracownicy":
-						typeJPanel.setVisible(false);
-//						if (showDataRadioButton.isSelected()) {
-//							myGrandPanel.refillPanel(SHOW_PANEL_TYPES.WORKERS_TABLE);
-//						}
-						break;
+//					case "Pracownicy":
+//						typeJPanel.setVisible(false);
+////						if (showDataRadioButton.isSelected()) {
+////							myGrandPanel.refillPanel(SHOW_PANEL_TYPES.WORKERS_TABLE);
+////						}
+//						break;
 					case "Sale":
 						typeJPanel.setVisible(false);
 //						if (showDataRadioButton.isSelected()) {
