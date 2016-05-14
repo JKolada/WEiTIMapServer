@@ -1,4 +1,4 @@
-package org.weiti_map;
+package org.weiti_map.server;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -78,7 +78,7 @@ public class MyServerPanel extends javax.swing.JPanel {
 			}
 		});
 		
-		add(serverIP);
+		add(new JLabel("Port na którym bêdzie nas³uchiwa³ serwer: "));
 		add(serverPort);
 		add(serverBtn);
 	}
