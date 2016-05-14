@@ -2,10 +2,13 @@ package com.example.kuba.weitimap.db;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public abstract class LectureParentObj implements Serializable {
 	
 	private static final long serialVersionUID = -826240034398882484L;
-	protected String skrót_nazwy_zajêæ;	
+	protected String activity_name;	
 	
-	protected abstract String[] getLectureData();
+	public abstract String[] getLectureData();
 }

@@ -37,9 +37,9 @@ public class MyPanel extends JPanel {
 	        }
 	    });		
 
-		LC layoutConstraints = new LC();
-		layoutConstraints.setFillX(true);
-		setLayout(new MigLayout(layoutConstraints));
+//		LC layoutConstraints = new LC();
+//		layoutConstraints.setFillX(true);
+		setLayout(new MigLayout("fillx, debug"));
 		
 //    	setOpaque(true);
 //		groupNameJTextField.setForeground(Color.GRAY);
@@ -62,7 +62,9 @@ public class MyPanel extends JPanel {
 				break;
 			case ROOMS_TABLE:
 				showPanel = new MyShowPanel(mDatabase, type);
-//				showWorkers();
+				break;
+			case LECTURES_TABLE:
+				showPanel = new MyShowPanel(mDatabase, type);
 				break;
 			default:
 				break;

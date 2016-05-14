@@ -28,6 +28,7 @@ public class GroupNameJPanel extends JPanel {
 	private JButton addGroupBtn;
 	private JButton removeGroupBtn;
 	private JTextField newGroupName;
+	private JLabel newGroupLabel;
 	
 	private ListenForAction classListener;
 	
@@ -37,13 +38,14 @@ public class GroupNameJPanel extends JPanel {
 		grandparentPanel = gparentJPanel;
 		
 		classListener = new ListenForAction();
-		addGroupBtn = new JButton("Dodaj grupê");
+		addGroupBtn = new JButton("Dodaj grupê ");
 		addGroupBtn.addActionListener(classListener);
 //		classListener = new ListenForAction();
-		removeGroupBtn =  new JButton("Usuñ grupê");
+		removeGroupBtn =  new JButton("Usuñ grupê ");
 		removeGroupBtn.addActionListener(classListener);
 		tableTypeLabel = new JLabel("Wybierz grupê:  ");
-		newGroupName = new JTextField("nazwa nowej grupy");
+		newGroupName = new JTextField("Nazwa nowej grupy ");
+		newGroupLabel = new JLabel("Dodaj now¹ grupê: ");
 		comboBox = new GroupComboBox(grandparentPanel, mDB.getGroupNames());		
 		restart();
 	}
@@ -54,6 +56,7 @@ public class GroupNameJPanel extends JPanel {
 		add(tableTypeLabel);		
 		add(comboBox);	
 		add(removeGroupBtn, "wrap");
+		add(newGroupLabel);
 		add(newGroupName);
 		add(addGroupBtn);	
 		setVisible(true);	

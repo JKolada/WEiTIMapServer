@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<groupPlanObject lectures="1E1">
+    <lectureObj activityKind="W" activityName="WFI" dayName="poniedziałek" hourId="8" parity="N" roomName="105-AR"/>
+    <lectureObj activityKind="W" activityName="WFI" dayName="poniedziałek" hourId="9" parity="N" roomName="105-AR"/>
+    <lectureObj activityKind="L" activityName="PRM" dayName="poniedziałek" hourId="10" parity="X" roomName="011"/>
+    <lectureObj activityKind="L" activityName="PRM" dayName="poniedziałek" hourId="11" parity="X" roomName="011"/>
+    <lectureObj activityKind="C" activityName="WFI" dayName="poniedziałek" hourId="12" parity="N" roomName="106"/>
+    <lectureObj activityKind="C" activityName="WFI" dayName="poniedziałek" hourId="13" parity="N" roomName="106"/>
+    <lectureObj activityKind="C" activityName="ULOG" dayName="poniedziałek" hourId="12" parity="P" roomName="106"/>
+    <lectureObj activityKind="C" activityName="ULOG" dayName="poniedziałek" hourId="13" parity="P" roomName="106"/>
+    <lectureObj activityKind="L" activityName="PPOM" dayName="poniedziałek" hourId="14" parity="X" roomName="DS202"/>
+    <lectureObj activityKind="L" activityName="PPOM" dayName="poniedziałek" hourId="15" parity="X" roomName="DS202"/>
+    <lectureObj activityKind="L" activityName="PPOM" dayName="poniedziałek" hourId="16" parity="X" roomName="DS202"/>
+</groupPlanObject>

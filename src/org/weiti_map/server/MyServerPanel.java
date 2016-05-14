@@ -3,23 +3,27 @@ package org.weiti_map.server;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//import javax.net.ssl.SSLServerSocket;
-//import javax.net.ssl.SSLServerSocketFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import org.weiti_map.db.MyDatabase;
+import org.weiti_map.server.ClientTask;
+
+import net.miginfocom.swt.MigLayout;
 
 public class MyServerPanel extends javax.swing.JPanel {
 
+	
 	private static final long serialVersionUID = 1018897889225847727L;
 	private static final int CLIENTS_MAX_AMOUNT = 10;
 
@@ -40,17 +44,17 @@ public class MyServerPanel extends javax.swing.JPanel {
 	}
 
 	private void configure() {
-//		try {
-//			serverIP = new JTextField(Inet4Address.getLocalHost().getHostAddress());
-//		} catch (UnknownHostException e) {
-//			e.printStackTrace();
-//		}
+//			try {
+//				serverIP = new JLabel(Inet4Address.getLocalHost().getHostAddress());
+//			} catch (UnknownHostException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 		
-
-//	    System.setProperty("javax.net.ssl.trustStore", "clienttrust");
+//		serverIP = new JLabel("192.168.0.1");
 		
-		serverIP = new JLabel("192.168.18.1");
-		serverPort = new JTextField("13131");		
+//		setLayout(new MigLayout("fillx"));
+		serverPort = new JTextField("13131");
 		serverState = onOff.SERVER_OFF;
 		serverBtn = new JButton("Start server");		
 		setServerButton();
@@ -74,7 +78,7 @@ public class MyServerPanel extends javax.swing.JPanel {
 			}
 		});
 		
-		add(serverIP);
+		add(new JLabel("Port na którym bêdzie nas³uchiwa³ serwer: "));
 		add(serverPort);
 		add(serverBtn);
 	}
@@ -92,32 +96,33 @@ public class MyServerPanel extends javax.swing.JPanel {
         }        
         
         clientProcessingPool = Executors.newFixedThreadPool(CLIENTS_MAX_AMOUNT);
-//		SSLServerSocketFactory sslFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
-        
 		   Runnable serverTask = new Runnable() {
 	            @Override
 	            public void run() {
 	                try {
-
-//	                    socket = (SSLServerSocket) sslFactory.createServerSocket(Integer.parseInt(port));
 	                    socket = new ServerSocket(Integer.parseInt(port));
-	        			setServerButton(onOff.SERVER_ON);
-	                    System.out.println("Waiting for clients to connect...");
-	                    while (true) {
-//	                    	SSLSocket clientSocket = (SSLSocket) socket.accept();
-	                    	Socket clientSocket = socket.accept();
-	                        clientProcessingPool.submit(new ClientTask(mDB, clientSocket));	// kolejny try/catch
-	                        
-	                    }
 	                } catch (IOException e) {
 	        			setServerButton(onOff.SERVER_OFF);
 	                    System.err.println("Unable to process client request");
 	                    e.printStackTrace();
 	                }
+	        			setServerButton(onOff.SERVER_ON);
+	                    System.out.println("Waiting for clients to connect...");
+	                    while (!socket.isClosed()) {
+	                    	try {
+	                    	Socket clientSocket = socket.accept();
+	                    	System.out.println("Client accepted");	                    	
+	                        clientProcessingPool.submit(new ClientTask(mDB, clientSocket));
+	                    	} catch (IOException e) {
+	                    		e.printStackTrace();
+	                    	}
+	                    }
+	                
 	            }
 	        };
 	        Thread serverThread = new Thread(serverTask);
 	        serverThread.start();
+
 		
 	}
 

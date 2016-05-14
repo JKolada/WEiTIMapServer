@@ -4,12 +4,7 @@ public final class MyDatabaseUtilities {
 	
 	// 'CREATE TABLES' STATEMENTS // // // // // // // //
 	
-	private final static String CREATE_TB_PRACOWNICY =
-	"CREATE TABLE IF NOT EXISTS tb_pracownicy (" +
-	"	pracownik_id INTEGER PRIMARY KEY," +
-	"	imie TEXT NOT NULL," +
-	"	nazwisko TEXT NOT NULL" +
-	")";
+
 
 	private final static String CREATE_TB_GRUPY =
 	"CREATE TABLE IF NOT EXISTS tb_grupy (" +
@@ -26,7 +21,7 @@ public final class MyDatabaseUtilities {
 	private final static String CREATE_TB_GODZINY =
 	"CREATE TABLE IF NOT EXISTS tb_godziny (" +
 	"	godz_id INTEGER PRIMARY KEY," +
-	"	godziny TEXT NOT NULL" +
+	"	godziny TEXT NOT NULL UNIQUE" +
 	")";
 
 	private final static String CREATE_TB_SALE =
@@ -41,9 +36,9 @@ public final class MyDatabaseUtilities {
 	private final static String CREATE_TB_ZAJECIA =
 	"CREATE TABLE IF NOT EXISTS tb_zajecia (" +
 	"	id_zajec INTEGER PRIMARY KEY," +
-	"	skrot_nazwy_zajec TEXT NOT NULL," +
-	"	nazwa_zajec TEXT NOT NULL," +
-	"	id_wykladowcy TEXT," +
+	"	skrot_nazwy_zajec TEXT NOT NULL UNIQUE," +
+	"	nazwa_zajec TEXT NOT NULL UNIQUE," +
+	"	id_wykladowcy INTEGER," +
 	"	FOREIGN KEY (id_wykladowcy) REFERENCES tb_pracownicy(pracownik_id)" +
 	")";
 
@@ -56,15 +51,23 @@ public final class MyDatabaseUtilities {
 	"	rodz_zajec VARCHAR(1) NOT NULL DEFAULT 'X',"  +	
 	"	sala_id INTEGER NOT NULL," +
 	"	parzystosc VARCHAR(1) NOT NULL DEFAULT 'X',"  +
-	"	CHECK (parzystosc = 'P' OR parzystosc = 'N' OR parzystosc = 'X'),"  +	
+	"	CHECK (parzystosc IN ('P', 'N', 'X')),"  +	
 	"	CHECK (rodz_zajec IN ('W', 'L', 'C', 'R')),"  +
 	"	FOREIGN KEY (grupa_id) REFERENCES tb_grupy(grupa_id),"  +
 	"	FOREIGN KEY (sala_id) REFERENCES tb_sale(sala_id)," +
 	"	FOREIGN KEY (dzien_tyg_id) REFERENCES tb_dni_tyg(dzien_tyg_id),"  +
 	"	FOREIGN KEY (godz_id) REFERENCES tb_godziny(godz_id),"  +
-	"	FOREIGN KEY (id_zajec) REFERENCES tb_zajecia(id_zajec)"  +
+	"	FOREIGN KEY (id_zajec) REFERENCES tb_zajecia(id_zajec),"  +
+	"	PRIMARY KEY (grupa_id, dzien_tyg_id, godz_id, id_zajec, rodz_zajec, sala_id, parzystosc) "  +
 	")";
 
+	private final static String CREATE_TB_PRACOWNICY =
+	"CREATE TABLE IF NOT EXISTS tb_pracownicy (" +
+	"	pracownik_id INTEGER PRIMARY KEY," +
+	"	imie TEXT NOT NULL," +
+	"	nazwisko TEXT NOT NULL" +
+	")";
+	
 	private final static String CREATE_TB_PLAN_KONSUL =
 	"CREATE TABLE IF NOT EXISTS tb_plan_konsul (" +
 	"	dzien_tyg_id INTEGER NOT NULL," +
