@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<groupPlanObject lectures="3I1">
+    <lectureObj activityKind="W" activityName="ARKO" dayName="poniedziałek" hourId="10" parity="X" roomName="011"/>
+    <lectureObj activityKind="W" activityName="ARKO" dayName="poniedziałek" hourId="11" parity="X" roomName="011"/>
+    <lectureObj activityKind="C" activityName="JA-2" dayName="poniedziałek" hourId="12" parity="N" roomName="106"/>
+    <lectureObj activityKind="C" activityName="JA-2" dayName="poniedziałek" hourId="13" parity="N" roomName="106"/>
+    <lectureObj activityKind="W" activityName="MPS" dayName="poniedziałek" hourId="14" parity="X" roomName="DS202"/>
+    <lectureObj activityKind="W" activityName="MPS" dayName="poniedziałek" hourId="15" parity="X" roomName="DS202"/>
+    <lectureObj activityKind="W" activityName="TSI" dayName="poniedziałek" hourId="16" parity="X" roomName="DS202"/>
+    <lectureObj activityKind="W" activityName="TSI" dayName="poniedziałek" hourId="17" parity="X" roomName="DS202"/>
+    <lectureObj activityKind="L" activityName="ARKO" dayName="wtorek" hourId="10" parity="N" roomName="10"/>
+    <lectureObj activityKind="L" activityName="ARKO" dayName="wtorek" hourId="11" parity="N" roomName="10"/>
+    <lectureObj activityKind="L" activityName="PTTB" dayName="wtorek" hourId="14" parity="N" roomName="412"/>
+    <lectureObj activityKind="L" activityName="PTTB" dayName="wtorek" hourId="15" parity="N" roomName="412"/>
+    <lectureObj activityKind="L" activityName="PTTB" dayName="wtorek" hourId="16" parity="N" roomName="412"/>
+    <lectureObj activityKind="L" activityName="ARKO" dayName="wtorek" hourId="8" parity="P" roomName="10"/>
+    <lectureObj activityKind="L" activityName="ARKO" dayName="wtorek" hourId="9" parity="P" roomName="10"/>
+    <lectureObj activityKind="L" activityName="ARKO" dayName="wtorek" hourId="10" parity="P" roomName="10"/>
+    <lectureObj activityKind="L" activityName="ARKO" dayName="wtorek" hourId="11" parity="P" roomName="10"/>
+    <lectureObj activityKind="L" activityName="ARKO" dayName="wtorek" hourId="12" parity="P" roomName="139"/>
+    <lectureObj activityKind="L" activityName="ARKO" dayName="wtorek" hourId="13" parity="P" roomName="139"/>
+    <lectureObj activityKind="L" activityName="PTTB" dayName="wtorek" hourId="14" parity="P" roomName="411"/>
+    <lectureObj activityKind="L" activityName="PTTB" dayName="wtorek" hourId="15" parity="P" roomName="411"/>
+    <lectureObj activityKind="L" activityName="PTTB" dayName="wtorek" hourId="16" parity="P" roomName="411"/>
+    <lectureObj activityKind="C" activityName="JA-2" dayName="środa" hourId="8" parity="N" roomName="102"/>
+    <lectureObj activityKind="C" activityName="JA-2" dayName="środa" hourId="9" parity="N" roomName="102"/>
+    <lectureObj activityKind="W" activityName="PTTB" dayName="środa" hourId="10" parity="X" roomName="133"/>
+    <lectureObj activityKind="W" activityName="PTTB" dayName="środa" hourId="11" parity="X" roomName="133"/>
+    <lectureObj activityKind="W" activityName="ARKO" dayName="środa" hourId="12" parity="X" roomName="161"/>
+    <lectureObj activityKind="C" activityName="WF3" dayName="środa" hourId="14" parity="X" roomName="?"/>
+    <lectureObj activityKind="C" activityName="WF3" dayName="środa" hourId="15" parity="X" roomName="?"/>
+    <lectureObj activityKind="L" activityName="ARKO" dayName="środa" hourId="8" parity="P" roomName="313"/>
+    <lectureObj activityKind="L" activityName="ARKO" dayName="środa" hourId="9" parity="P" roomName="313"/>
+    <lectureObj activityKind="C" activityName="AISDI" dayName="czwartek" hourId="12" parity="N" roomName="122"/>
+    <lectureObj activityKind="C" activityName="AISDI" dayName="czwartek" hourId="13" parity="N" roomName="122"/>
+    <lectureObj activityKind="C" activityName="TSI" dayName="czwartek" hourId="12" parity="P" roomName="122"/>
+    <lectureObj activityKind="C" activityName="TSI" dayName="czwartek" hourId="13" parity="P" roomName="122"/>
+    <lectureObj activityKind="L" activityName="TSI" dayName="czwartek" hourId="8" parity="P" roomName="418"/>
+    <lectureObj activityKind="L" activityName="TSI" dayName="czwartek" hourId="9" parity="P" roomName="418"/>
+    <lectureObj activityKind="L" activityName="TSI" dayName="czwartek" hourId="10" parity="P" roomName="418"/>
+    <lectureObj activityKind="C" activityName="MPS" dayName="piątek" hourId="8" parity="X" roomName="104-AR"/>
+    <lectureObj activityKind="C" activityName="MPS" dayName="piątek" hourId="9" parity="X" roomName="104-AR"/>
+    <lectureObj activityKind="L" activityName="AISDI" dayName="piątek" hourId="10" parity="X" roomName="011"/>
+    <lectureObj activityKind="L" activityName="AISDI" dayName="piątek" hourId="11" parity="X" roomName="011"/>
+    <lectureObj activityKind="W" activityName="FKS" dayName="piątek" hourId="12" parity="X" roomName="164"/>
+    <lectureObj activityKind="W" activityName="FKS" dayName="piątek" hourId="13" parity="X" roomName="164"/>
+    <lectureObj activityKind="W" activityName="AISDI" dayName="piątek" hourId="14" parity="X" roomName="118-AL"/>
+    <lectureObj activityKind="W" activityName="AISDI" dayName="piątek" hourId="15" parity="X" roomName="118-AL"/>
+    <lectureObj activityKind="L" activityName="FPPI" dayName="piątek" hourId="16" parity="X" roomName="277"/>
+    <lectureObj activityKind="L" activityName="FPPI" dayName="piątek" hourId="17" parity="X" roomName="277"/>
+    <lectureObj activityKind="L" activityName="FPPI" dayName="piątek" hourId="18" parity="X" roomName="277"/>
+</groupPlanObject>
+<!-- 
+AISDI.B Algorytmy i struktury danych (I)
+ARKO.A  Architektura komputerów
+FKS.B   Fizyka kwantowa i statystyczna
+FPPI.A  Fizyczne podstawy przetwarzania informacji
+JA-2.B  Język angielski 2 - poziom B2
+MPS.A   Metody probabilistyczne i statystyka
+PTT.B   Podstawy telekomunikacji
+TSI.A   Teoria sygnałów i informacji
+WF3.A   Wychowanie fizyczne 3
+ -->

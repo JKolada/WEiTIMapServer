@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<groupPlanObject lectures="6RTM">
+    <lectureObj activityKind="W" activityName="CSK" dayName="poniedziałek" hourId="8" parity="X" roomName="168"/>
+    <lectureObj activityKind="W" activityName="CSK" dayName="poniedziałek" hourId="9" parity="X" roomName="168"/>
+    <lectureObj activityKind="W" activityName="MR" dayName="poniedziałek" hourId="12" parity="X" roomName="122"/>
+    <lectureObj activityKind="W" activityName="MR" dayName="poniedziałek" hourId="13" parity="X" roomName="122"/>
+    <lectureObj activityKind="L" activityName="CSK" dayName="wtorek" hourId="8" parity="X" roomName="429"/>
+    <lectureObj activityKind="L" activityName="CSK" dayName="wtorek" hourId="9" parity="X" roomName="429"/>
+    <lectureObj activityKind="L" activityName="CSK" dayName="wtorek" hourId="10" parity="X" roomName="429"/>
+    <lectureObj activityKind="L" activityName="MR" dayName="wtorek" hourId="12" parity="X" roomName="430"/>
+    <lectureObj activityKind="L" activityName="MR" dayName="wtorek" hourId="13" parity="X" roomName="430"/>
+    <lectureObj activityKind="L" activityName="MR" dayName="wtorek" hourId="14" parity="X" roomName="430"/>
+    <lectureObj activityKind="L" activityName="CSK" dayName="czwartek" hourId="8" parity="X" roomName="429"/>
+    <lectureObj activityKind="L" activityName="CSK" dayName="czwartek" hourId="9" parity="X" roomName="429"/>
+    <lectureObj activityKind="L" activityName="CSK" dayName="czwartek" hourId="10" parity="X" roomName="429"/>
+    <lectureObj activityKind="W" activityName="SYTE" dayName="czwartek" hourId="12" parity="X" roomName="04b"/>
+    <lectureObj activityKind="W" activityName="SYTE" dayName="czwartek" hourId="13" parity="X" roomName="04b"/>
+    <lectureObj activityKind="L" activityName="MR" dayName="piątek" hourId="8" parity="X" roomName="430"/>
+    <lectureObj activityKind="L" activityName="MR" dayName="piątek" hourId="9" parity="X" roomName="430"/>
+    <lectureObj activityKind="L" activityName="MR" dayName="piątek" hourId="10" parity="X" roomName="430"/>
+    <lectureObj activityKind="L" activityName="MR" dayName="piątek" hourId="11" parity="X" roomName="430"/>
+    <lectureObj activityKind="L" activityName="SYTE" dayName="piątek" hourId="12" parity="X" roomName="08"/>
+    <lectureObj activityKind="L" activityName="SYTE" dayName="piątek" hourId="13" parity="X" roomName="08"/>
+    <lectureObj activityKind="L" activityName="SYTE" dayName="piątek" hourId="14" parity="X" roomName="08"/>
+</groupPlanObject>
+<!-- 
+CSK.A   Cyfrowe systemy komórkowe
+MR.A    Miernictwo radioelektroniczne
+SYTE.A  Systemy telewizyjne
+ -->
+ 

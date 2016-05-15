@@ -9,31 +9,30 @@ import javax.swing.JComboBox;
 public class GroupComboBox extends JComboBox<String> {
 
 	private static final long serialVersionUID = 1L;
-	
-//	private String[] items;
+
+	// private String[] items;
 	private MyPanel myPanel;
-	
-	
+
 	GroupComboBox(MyPanel parent, String[] strings) {
 		super(strings);
-//		items = strings;
+		// items = strings;
 		getSelectedItem();
 		myPanel = parent;
 		configure();
 	}
-	
+
 	private void configure() {
-		addActionListener(new ActionListener() {			
+		addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				myPanel.showGroupPlan(String.valueOf(getSelectedItem()));				
+				myPanel.showGroupPlan(String.valueOf(getSelectedItem()));
 			}
 		});
-	}  		
-	
+	}
+
 	@Override
 	public String getSelectedItem() {
 		String temp = (String) super.getSelectedItem();
-		return temp;		
+		return temp;
 	}
 }
