@@ -16,52 +16,49 @@ public class MainViewsComboBox extends JComboBox<String> {
 	private MyPanel myGrandPanel;
 	private MyControlPanel myParentPanel;
 	private JRadioButton showDataRadioButton;
-	
-	MainViewsComboBox(MyPanel myPanel, MyControlPanel myControlPanel, GroupNameJPanel tableTypeJPanel, String[] strings) {
+
+	MainViewsComboBox(MyPanel myPanel, MyControlPanel myControlPanel,
+			GroupNameJPanel tableTypeJPanel, String[] strings) {
 		super(strings);
 		typeJPanel = tableTypeJPanel;
 		myGrandPanel = myPanel;
 		myParentPanel = myControlPanel;
-//		showDataRadioButton = myControlPanel.getShowDataRadioButton();	
+		// showDataRadioButton = myControlPanel.getShowDataRadioButton();
 		configure();
 	}
-	
 
 	private void configure() {
 
-		addActionListener(new ActionListener() {			
+		addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String selectedItem = String.valueOf(getSelectedItem());
 				switch (selectedItem) {
-					case "Plan zajêæ":						
-						myGrandPanel.showGroupPlan();		
-						typeJPanel.restart();
-						break;
-					case "Zajêcia":
-						typeJPanel.setVisible(false);
-//						if (showDataRadioButton.isSelected()) {
-							myGrandPanel.refillPanel(SHOW_PANEL_TYPES.LECTURES_TABLE);
-//						}
-						break;
-//					case "Pracownicy":
-//						typeJPanel.setVisible(false);
-////						if (showDataRadioButton.isSelected()) {
-////							myGrandPanel.refillPanel(SHOW_PANEL_TYPES.WORKERS_TABLE);
-////						}
-//						break;
-					case "Sale":
-						typeJPanel.setVisible(false);
-//						if (showDataRadioButton.isSelected()) {
-							myGrandPanel.refillPanel(SHOW_PANEL_TYPES.ROOMS_TABLE);
-//						}
-						break;
+				case "Plan zajêæ":
+					myGrandPanel.showGroupPlan();
+					typeJPanel.restart();
+					break;
+				case "Zajêcia":
+					typeJPanel.setVisible(false);
+					// if (showDataRadioButton.isSelected()) {
+					myGrandPanel.refillPanel(SHOW_PANEL_TYPES.LECTURES_TABLE);
+					// }
+					break;
+				// case "Pracownicy":
+				// typeJPanel.setVisible(false);
+				//// if (showDataRadioButton.isSelected()) {
+				//// myGrandPanel.refillPanel(SHOW_PANEL_TYPES.WORKERS_TABLE);
+				//// }
+				// break;
+				case "Sale":
+					typeJPanel.setVisible(false);
+					// if (showDataRadioButton.isSelected()) {
+					myGrandPanel.refillPanel(SHOW_PANEL_TYPES.ROOMS_TABLE);
+					// }
+					break;
 				}
 			}
 		});
 	}
-	
-	
-	
-	
+
 }

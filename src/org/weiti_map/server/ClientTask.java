@@ -30,52 +30,62 @@ public class ClientTask implements Runnable {
 
 		System.out.println("Client connected");
 		printSocketInfo(clientSocket);
-		
-//		SSLSession session = clientSocket.getSession();
-//		Certificate[] cchain2 = session.getLocalCertificates();
-//		System.out.println(cchain2.toString());
-//		for (int i = 0; i < cchain2.length; i++) {
-//		  System.out.println(((X509Certificate) cchain2[i]).getSubjectDN());
-//		}   
-		
+
+		// SSLSession session = clientSocket.getSession();
+		// Certificate[] cchain2 = session.getLocalCertificates();
+		// System.out.println(cchain2.toString());
+		// for (int i = 0; i < cchain2.length; i++) {
+		// System.out.println(((X509Certificate) cchain2[i]).getSubjectDN());
+		// }
+
 		try {
 			inData = new DataInputStream(clientSocket.getInputStream());
-			outData = new DataOutputStream(clientSocket.getOutputStream());		 
+			outData = new DataOutputStream(clientSocket.getOutputStream());
 		} catch (IOException e) {
-			System.out.println("Writers/readers creation failed");			
+			System.out.println("Writers/readers creation failed");
 			e.printStackTrace();
 		}
-			
+
 		Message msg;
-		while ((msg = receiveMessageObj()) == null) {};
-		
+		while ((msg = receiveMessageObj()) == null) {
+		}
+		;
+
 		if (msg.getType() == Message.MessageType.HANDSHAKE) {
 			sendMessage(new Message(Message.MessageType.HANDSHAKE));
-			
+
 			Message getGroupMessage = null;
-			while ((getGroupMessage = receiveMessageObj()) == null) {};
-			GroupPlanObject groupObjToSend = getGroupMessage.getGroupPlanobject(myDB);
+			while ((getGroupMessage = receiveMessageObj()) == null) {
+			}
+			;
+			GroupPlanObject groupObjToSend = getGroupMessage
+					.getGroupPlanobject(myDB);
 			if (groupObjToSend == null) {
-				sendMessage(new Message(Message.MessageType.SEND_GROUP, ServerUtils.GROUP_DOESNT_EXIST));
+				sendMessage(new Message(Message.MessageType.SEND_GROUP,
+						ServerUtils.GROUP_DOESNT_EXIST));
 			} else {
-				sendMessage(new Message(Message.MessageType.SEND_GROUP, ServerUtils.GROUP_EXISTS));
+				sendMessage(new Message(Message.MessageType.SEND_GROUP,
+						ServerUtils.GROUP_EXISTS));
 				try {
-					objOut = new ObjectOutputStream(clientSocket.getOutputStream());
+					objOut = new ObjectOutputStream(
+							clientSocket.getOutputStream());
 					objOut.writeObject(groupObjToSend);
-					System.out.println("Group object sent and closing object stream.");
+					System.out.println(
+							"Group object sent and closing object stream.");
 					objOut.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		} else {
-			System.out.println("Received a message that is not a handshake message.");
+			System.out.println(
+					"Received a message that is not a handshake message.");
 		}
-		shutdown();	   
+		shutdown();
 	}
-	
+
 	private void shutdown() {
-		try {		   
+		try {
 			outData.close();
 			inData.close();
 			clientSocket.close();
@@ -86,58 +96,64 @@ public class ClientTask implements Runnable {
 	}
 
 	private void printSocketInfo(Socket clientSocket2) {
-		System.out.println("   Socket class:          " + clientSocket2.getClass());
+		System.out.println(
+				"   Socket class:          " + clientSocket2.getClass());
 		System.out.println("   Remote address       = "
-			+ clientSocket2.getInetAddress().toString());
-		System.out.println("   Remote port          = " + clientSocket2.getPort());
+				+ clientSocket2.getInetAddress().toString());
+		System.out.println(
+				"   Remote port          = " + clientSocket2.getPort());
 		System.out.println("   Local socket address = "
-			+ clientSocket2.getLocalSocketAddress().toString());
+				+ clientSocket2.getLocalSocketAddress().toString());
 		System.out.println("   Local address        = "
-			+ clientSocket2.getLocalAddress().toString());
-		System.out.println("   Local port           = " + clientSocket2.getLocalPort());
-//		 System.out.println("   Need client authentication = "
-//			+ clientSocket2.getNeedClientAuth());
-//		 SSLSession ss = clientSocket2.getSession();
-//		 System.out.println("   Cipher suite = "+ss.getCipherSuite());
-//		 System.out.println("   Protocol = "+ss.getProtocol());	   
-	}
-		
-	private void sendMessage(Message msg) {
-		sendMessageBytes(msg.toString());	   
+				+ clientSocket2.getLocalAddress().toString());
+		System.out.println(
+				"   Local port           = " + clientSocket2.getLocalPort());
+		// System.out.println(" Need client authentication = "
+		// + clientSocket2.getNeedClientAuth());
+		// SSLSession ss = clientSocket2.getSession();
+		// System.out.println(" Cipher suite = "+ss.getCipherSuite());
+		// System.out.println(" Protocol = "+ss.getProtocol());
 	}
 
-	private void sendMessageBytes(String message){
+	private void sendMessage(Message msg) {
+		sendMessageBytes(msg.toString());
+	}
+
+	private void sendMessageBytes(String message) {
 		byte[] msgBytes = message.getBytes();
-//		String hexString = ServerUtils.bytesToHex(msgBytes);		
-//		System.out.println("\nHex of actual message:");
-//		System.out.println(hexString);
-		
+		// String hexString = ServerUtils.bytesToHex(msgBytes);
+		// System.out.println("\nHex of actual message:");
+		// System.out.println(hexString);
+
 		int msgLength = 4 + msgBytes.length;
-		
-		byte[] msgLengthBytes = ByteBuffer.allocate(4).putInt(msgLength).array();
-//		hexString = ServerUtils.bytesToHex(msgLengthBytes);	 
-//		System.out.println("Hex of string length:");
-//		System.out.println(hexString);
-		
+
+		byte[] msgLengthBytes = ByteBuffer.allocate(4).putInt(msgLength)
+				.array();
+		// hexString = ServerUtils.bytesToHex(msgLengthBytes);
+		// System.out.println("Hex of string length:");
+		// System.out.println(hexString);
+
 		byte[] combined = new byte[msgLengthBytes.length + msgBytes.length];
-		System.arraycopy(msgLengthBytes, 0, combined, 0					, msgLengthBytes.length);
-		System.arraycopy(msgBytes,	   0, combined, msgLengthBytes.length, msgBytes.length);
-							  
-//		hexString = ServerUtils.bytesToHex(combined);   
-//		System.out.println("Hex of overall message:");	  
-//		System.out.println(hexString);	  
-		
+		System.arraycopy(msgLengthBytes, 0, combined, 0, msgLengthBytes.length);
+		System.arraycopy(msgBytes, 0, combined, msgLengthBytes.length,
+				msgBytes.length);
+
+		// hexString = ServerUtils.bytesToHex(combined);
+		// System.out.println("Hex of overall message:");
+		// System.out.println(hexString);
+
 		try {
 			outData.write(combined);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}	   
+		}
 		return;
-	}   
+	}
 
 	private Message receiveMessageObj() {
 		String msgString = receivePrefixedMessage();
-		if (msgString == null) return null;
+		if (msgString == null)
+			return null;
 		String regexp = "<(" + ServerUtils.MSG_TYPES_REGEXP + ")/([\\S]+)>";
 		Pattern pattern = Pattern.compile(regexp);
 		Matcher m = pattern.matcher(msgString);
@@ -160,7 +176,8 @@ public class ClientTask implements Runnable {
 		// prefix reading
 		while (prefixBytesToRead > 0) {
 			try {
-				int n = inData.read(prefixBuffer, prefixBytesRead, prefixBytesToRead);
+				int n = inData.read(prefixBuffer, prefixBytesRead,
+						prefixBytesToRead);
 				if (n == 0) {
 					return null;
 				}
@@ -172,19 +189,20 @@ public class ClientTask implements Runnable {
 			}
 		}
 
-//		String hexString = ServerUtils.bytesToHex(prefixBuffer);
-//		System.out.println("Hex of message's length: " + hexString);
+		// String hexString = ServerUtils.bytesToHex(prefixBuffer);
+		// System.out.println("Hex of message's length: " + hexString);
 		// end of prefix reading
 
-		final ByteBuffer b = ByteBuffer.wrap(new String(prefixBuffer).getBytes());
-//		b.order(ByteOrder.BIG_ENDIAN);
+		final ByteBuffer b = ByteBuffer
+				.wrap(new String(prefixBuffer).getBytes());
+		// b.order(ByteOrder.BIG_ENDIAN);
 		int dataLength = b.getInt() - 4;
-//		System.out.println("DataLength: " + dataLength);
+		// System.out.println("DataLength: " + dataLength);
 
 		// actual message reading
 		int dataBytesToRead = dataLength;
 		int dataBytesRead = 0;
-		
+
 		if (dataLength <= 0) {
 			return null;
 		}
@@ -194,8 +212,9 @@ public class ClientTask implements Runnable {
 			int n;
 			try {
 				n = inData.read(dataBuffer, dataBytesRead, dataBytesToRead);
-//				System.out.println("read bytes number: " + n);
-				if (n == 0) return null;
+				// System.out.println("read bytes number: " + n);
+				if (n == 0)
+					return null;
 				dataBytesRead += n;
 				dataBytesToRead -= n;
 			} catch (IOException e) {
@@ -204,11 +223,11 @@ public class ClientTask implements Runnable {
 		}
 		// end of actual message reading
 
-//		hexString = ServerUtils.bytesToHex(dataBuffer);
-//		System.out.println("Hex actual message: " + hexString);
+		// hexString = ServerUtils.bytesToHex(dataBuffer);
+		// System.out.println("Hex actual message: " + hexString);
 
 		String ret = new String(dataBuffer);
-//		System.out.println(ret);
+		// System.out.println(ret);
 		return ret;
 	}
 }

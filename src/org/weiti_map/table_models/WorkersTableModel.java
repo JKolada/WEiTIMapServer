@@ -5,21 +5,17 @@ import javax.swing.table.TableModel;
 
 import org.weiti_map.db.WorkersTableObject;
 
-public class WorkersTableModel extends AbstractTableModel implements TableModel {	
-	
+public class WorkersTableModel extends AbstractTableModel
+		implements TableModel {
+
 	private static final long serialVersionUID = 4812024452486877443L;
-	private final int JTABLE_ROW_NUM;		
+	private final int JTABLE_ROW_NUM;
 	private final int JTABLE_COLS_NUM = 3;
-	
+
 	private String[][] data;
-	
-	private final static String[] COLUMNS = 
-		{"ID",
-		 "Imiê",
-		 "Nazwisko",
-		 " "};
-	
-	
+
+	private final static String[] COLUMNS = { "ID", "Imiê", "Nazwisko", " " };
+
 	public WorkersTableModel(WorkersTableObject workers) {
 		super();
 		JTABLE_ROW_NUM = workers.getRowCount();
@@ -29,17 +25,17 @@ public class WorkersTableModel extends AbstractTableModel implements TableModel 
 
 	public String getColumnName(int col) {
 		return COLUMNS[col];
-    }	
+	}
 
 	public Class<?> getColumnClass(int c) {
-        return String.class;
-    }
-	
-    @Override
-    public boolean isCellEditable(int row, int column) {
-	    return false;
-    }
-	
+		return String.class;
+	}
+
+	@Override
+	public boolean isCellEditable(int row, int column) {
+		return false;
+	}
+
 	@Override
 	public int getRowCount() {
 		return JTABLE_ROW_NUM;
@@ -52,12 +48,12 @@ public class WorkersTableModel extends AbstractTableModel implements TableModel 
 
 	@Override
 	public Object getValueAt(int row, int col) {
-        return data[row][col];
-	}	
-	
+		return data[row][col];
+	}
+
 	void setValueAt(String text, int row, int col) {
 		data[row][col] = text;
-        fireTableCellUpdated(row, col);
-    }
+		fireTableCellUpdated(row, col);
+	}
 
 }

@@ -8,8 +8,7 @@ public class RoomObj extends AbstractRowObject {
 	private String piêtro_sali;
 	private String mapa_x;
 	private String mapa_y;
-	
-	
+
 	RoomObj(ArrayList<String> poj_sala) {
 		sala_id = poj_sala.get(0);
 		nazwa_sali = poj_sala.get(1);
@@ -17,10 +16,11 @@ public class RoomObj extends AbstractRowObject {
 		mapa_x = poj_sala.get(3);
 		mapa_y = poj_sala.get(4);
 	}
-	
+
 	String[] getData() {
-		final String[] roomData = {sala_id, nazwa_sali, piêtro_sali, mapa_x, mapa_y};
+		final String[] roomData = { sala_id, nazwa_sali, piêtro_sali, mapa_x,
+				mapa_y };
 		return roomData;
-	}	
+	}
 
 }

@@ -17,37 +17,37 @@ class PlanTablePanel extends JPanel {
 	private PlanJTable planTable;
 	private JLabel parzystoscLabel;
 	private MyDatabase mDB;
-	
+
 	PlanTablePanel(MyDatabase mDatabase, char _parzystosc) {
 		super();
 		mDB = mDatabase;
-		parzystosc = _parzystosc;		
+		parzystosc = _parzystosc;
 		planTable = new PlanJTable(mDB);
 		parzystoscLabel = new JLabel();
-		configure();		
+		configure();
 	}
 
 	void setGroupPlan(GroupPlanObject plan) {
-		 planTable.setGroupPlan(plan, parzystosc); 
-	}	
+		planTable.setGroupPlan(plan, parzystosc);
+	}
 
 	void resetTable() {
-		planTable.resetTable();		
-	}	
-	
+		planTable.resetTable();
+	}
+
 	private void configure() {
-		if (parzystosc == 'P') {			
+		if (parzystosc == 'P') {
 			parzystoscLabel.setText("Tydzieñ parzysty");
 		} else {
 			parzystoscLabel.setText("Tydzieñ nieparzysty");
 		}
-		planTable.getTableHeader().setReorderingAllowed(false);		
+		planTable.getTableHeader().setReorderingAllowed(false);
 		LC layoutConstraints = new LC();
 		layoutConstraints.setFillX(true);
-		setLayout(new MigLayout(layoutConstraints));		
-		add(parzystoscLabel, "wrap");		
+		setLayout(new MigLayout(layoutConstraints));
+		add(parzystoscLabel, "wrap");
 		add(planTable.getTableHeader(), "wrap");
-		add(planTable);		
+		add(planTable);
 	}
 
 }

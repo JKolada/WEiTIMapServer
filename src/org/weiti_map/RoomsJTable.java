@@ -29,29 +29,32 @@ public class RoomsJTable extends JTable {
 	private void configure() {
 		this.setFont(new Font("Arial", Font.BOLD, 15));
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//		setLayout(new BorderLayout());
-		
+		// setLayout(new BorderLayout());
+
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		for (int i = 0; i < tableModel.getColumnCount(); i++) {
 			getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 		}
 
 		setPreferredScrollableViewportSize(new Dimension(500, 70));
 		setFillsViewportHeight(true);
-//        getSelectionModel().addListSelectionListener(new RowListener());
-//        getColumnModel().getSelectionModel().
-//            addListSelectionListener(new ColumnListener());
+		// getSelectionModel().addListSelectionListener(new RowListener());
+		// getColumnModel().getSelectionModel().
+		// addListSelectionListener(new ColumnListener());
 	}
-	
+
 	@Override
-	public	Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-        Component component = super.prepareRenderer(renderer, row, column);
-        int rendererWidth = component.getPreferredSize().width;
-        TableColumn tableColumn = getColumnModel().getColumn(column);
-        tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width + 10, tableColumn.getPreferredWidth()));
-        return component;
-    }
+	public Component prepareRenderer(TableCellRenderer renderer, int row,
+			int column) {
+		Component component = super.prepareRenderer(renderer, row, column);
+		int rendererWidth = component.getPreferredSize().width;
+		TableColumn tableColumn = getColumnModel().getColumn(column);
+		tableColumn.setPreferredWidth(
+				Math.max(rendererWidth + getIntercellSpacing().width + 10,
+						tableColumn.getPreferredWidth()));
+		return component;
+	}
 
 }
