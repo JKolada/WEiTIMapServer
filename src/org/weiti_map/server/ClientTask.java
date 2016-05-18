@@ -66,16 +66,23 @@ public class ClientTask implements Runnable {
 			} else {
 				sendMessage(new Message(Message.MessageType.SEND_GROUP,
 						ServerUtils.GROUP_EXISTS));
-				try {
-					objOut = new ObjectOutputStream(
-							clientSocket.getOutputStream());
-					objOut.writeObject(groupObjToSend);
-					System.out.println(
-							"Group object sent and closing object stream.");
-					objOut.close();
-				} catch (IOException e) {
-					e.printStackTrace();
+
+				Message secondReq;
+				while ((secondReq = receiveMessageObj()) == null) {
 				}
+				;
+				if (secondReq.equals(secondReq)) {
+					try {
+						objOut = new ObjectOutputStream(
+								clientSocket.getOutputStream());
+						objOut.writeObject(groupObjToSend);
+						System.out.println(
+								"Group object sent and closing object stream.");
+						objOut.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else System.out.println("not equal");
 			}
 		} else {
 			System.out.println(

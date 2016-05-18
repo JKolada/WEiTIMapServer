@@ -90,9 +90,14 @@ class Message {
 		else
 			return null;
 	}
-
-	// public boolean isValid() {return isValid;}
-
+	
+	public boolean equals(Message a) {
+		if (MsgType == a.getMsgType() && param == a.getParam() && allMessage == a.toString()) {
+			return true;
+		}
+		return false;
+	}
+	
 	public GroupPlanObject getGroupPlanobject(MyDatabase mDB) {
 		GroupPlanObject ret = null;
 		if (validate(mDB)) {

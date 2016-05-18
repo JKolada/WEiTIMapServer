@@ -67,9 +67,7 @@ public class GroupNameJPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String groupName;
-			if (e.getSource() == addGroupBtn) { // If the user clicks Add
-												// Customer, add the information
-												// into the database
+			if (e.getSource() == addGroupBtn) { 
 				groupName = newGroupName.getText();
 				Pattern pattern = Pattern.compile("\\s");
 				Matcher matcher = pattern.matcher(groupName);
@@ -78,7 +76,6 @@ public class GroupNameJPanel extends JPanel {
 					try {
 						throw new Exception("Bia³y znak!");
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					return;
@@ -94,11 +91,10 @@ public class GroupNameJPanel extends JPanel {
 				// accept input and convert (parse) if needed
 
 				int dialogButton = JOptionPane.YES_NO_OPTION;
-				// String x = JOptionPane.showInputDialog(null,"enter num!");
 				int dialogResult = JOptionPane
 						.showConfirmDialog(null,
-								"Would You Like to remove " + groupName
-										+ " group plan?",
+								"Czy na pewno chcesz usun¹æ grupê '" + groupName
+										+ "' z bazy danych?",
 								"Warning", dialogButton);
 
 				if (dialogResult == JOptionPane.YES_OPTION) {
