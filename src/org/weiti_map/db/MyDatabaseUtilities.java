@@ -2,6 +2,10 @@ package org.weiti_map.db;
 
 public final class MyDatabaseUtilities {
 
+	private MyDatabaseUtilities() {
+		throw new AssertionError();
+	}
+
 	// 'CREATE TABLES' STATEMENTS // // // // // // // //
 
 	private final static String CREATE_TB_GRUPY = "CREATE TABLE IF NOT EXISTS tb_grupy ("

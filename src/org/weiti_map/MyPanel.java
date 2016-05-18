@@ -37,9 +37,7 @@ public class MyPanel extends JPanel {
 			}
 		});
 
-		// LC layoutConstraints = new LC();
-		// layoutConstraints.setFillX(true);
-		setLayout(new MigLayout("fillx, debug"));
+		setLayout(new MigLayout("fillx"));
 
 		// setOpaque(true);
 		// groupNameJTextField.setForeground(Color.GRAY);
