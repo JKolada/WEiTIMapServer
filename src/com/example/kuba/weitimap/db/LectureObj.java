@@ -99,4 +99,12 @@ public class LectureObj extends LectureParentObj implements Serializable {
 		}
 	}
 
+	// woohoo, i know this is not a good looking code
+	// just playing with generics with extended classes
+	@Override
+	protected
+	String[] getData() {
+		return getLectureData();
+	}
+
 }

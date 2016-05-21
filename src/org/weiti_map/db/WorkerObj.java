@@ -13,7 +13,7 @@ public class WorkerObj extends AbstractRowObject {
 		nazwisko = poj_pracownik.get(2);
 	}
 
-	String[] getData() {
+	protected String[] getData() {
 		final String[] workerData = { pracownik_id, imiê, nazwisko };
 		return workerData;
 	}

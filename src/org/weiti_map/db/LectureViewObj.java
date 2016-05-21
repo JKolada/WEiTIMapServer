@@ -13,6 +13,13 @@ public class LectureViewObj extends LectureParentObj {
 	private String imie_wyk³adowcy;
 	private String nazwisko_wyk³adowcy;
 
+	@Override
+	public String[] getData() {
+		final String[] lectureData = { id_zajêæ, activity_name, nazwa_zajêæ,
+				id_wyk³adowcy, imie_wyk³adowcy, nazwisko_wyk³adowcy };
+		return lectureData;
+	}
+	
 	LectureViewObj(ArrayList<String> poj_zajêcia) {
 		id_zajêæ = poj_zajêcia.get(0);
 		activity_name = poj_zajêcia.get(1);
@@ -21,11 +28,4 @@ public class LectureViewObj extends LectureParentObj {
 		imie_wyk³adowcy = poj_zajêcia.get(4);
 		nazwisko_wyk³adowcy = poj_zajêcia.get(5);
 	}
-
-	public String[] getLectureData() {
-		final String[] lectureData = { id_zajêæ, activity_name, nazwa_zajêæ,
-				id_wyk³adowcy, imie_wyk³adowcy, nazwisko_wyk³adowcy };
-		return lectureData;
-	}
-
 }

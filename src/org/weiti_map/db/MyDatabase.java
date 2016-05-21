@@ -374,6 +374,35 @@ public class MyDatabase extends SQLiteDataSource {
 		return roomsTable;
 	}
 
+	public CustomTableObject<LectureViewObj> getLectureTableObject() {
+		String query = "SELECT * FROM VW_LECTURES ORDER BY 1";
+		// LecturesTableObject lecturesTable = null;
+		CustomTableObject<LectureViewObj> lecturesTable = null;
+		try {
+			ResultSet lecturesRS = mConnection.createStatement()
+					.executeQuery(query);
+			lecturesTable = new CustomTableObject<LectureViewObj>(6);
+			if (!lecturesRS.isClosed()) {
+				while (lecturesRS.next()) {
+					ArrayList<String> pojedyncze_zajecia = new ArrayList<String>();
+					for (int k = 0; k < 6; k++) {
+						pojedyncze_zajecia.add(lecturesRS.getString(k + 1));
+						// System.out.println(lecturesRS.getString(k+1)); //TO
+						// DELETE
+					}
+					 lecturesTable.add(new LectureViewObj(pojedyncze_zajecia));
+				}
+
+			} else {
+				System.out.println("Result set is null"); // TO DELETE
+			}
+			lecturesRS.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lecturesTable;
+	}
+
 	public void addGroup(String groupName) {
 		String query = "INSERT INTO tb_grupy (nazwa_grupy) VALUES ('"
 				+ groupName + "')";
@@ -456,32 +485,6 @@ public class MyDatabase extends SQLiteDataSource {
 			e.printStackTrace();
 		}
 	}
-
-	// LecturesTableObject getLectureTableObject() { //TODO
-	// String query = "SELECT * FROM VW_LECTURES ORDER BY 1";
-	// LecturesTableObject lecturesTable = null;
-	// try {
-	// ResultSet lecturesRS = mConnection.createStatement().executeQuery(query);
-	// lecturesTable = new LecturesTableObject();
-	// if (!lecturesRS.isClosed()) {
-	// while (lecturesRS.next()) {
-	// List<String> pojedyncze_zajecia = new ArrayList<String>();
-	// for (int k = 0; k < 6; k++) {
-	// pojedyncze_zajecia.add(lecturesRS.getString(k+1));
-	//// System.out.println(lecturesRS.getString(k+1)); //TO DELETE
-	// }
-	// lecturesTable.add(new RoomObj((ArrayList<String>) pojedyncze_zajecia );
-	// }
-	//
-	// } else {
-	// System.out.println("Result set is null"); //TO DELETE
-	// }
-	// lecturesRS.close();
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	// return lecturesTable;
-	// }
 
 	// KonsulTableObject getKonsulTableObject() { //TODO
 	// String query = "SELECT * FROM VW_KONSUL ORDER BY 1";
