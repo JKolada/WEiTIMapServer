@@ -17,7 +17,7 @@ public class RoomObj extends AbstractRowObject {
 		mapa_y = poj_sala.get(4);
 	}
 
-	String[] getData() {
+	protected String[] getData() {
 		final String[] roomData = { sala_id, nazwa_sali, piêtro_sali, mapa_x,
 				mapa_y };
 		return roomData;

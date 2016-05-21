@@ -33,8 +33,8 @@ public class MyShowPanel extends JPanel {
 	// private CustomTablePanel<CustomTableModel<RoomsTableObject>,
 	// RoomsTableObject> roomsTable;
 	private CustomTablePanel<CustomTableModel<CustomTableObject<RoomObj>>, CustomTableObject<RoomObj>> roomsTable;
-
-	private CustomTablePanel<WorkersTableModel, WorkersTableObject> workersTable;
+	private CustomTablePanel<CustomTableModel<CustomTableObject<LectureViewObj>>, CustomTableObject<LectureViewObj>> lecturesTable;
+//	private CustomTablePanel<WorkersTableModel, WorkersTableObject> workersTable;
 
 	// private LecturesTablePanel lecturesTable;
 
@@ -67,25 +67,25 @@ public class MyShowPanel extends JPanel {
 		case ROOMS_TABLE:
 			CustomTableObject<RoomObj> roomTableObj = mDatabase
 					.getRoomsTableObject();
-			String[] ColNames = { "ID", "Nazwa Sali", "Piêtro", "X", "Y" };
+			String[] RoomsShowNames = { "ID", "Nazwa Sali", "Piêtro", "X", "Y" };
 			CustomTableModel<CustomTableObject<RoomObj>> roomTableModel = new CustomTableModel<CustomTableObject<RoomObj>>(
-					5, ColNames, roomTableObj);
+					5, RoomsShowNames, roomTableObj);
 			roomsTable = new CustomTablePanel<CustomTableModel<CustomTableObject<RoomObj>>, CustomTableObject<RoomObj>>(
 					"Sale", roomTableObj, roomTableModel);
 			add(roomsTable);
 			break;
 		case LECTURES_TABLE:
-			// CustomTableObject<LectureViewObj> lectureTableObj =
-			// mDatabase.getL();
-			// String[] ColNames = {"ID", "Nazwa Sali", "Piêtro", "X", "Y"};
-			// CustomTableModel<CustomTableObject<RoomObj>> roomTableModel= new
-			// CustomTableModel<CustomTableObject<RoomObj>>(5, ColNames,
-			// roomTableObj);
-			// roomsTable = new
-			// CustomTablePanel<CustomTableModel<CustomTableObject<RoomObj>>,
-			// CustomTableObject<RoomObj>>("Sale", roomTableObj,
-			// roomTableModel);
-			// add(lecturesTable);
+			 CustomTableObject<LectureViewObj> lectureTableObj = mDatabase.getLectureTableObject();
+//			 a.id_zajec, a.skrot_nazwy_zajec, a.nazwa_zajec, a.id_wykladowcy, b.imie, b.nazwisko "
+			 String[] LectureShowNames = {"ID", "Skrót nazwy zajêæ", "Nazwa zajêæ", "ID Wyk³adowcy", "Imiê wyk³adowcy", "Nazwisko wyk³adowcy"};
+			 CustomTableModel<CustomTableObject<LectureViewObj>> lectureTableModel = new
+			 CustomTableModel<CustomTableObject<LectureViewObj>>(6, LectureShowNames,
+			 lectureTableObj);
+			 lecturesTable = new
+			 CustomTablePanel<CustomTableModel<CustomTableObject<LectureViewObj>>,
+			 CustomTableObject<LectureViewObj>>("Zajêcia", lectureTableObj,
+			 lectureTableModel);
+			 add(lecturesTable);
 			break;
 		}
 	}
