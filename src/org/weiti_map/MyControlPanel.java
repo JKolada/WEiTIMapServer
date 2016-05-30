@@ -44,12 +44,10 @@ public class MyControlPanel extends JPanel {
 	}
 
 	private void configure() {
-		MigLayout layout = (new MigLayout("fillx, debug", // Layout Constraints
-				"[][][]", // Column constraints
-				""));
+		MigLayout layout = (new MigLayout("fillx"));
 		setLayout(layout);
 		fc = new JFileChooser();
-		groupJPanel = new JPanel(new MigLayout("fillx, debug"));
+		groupJPanel = new JPanel(new MigLayout("fillx"));
 		loadFileBtn = new JButton("Wczytaj plan grupy w postaci pliku XML");
 		tableTypeJPanel = new GroupNameJPanel(mDatabase, parentJPanel);
 		comboBox1 = new MainViewsComboBox(parentJPanel, this, tableTypeJPanel,

@@ -52,7 +52,7 @@ public class MyServerPanel extends javax.swing.JPanel {
 
 		// serverIP = new JLabel("192.168.0.1");
 
-		setLayout(new MigLayout("fill, debug", "[fill]"));
+		setLayout(new MigLayout("fill", "[fill]"));
 		serverPort = new JTextField("13131");
 		serverState = onOff.SERVER_OFF;
 		serverBtn = new JButton("Start server");

@@ -46,16 +46,19 @@ public class MyShowPanel extends JPanel {
 	}
 
 	void configure() {
-		LC layoutConstraints = new LC();
-		layoutConstraints.setFillX(true);
-		setLayout(new MigLayout(layoutConstraints));
+//		LC layoutConstraints = new LC();
+//		layoutConstraints.setFillX(true);
+//		setLayout(new MigLayout(layoutConstraints));
+		
+		setLayout(new MigLayout("fillx, center"));
+		
 
 		switch (panel_type) {
 		case GROUP_TABLES:
 			tablePanelP = new PlanTablePanel(mDatabase, 'P');
 			tablePanelN = new PlanTablePanel(mDatabase, 'N');
-			add(tablePanelP);
-			add(tablePanelN);
+			add(tablePanelP, "dock south");
+			add(tablePanelN, "dock south");
 			break;
 		// case WORKERS_TABLE:
 		// WorkersTableObject tabObject0 = mDatabase.getWorkersTableObject();

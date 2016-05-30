@@ -37,7 +37,7 @@ public class MyPanel extends JPanel {
 			}
 		});
 
-		setLayout(new MigLayout("fillx"));
+		setLayout(new MigLayout("fillx", "[center]", "[center]"));
 
 		// setOpaque(true);
 		// groupNameJTextField.setForeground(Color.GRAY);
